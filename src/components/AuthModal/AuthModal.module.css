@@ -1,0 +1,192 @@
+.backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: rgba(0, 0, 0, 0.45);
+}
+
+.modal {
+    width: 522px;
+    min-height: 399px;
+
+    padding: 48px 32px 32px;
+    border-radius: 30px;
+
+    background-color: #fbf3df;
+    color: #000000;
+    text-align: center;
+}
+
+.title {
+    margin: 0 0 20px;
+
+    font-family: var(--font-family);
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 39px;
+}
+
+.description {
+    max-width: 293px;
+    margin: 0 auto 20px;
+
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+}
+
+.label {
+    width: 458px;
+    margin: 0 auto;
+
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    text-align: left;
+
+    font-family: var(--font-family);
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+}
+
+.label+.label {
+    margin-top: 16px;
+}
+
+.input {
+    width: 458px;
+    height: 38px;
+
+    padding: 8px 12px;
+
+    border: 1px solid #d9d9d9;
+    border-radius: 6px;
+    background-color: #ffffff;
+
+    font-family: var(--font-family);
+    font-size: 14px;
+    line-height: 20px;
+    color: #000000;
+}
+
+.input::placeholder {
+    color: #b3b3b3;
+}
+
+.primaryBtn {
+    width: 458px;
+    height: 44px;
+
+    margin: 27px auto 0;
+
+    display: block;
+
+    border: none;
+    border-radius: 8px;
+
+    background-color: #9b6c43;
+    color: #ffffff;
+
+    font-family: var(--font-family);
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 20px;
+
+    cursor: pointer;
+    transition: background-color 250ms ease;
+}
+
+.primaryBtn:hover {
+    background-color: #7f5634;
+}
+
+.switchText {
+    margin: 20px 0 0;
+
+    font-family: var(--font-family);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+}
+
+.switchBtn {
+    border: none;
+    padding: 0;
+
+    background: transparent;
+
+    color: #000000;
+    text-decoration: underline;
+
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.switchBtn:hover {
+    color: #9b6c43;
+}
+
+@media screen and (max-width: 767px) {
+    .modal {
+        width: 343px;
+        min-height: auto;
+
+        padding: 32px 24px;
+    }
+
+    .label,
+    .input,
+    .primaryBtn {
+        width: 100%;
+    }
+
+    .title {
+        font-size: 28px;
+        line-height: 34px;
+    }
+}
+
+.passwordWrapper {
+    position: relative;
+    width: 458px;
+    margin: 0 auto;
+}
+
+.passwordWrapper .input {
+    width: 100%;
+    padding-right: 48px;
+}
+
+.eyeBtn {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+
+    width: 24px;
+    height: 24px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+    border: none;
+    background: transparent;
+
+    cursor: pointer;
+}
