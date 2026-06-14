@@ -1,9 +1,17 @@
+import css from "./SearchBox.module.css";
+
 export default function SearchBox() {
     return (
-        <form>
-            <input type="text" placeholder="Search recipes" />
+        <form className={css.form}>
+            <input
+                className={css.input}
+                type="text"
+                placeholder="Search recipes"
+            />
 
-            <button type="submit">Search</button>
+            <button className={css.button} type="submit">
+                Search
+            </button>
         </form>
     );
 }
