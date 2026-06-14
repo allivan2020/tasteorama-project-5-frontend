@@ -1,3 +1,40 @@
+// 'use client';
+
+// import Link from 'next/link';
+// import styles from './AuthModal.module.css';
+
+// type AuthModalProps = {
+//   onClose: () => void;
+// };
+
+// export const AuthModal = ({ onClose }: AuthModalProps) => {
+//   return (
+//     <div className={styles.backdrop} onClick={onClose}>
+//       <div
+//         className={styles.modal}
+//         onClick={(event) => event.stopPropagation()}
+//       >
+//         <h2 className={styles.title}>Authorization required</h2>
+
+//         <p className={styles.text}>
+//           Please log in or register to continue.
+//         </p>
+
+//         <div className={styles.actions}>
+//           <Link href="/auth/login" className={styles.primaryBtn}>
+//             Log in
+//           </Link>
+
+//           <Link href="/auth/register" className={styles.secondaryBtn}>
+//             Register
+//           </Link>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+
 'use client';
 
 import { useState } from 'react';
@@ -41,18 +78,7 @@ export const AuthModal = ({ onClose }: AuthModalProps) => {
                     placeholder="********"
                   />
 
-                  <button
-                    type="button"
-                    className={styles.eyeBtn}
-                    aria-label="Show password"
-                  >
-                    <Image
-                      src="/icons/Icon.eye.png"
-                      alt="Eye icon"
-                      width={24}
-                      height={24}
-                    />
-                  </button>
+               
                 </div>
               </label>
 
@@ -110,18 +136,7 @@ export const AuthModal = ({ onClose }: AuthModalProps) => {
                     placeholder="********"
                   />
 
-                  <button
-                    type="button"
-                    className={styles.eyeBtn}
-                    aria-label="Show password"
-                  >
-                    <Image
-                      src="/Icon-eye.png"
-                      alt="Eye icon"
-                      width={24}
-                      height={24}
-                    />
-                  </button>
+                 
                 </div>
               </label>
 
@@ -135,18 +150,7 @@ export const AuthModal = ({ onClose }: AuthModalProps) => {
                     placeholder="********"
                   />
 
-                  <button
-                    type="button"
-                    className={styles.eyeBtn}
-                    aria-label="Show password"
-                  >
-                    <Image
-                      src="/Icon-eye.png"
-                      alt="Eye icon"
-                      width={24}
-                      height={24}
-                    />
-                  </button>
+               
                 </div>
               </label>
 

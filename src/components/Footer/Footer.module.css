@@ -4,7 +4,7 @@
 }
 
 .container {
-    min-height: 197px;
+    min-height: 261px;
     padding: 24px 59px;
 
     display: flex;
@@ -25,7 +25,6 @@
     font-family: var(--font-family);
     font-size: 18px;
     font-weight: 600;
-    /* Semibold */
     line-height: 22px;
 
     transition: color 250ms ease;
@@ -38,32 +37,14 @@
 
 .copy {
     margin: 0;
-
     width: 282px;
 
     color: #ffffff;
     font-size: 12px;
     font-weight: 400;
-    line-height: 1.25;
+    line-height: 15px;
     text-align: center;
 }
-
-.link {
-    color: #ffffff;
-    text-decoration: none;
-
-    font-size: 16px;
-    font-weight: 700;
-    line-height: 1.25;
-
-    cursor: pointer;
-    transition: color 250ms ease;
-}
-.logo:hover {
-    color: #e0c4a8;
-}
-
-
 
 .nav {
     display: flex;
@@ -72,13 +53,35 @@
     gap: 32px;
 }
 
+.link,
+.linkButton {
+    padding: 0;
+    border: none;
+    background: transparent;
 
+    color: #ffffff;
+    text-decoration: none;
 
-.link:hover {
+    font-family: var(--font-family);
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 20px;
+
+    cursor: pointer;
+    transition: color 250ms ease;
+}
+
+.logo:hover,
+.link:hover,
+.linkButton:hover {
     color: #e0c4a8;
 }
 
 @media screen and (min-width: 768px) {
+    .container {
+        min-height: 197px;
+    }
+
     .nav {
         flex-direction: row;
     }
@@ -108,25 +111,4 @@
         flex-direction: row;
         gap: 32px;
     }
-}
-
-.linkButton {
-    border: none;
-    background: transparent;
-    padding: 0;
-
-    color: #ffffff;
-
-    font-family: var(--font-family);
-    font-size: 16px;
-    font-weight: 700;
-    line-height: 20px;
-
-    cursor: pointer;
-
-    transition: color 250ms ease;
-}
-
-.linkButton:hover {
-    color: #e0c4a8;
 }
