@@ -57,3 +57,18 @@
         width: 176px;
     }
 }
+/* desktop */
+@media (min-width: 1440px) {
+    .form {
+        flex-direction: row;
+        gap: 12px;
+    }
+    .input {
+        width: 459px;
+        flex: none;
+    }
+
+    .button {
+        width: 190px;
+    }
+}
