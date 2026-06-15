@@ -7,10 +7,11 @@ import {RegistrationFormValidationSchema} from "@/components/RegistrationForm/Re
 import EyeOnIcon from '@/assets/icons/open-eye-icon.svg';
 import EyeOffIcon from '@/assets/icons/close-eye-icon.svg';
 import {useMutation} from "@tanstack/react-query";
-import axios, {AxiosError} from "axios";
-import {register, UserRegisterProps} from "@/lib/api/clientApi";
+import {AxiosError} from "axios";
+import {register} from "@/lib/api/clientApi";
 import {useRouter} from "next/navigation";
 import {toast} from "react-hot-toast";
+import {useAuthStore} from "@/lib/store/authStore";
 
 interface RegisterFormValues {
     email: string,
@@ -33,13 +34,14 @@ const RegistrationForm = () => {
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     const router = useRouter();
-    const [error, setError] = useState('');
+    const setUser = useAuthStore((state) => state.setUser);
 
     const mutation = useMutation({
         mutationFn: register,
         onSuccess: (res) => {
             if (res) {
-                toast.success('Login successful!');
+                setUser(res.newUser);
+                toast.success('Registration successful!');
                 router.push('/');
             }
         },
@@ -58,13 +60,9 @@ const RegistrationForm = () => {
         actions: FormikHelpers<RegisterFormValues>
     ) => {
 
-        const { confirmPassword, ...payload } = values;
-
-        console.log('payload', payload)
-        console.log('values',values);
+        const {confirmPassword, ...payload} = values;
 
         mutation.mutate(payload);
-
         actions.setSubmitting(false);
     };
 
@@ -157,7 +155,8 @@ const RegistrationForm = () => {
                         </div>
 
 
-                        <button type="submit" className={css.submitButton} disabled={!dirty || !isValid || isSubmitting}>
+                        <button type="submit" className={css.submitButton}
+                                disabled={!dirty || !isValid || isSubmitting}>
                             Create account
                         </button>
                     </Form>
