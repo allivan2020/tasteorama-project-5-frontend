@@ -22,6 +22,7 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('http://localhost:3000'),
   title: 'Tasteorama - Твій Помічник',
   description: 'Зручний додаток для пошуку, збереження та створення рецептів',
   icons: {
