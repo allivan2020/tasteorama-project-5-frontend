@@ -1,7 +1,8 @@
+/* 1. Нормализация (если используете modern-normalize, импортируем его здесь) */
 @import 'modern-normalize/modern-normalize.css';
 
+/* 2. Дизайн-токены (Цвета и шрифты из макета) */
 :root {
-  /* Кольори з макету */
   --black: #000;
   --gray: #595d62;
   --white: #fff;
@@ -32,45 +33,105 @@
   --light-beige-3: #e1d7c6;
   --red: #c80000;
 
-  /* Шрифти */
   --font-family: "Montserrat", sans-serif;
   --second-family: "DM Sans", sans-serif;
+
+  /* Переменные для транзишенов, чтобы анимации во всем проекте были одинаковыми */
+  --transition-fast: 0.2s ease-in-out;
+  --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-html {
-  height: 100%;
-  min-width: 320px;
+/* 3. Жесткий глобальный сброс (Reset) */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
+/* Сброс списков во всем проекте */
+ul,
+ol {
+  list-style: none;
+}
+
+/* Сброс ссылок */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Сброс дефолтных кнопок */
+button {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  color: inherit;
+}
+
+/* Стандартизация изображений (Next.js Image компонент сам справляется, но для обычных тегов img это мастхэв) */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* 4. Базовые стили документа */
 html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
-}
-
-body {
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
+  background-color: var(--background);
   color: var(--black);
-  background: var(--background);
   font-family: var(--font-family);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+/* Глобальный hover для интерактивных элементов согласно ТЗ */
+a, button, [role="button"] {
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+/* 5. Глобальный контейнер (Архитектура сетки)
+  Выносим логику контейнера в глобальную область, чтобы разработчики 
+  использовали класс .container и не ломали брейкпоинты в локальных модулях.
+*/
+
+.container {
+  /* Резиновая верстка до 393px: занимаем всю ширину, задаем минимальные боковые отступы */
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 16px; /* Замени на отступ из макета для мобилок */
 }
 
-a, button, input[type="submit"], input[type="button"] {
-  cursor: pointer;
-  transition: all 0.3s ease; 
+/* Четкий перелом: от 393px до планшета */
+@media screen and (min-width: 393px) {
+  .container {
+    width: 393px;
+    /* padding остается прежним или меняется по макету */
+  }
+}
+
+/* Четкий перелом: Tablet (от 768px до десктопа) */
+@media screen and (min-width: 768px) {
+  .container {
+    width: 768px;
+    padding: 0 32px; /* Планшетные отступы */
+  }
+}
+
+/* Четкий перелом: Desktop (от 1440px и шире) */
+@media screen and (min-width: 1440px) {
+  .container {
+    width: 1440px;
+    padding: 0 64px; /* Десктопные отступы */
+  }
 }
