@@ -1,118 +1,95 @@
-.backdrop {
+
+
+
+
+ .backdrop {
     position: fixed;
     inset: 0;
     z-index: 1000;
 
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+
+    padding: 16px;
 
     background-color: rgba(0, 0, 0, 0.45);
 }
 
 .modal {
-    width: 522px;
-    min-height: 399px;
+    box-sizing: border-box;
 
-    padding: 48px 32px 32px;
+    background: #faf3e0;
     border-radius: 30px;
 
-    background-color: #fbf3df;
-    color: #000000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
     text-align: center;
 }
+
+/* ===========================
+        MOBILE
+=========================== */
+
+.loginModal {
+    width: 362px;
+    height: 399px;
+
+    padding: 48px 32px;
+}
+
+ .registerModal {
+    width: 362px;
+    height: 671px;
+
+    padding: 48px 32px;
+}  
+
+/* ==========================
+        TYPOGRAPHY
+=========================== */
 
 .title {
     margin: 0 0 20px;
 
     font-family: var(--font-family);
     font-size: 32px;
-    font-weight: 700;
+    font-weight: 600;
     line-height: 39px;
+
+    color: #000;
 }
 
-.description {
-    max-width: 293px;
-    margin: 0 auto 20px;
 
-    font-size: 14px;
-    line-height: 20px;
-}
+/* ===========================
+        PLACEHOLDER
+=========================== */
 
-.form {
-    display: flex;
-    flex-direction: column;
-}
-
-.label {
-    width: 458px;
-    margin: 0 auto;
-
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-
-    text-align: left;
-
-    font-family: var(--font-family);
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 16px;
-}
-
-.label+.label {
-    margin-top: 16px;
-}
-
-.input {
+ .formPlaceholder {
     width: 100%;
-    height: 38px;
+    flex: 1;
 
-    padding: 8px 48px 8px 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-    border: 1px solid #d9d9d9;
-    border-radius: 6px;
-    background-color: #ffffff;
-
-    font-family: var(--font-family);
-    font-size: 14px;
-    line-height: 20px;
-    color: #000000;
-}
-
-.input::placeholder {
-    color: #b3b3b3;
-}
-
-.primaryBtn {
-    width: 458px;
-    height: 44px;
-
-    margin: 27px auto 0;
-
-    display: block;
-
-    border: none;
+    border: 1px dashed #9b6c43;
     border-radius: 8px;
 
-    background-color: #9b6c43;
-    color: #ffffff;
+    color: #9b6c43;
 
     font-family: var(--font-family);
     font-size: 14px;
-    font-weight: 700;
-    line-height: 20px;
+} 
 
-    cursor: pointer;
-    transition: background-color 250ms ease;
-}
+/* ===========================
+        FOOTER
+=========================== */
 
-.primaryBtn:hover {
-    background-color: #7f5634;
-}
-
-.switchText {
-    margin: 20px 0 0;
+ .switchText {
+    margin-top: 20px;
 
     font-family: var(--font-family);
     font-size: 14px;
@@ -121,75 +98,106 @@
 }
 
 .switchBtn {
-    border: none;
     padding: 0;
 
+    border: none;
     background: transparent;
 
-    color: #000000;
-    text-decoration: underline;
+    color: #000;
 
-    font-family: inherit;
-    font-size: inherit;
+    font: inherit;
     font-weight: 700;
 
+    text-decoration: underline;
+
     cursor: pointer;
+
+    transition: color 250ms ease;
 }
 
 .switchBtn:hover {
     color: #9b6c43;
-}
+} 
 
-@media screen and (max-width: 767px) {
-    .modal {
-        width: 343px;
-        min-height: auto;
+/* ===========================
+        TABLET
+=========================== */
+@media screen and (min-width: 768px) {
+    .loginModal {
+        width: 522px;
+        height: 399px;
 
-        padding: 32px 24px;
+        padding: 48px 32px;
     }
 
-    .label,
-    .input,
-    .primaryBtn {
-        width: 100%;
+    .registerModal {
+        width: 522px;
+        height: 621px;
+
+        padding: 48px 32px;
+    }
+} 
+/* ===========================
+        DESKTOP
+=========================== */
+
+@media screen and (min-width: 1440px) {
+    .loginModal {
+        width: 420px;
+        height: 399px;
+
+        padding: 48px 32px;
     }
 
-    .title {
-        font-size: 28px;
-        line-height: 34px;
+    .registerModal {
+        width: 420px;
+        height: 646px;
+
+        padding: 48px 32px;
+    }
+} 
+
+.description {
+    margin: 0 auto 20px;
+
+    font-family: var(--font-family);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+
+    color: #000;
+    text-align: center;
+}
+
+.mobileText,
+.tabletText,
+.desktopText {
+    display: none;
+}
+
+/* Mobile */
+.mobileText {
+    display: inline;
+}
+
+/* Tablet */
+@media screen and (min-width: 768px) {
+    .mobileText {
+        display: none;
+    }
+
+    .tabletText {
+        display: inline;
     }
 }
 
-.passwordWrapper {
-    position: relative;
-    width: 100%;
-}
+/* Desktop */
+@media screen and (min-width: 1440px) {
+    .tabletText {
+        display: none;
+    }
 
-.passwordWrapper .input {
-    width: 100%;
-   
-}
-
-.eyeBtn {
-    position: absolute;
-    top: 50%;
-    right: 12px;
-
-    transform: translateY(-50%);
-
-    width: 24px;
-    height: 24px;
-
-    padding: 0;
-    margin: 0;
-
-    border: none;
-    outline: none;
-    background: transparent;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    cursor: pointer;
+    .desktopText {
+        display: inline;
+    }
 }
