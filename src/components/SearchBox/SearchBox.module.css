@@ -13,14 +13,10 @@
 .input {
     width: 100%;
     height: 46px;
-
     padding: 12px;
-
     border: 1px solid var(--light-gray);
     border-radius: 8px;
-
     background-color: var(--white);
-
     font-family: var(--font-family);
     font-size: 16px;
 }
@@ -50,4 +46,14 @@
 
 /* tablet */
 @media screen and (min-width: 768px) {
+    .form {
+        flex-direction: row;
+    }
+    .input {
+        flex: 1;
+    }
+
+    .button {
+        width: 176px;
+    }
 }

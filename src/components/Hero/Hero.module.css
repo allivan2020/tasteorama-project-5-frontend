@@ -7,7 +7,7 @@
 }
 .hero {
     width: 100%;
-    min-height: 513px;
+    height: 513px;
     padding: 128px 0px;
     background-image:
         linear-gradient(
@@ -34,9 +34,9 @@
 .title {
     font-size: 40px;
     font-weight: 600;
-    line-height: normal;
     color: var(--white);
     margin-bottom: 24px;
+    line-height: 1.1;
 }
 
 .form {
@@ -46,7 +46,6 @@
 @media screen and (min-width: 768px) {
     .container {
         max-width: 768px;
-        padding: 0 32px;
     }
     .hero {
         min-height: 443px;
@@ -61,6 +60,9 @@
                 url("/image/hero-tab-1x.jpg") 1x,
                 url("/image/hero-tab-2x.jpg") 2x
             );
+    }
+    .title {
+        font-size: 48px;
     }
 }
 
