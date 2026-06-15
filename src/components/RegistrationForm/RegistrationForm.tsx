@@ -7,18 +7,21 @@ import {RegistrationFormValidationSchema} from "@/components/RegistrationForm/Re
 import EyeOnIcon from '@/assets/icons/open-eye-icon.svg';
 import EyeOffIcon from '@/assets/icons/close-eye-icon.svg';
 import {useMutation} from "@tanstack/react-query";
-import axios from "axios";
+import axios, {AxiosError} from "axios";
+import {register, UserRegisterProps} from "@/lib/api/clientApi";
+import {useRouter} from "next/navigation";
+import {toast} from "react-hot-toast";
 
 interface RegisterFormValues {
     email: string,
-    name: string,
+    username: string,
     password: string,
     confirmPassword: string
 }
 
 const initialValues: RegisterFormValues = {
     email: "",
-    name: "",
+    username: "",
     password: "",
     confirmPassword: ""
 }
@@ -29,30 +32,40 @@ const RegistrationForm = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-    // const mutation = useMutation({
-    //     mutationFn: async (newTodo) => {
-    //         const res = await axios.post('https://jsonplaceholder.typicode.com/todos', newTodo);
-    //         return res.data;
-    //     },
-    //     onSuccess: () => {
-    //         console.log("Todo added successfully");
-    //     }
-    // });
+    const router = useRouter();
+    const [error, setError] = useState('');
 
-    // const handleCreateTodo = () => {
-    //     // 3. Викликаємо mutate для того щоб виконати HTTP-запит
-    //     mutation.mutate({
-    //         title: "My new todo",
-    //         completed: false
-    //     })
-    // };
+    const mutation = useMutation({
+        mutationFn: register,
+        onSuccess: (res) => {
+            if (res) {
+                toast.success('Login successful!');
+                router.push('/');
+            }
+        },
+        onError: (error: AxiosError<{ error?: string }>) => {
+            const errorMessage =
+                error.response?.data?.error ??
+                error.message ??
+                'Oops... some error';
+            toast.error(errorMessage);
+        },
+    });
 
-    const handleSubmit = (
+
+    const handleSubmit = async (
         values: RegisterFormValues,
         actions: FormikHelpers<RegisterFormValues>
     ) => {
-        console.log("Order data:", values);
-        actions.resetForm();
+
+        const { confirmPassword, ...payload } = values;
+
+        console.log('payload', payload)
+        console.log('values',values);
+
+        mutation.mutate(payload);
+
+        actions.setSubmitting(false);
     };
 
 
@@ -80,16 +93,16 @@ const RegistrationForm = () => {
                         </div>
 
                         <div className={css.formGroup}>
-                            <label className={css.label} htmlFor={`${fieldId}-name`}>
+                            <label className={css.label} htmlFor={`${fieldId}-username`}>
                                 Enter your name
                             </label>
                             <Field
                                 className={css.input}
                                 type="name"
-                                name="name"
-                                id={`${fieldId}-name`}
+                                name="username"
+                                id={`${fieldId}-username`}
                                 placeholder="Max"/>
-                            <ErrorMessage component="span" name="name" className={css.isError}/>
+                            <ErrorMessage component="span" name="username" className={css.isError}/>
                         </div>
 
                         <div className={css.formGroup}>

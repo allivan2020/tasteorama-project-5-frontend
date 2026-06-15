@@ -5,7 +5,7 @@ export const RegistrationFormValidationSchema = Yup.object().shape({
         .email("Incorrect email format!")
         .max(128, "Email too long! Maximum 128 characters allowed.")
         .required("Email is required!"),
-    name: Yup.string()
+    username: Yup.string()
         .max(16, "Name too long. Maximum 16 characters.")
         .required("Name is required!"),
     password: Yup.string()
