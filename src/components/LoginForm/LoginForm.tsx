@@ -62,7 +62,7 @@ export default function LoginForm() {
 
     return (
         <div className={css.formCard} >
-            <h1 className={css.formTitle}>Login</h1>
+            <h1 className={css.formTitle}>Login</h1> 
             <Formik initialValues={initialValues} validationSchema={LoginFormValidationSchema} onSubmit={handleSubmit}>
                 <Form className={css.form}>
 

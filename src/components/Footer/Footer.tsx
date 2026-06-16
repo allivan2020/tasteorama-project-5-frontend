@@ -10,6 +10,7 @@ import { useAuthModalStore } from '@/lib/store/authModalStore';
 
 import styles from './Footer.module.css';
 
+
 export const Footer = () => {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const isModalOpen = useAuthModalStore((state) => state.isOpen);
