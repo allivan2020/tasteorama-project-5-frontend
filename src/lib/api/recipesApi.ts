@@ -20,7 +20,7 @@ export type RecipesResponse = {
 
 export type RecipesParams = {
   page?: number;
-  limit?: number;
+  perPage?: number;
   category?: string;
   ingredient?: string;
 };
