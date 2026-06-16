@@ -1,41 +1,43 @@
 'use client';
 
-import {Header} from '../Header/Header';
-import {Footer} from '../Footer/Footer';
-import {AuthModal} from '../AuthModal/AuthModal';
-import {useAuthModalStore} from '@/lib/store/authModalStore';
+import { usePathname } from 'next/navigation';
 
-export const SharedLayout = ({
-                                 children,
-                             }: {
-    children: React.ReactNode;
-}) => {
-    const isOpen = useAuthModalStore((state) => state.isOpen);
-    const closeModal = useAuthModalStore((state) => state.closeModal);
+import { Header } from '../Header/Header';
+import { Footer } from '../Footer/Footer';
+import { AuthModal } from '../AuthModal/AuthModal';
+import { useAuthModalStore } from '@/lib/store/authModalStore';
 
-    return (
-        <div
-            style={{
-                display: 'flex',
-                flexDirection: 'column',
-                height: '100dvh',
-            }}
-        >
-            <Header/>
+export const SharedLayout = ({ children }: { children: React.ReactNode }) => {
+  const pathname = usePathname();
 
-            <main
-                style={{
-                    flex: 1,
-                    minHeight: 0,
-                    overflowY: 'auto',
-                }}
-            >
-                {children}
-            </main>
+  const isOpen = useAuthModalStore((state) => state.isOpen);
+  const closeModal = useAuthModalStore((state) => state.closeModal);
 
-            <Footer/>
+  const isAuthPage = pathname === '/auth/login' || pathname === '/auth/register';
 
-            {isOpen && <AuthModal onClose={closeModal}/>}
-        </div>
-    );
+  return (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100dvh',
+      }}
+    >
+      <Header />
+
+      <main
+        style={{
+          flex: 1,
+          minHeight: 0,
+          overflowY: 'auto',
+        }}
+      >
+        {children}
+      </main>
+
+      <Footer />
+
+      {isOpen && !isAuthPage && <AuthModal onClose={closeModal} />}
+    </div>
+  );
 };
