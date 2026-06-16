@@ -1,4 +1,6 @@
 //заглушка - тут буде сторінка профілю
+import {redirect} from "next/navigation";
+
 export default function ProfilePage() {
-  return <h1>Profile Page</h1>;
+  redirect('/profile/own');
 }
