@@ -36,7 +36,7 @@ export default function RootLayout({
           <SharedLayout>{children}</SharedLayout>
 
           <Toaster
-            position="top-right"
+            position="top-center"
             toastOptions={{
               duration: 4000,
             }}

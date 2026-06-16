@@ -1,0 +1,29 @@
+.title {
+    font-weight: 600;
+    font-size: 40px;
+    margin: 48px 0 16px;
+}
+
+.tabs {
+    display: flex;
+    gap: 38px;
+}
+
+.link {
+    font-weight: 600;
+    font-size: 18px;
+    padding-bottom: 4px;
+    transition: border-color var(--transition-fast);
+
+    @media (min-width: 768px) {
+        font-size: 12px;
+    }
+}
+
+.linkActive {
+    border-bottom: 1px solid var(--black);
+}
+
+.pageContent {
+    margin-top: 16px;
+}
