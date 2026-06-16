@@ -1,10 +1,7 @@
-import { User } from "@/app/types/user";
-import { nextServer } from "./api";
 
-interface UserAuthDataProps {
-  email: string;
-  password: string;
-}
+import { nextServer } from './api';
+import { User } from '@/app/types/user';
+
 
 export type UserRegisterProps = {
   email: string;
@@ -12,16 +9,43 @@ export type UserRegisterProps = {
   username: string;
 };
 
+export type UserAuthDataProps = {
+  email: string;
+  password: string;
+};
+
 type RegisterResponse = {
   newUser: User;
 };
 
+
 export const login = async (userData: UserAuthDataProps): Promise<User> => {
-  const { data } = await nextServer.post<User>("/auth/login", userData);
+  const { data } = await nextServer.post<User>('/auth/login', userData);
   return data;
 };
 
-export const register = async (data: UserRegisterProps): Promise<RegisterResponse> => {
+export const register = async (
+  data: UserRegisterProps,
+): Promise<RegisterResponse> => {
   const res = await nextServer.post('/auth/register', data);
   return res.data;
+};
+
+export const logout = async () => {
+  const res = await nextServer.post(
+    '/auth/logout',
+    {},
+    {
+      withCredentials: true,
+    },
+  );
+  return res.data;
+};
+
+export const getProfile = async (): Promise<User> => {
+  const res = await nextServer.get('/profile', {
+    withCredentials: true,
+  });
+
+  return res.data?.user;
 };
