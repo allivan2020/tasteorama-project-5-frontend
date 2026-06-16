@@ -2,9 +2,13 @@
 
 Frontend part of the Tasteorama application — a modern web platform for searching, exploring, and managing recipes.
 
+---
+
 ## About the Project
 
 Tasteorama helps users discover recipes, browse categories and ingredients, save favorite recipes, and manage their personal cooking experience through an intuitive and responsive interface.
+
+---
 
 ## Technologies
 
@@ -15,6 +19,8 @@ Tasteorama helps users discover recipes, browse categories and ingredients, save
 - CSS Modules
 - ESLint
 - Prettier
+
+---
 
 ## Project Structure
 
@@ -28,6 +34,8 @@ src/
 ├── styles/
 └── assets/
 ```
+
+---
 
 ## Getting Started
 
@@ -49,7 +57,15 @@ npm install
 Create a `.env.local` file in the project root:
 
 ```env
-NEXT_PUBLIC_API_URL=http://localhost:3000
+# ==========================================
+# API CONFIGURATION
+# ==========================================
+
+# Default: Connect to the deployed backend on Render
+NEXT_PUBLIC_API_URL=https://tasteorama-project-5-backend.onrender.com
+
+# Uncomment for local backend development
+# NEXT_PUBLIC_API_URL=http://localhost:3000
 ```
 
 ### Run Development Server
@@ -64,21 +80,35 @@ The application will be available at:
 http://localhost:3001
 ```
 
+---
+
 ## Backend
 
-The frontend communicates with the backend API running at:
+The frontend communicates with the backend API.
+
+### Production Backend
+
+```text
+https://tasteorama-project-5-backend.onrender.com
+```
+
+### Local Backend
 
 ```text
 http://localhost:3000
 ```
 
-Backend repository:
+### Backend Repository
 
+```text
 https://github.com/allivan2020/tasteorama-project-5-backend
+```
+
+---
 
 ## Features
 
-Current and planned functionality:
+### Current and Planned Functionality
 
 - User registration
 - User authentication
@@ -88,63 +118,84 @@ Current and planned functionality:
 - Category filtering
 - Ingredient filtering
 - Favorites management
-- Responsive design
 - Personal profile management
+- Responsive design
+
+---
 
 ## Available Scripts
 
-Run development server:
+### Run Development Server
 
 ```bash
 npm run dev
 ```
 
-Build for production:
+### Build for Production
 
 ```bash
 npm run build
 ```
 
-Start production server:
+### Start Production Server
 
 ```bash
 npm run start
 ```
 
-Run linting:
+### Run Linting
 
 ```bash
 npm run lint
 ```
 
+---
+
 ## API Configuration
 
-The frontend uses the following environment variable:
+The frontend uses the following environment variable to communicate with the backend:
 
 | Variable | Description |
 |-----------|-------------|
-| NEXT_PUBLIC_API_URL | Backend API URL |
+| `NEXT_PUBLIC_API_URL` | Backend API URL (Render or Localhost) |
 
-Example:
+---
 
-```env
-NEXT_PUBLIC_API_URL=http://localhost:3000
-```
+## Team
+
+- Oleksandr Sizov
+- Snizhana Pertushka
+- Ivan Yuschuk
+- Viktoria Babyuk
+- Ihor Yaremkevych
+- Eugene Mukhin
+- Valeriia Kravchuk
+- Viacheslav Butrim
+- Oksana Bochkor
+- Roman Yakubovskyi
+- Maksym Yaropovets
+- Anatolii Honchar
+
+### QA Team
+
+- Marta Vitiaz
+- Olena Ihnatiuk
+- Iryna Ielkina
+
+---
 
 ## Deployment
 
 The project is intended to be deployed on Vercel.
 
-Production environment variables should be configured in the deployment platform settings.
+Production environment variables should be configured in the deployment platform settings. For example:
 
-## Screenshots
+```env
+NEXT_PUBLIC_API_URL=https://tasteorama-project-5-backend.onrender.com
+```
 
-Screenshots will be added after the project is completed.
+---
 
-## Contributors
+## Development Status
 
-Tasteorama Development Team
-
-## License
-
-This project was created for educational purposes.
+This project is currently under active development. Some features may be incomplete or subject to change.
