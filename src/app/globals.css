@@ -1,4 +1,6 @@
-@import 'modern-normalize/modern-normalize.css';
+
+
+/* @import 'modern-normalize/modern-normalize.css';
 
 /* =========================================
    Design Tokens
@@ -146,7 +148,7 @@ button,
 @media screen and (min-width: 1440px) {
   .container {
     width: 1440px;
-    padding: 0 64px;
+    padding: 0 108px;
   }
 }
 
@@ -174,4 +176,4 @@ button,
     width: 32px;
     height: 32px;
   }
-}
+} 

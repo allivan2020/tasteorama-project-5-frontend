@@ -1,0 +1,27 @@
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 40px auto 0;
+  padding: 14px 48px;
+  min-width: 180px;
+  min-height: 52px;
+  background-color: var(--brown);
+  color: var(--white);
+  border: none;
+  border-radius: 30px;
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.button:hover {
+  background-color: var(--darck-brown);
+}
+
+.button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}

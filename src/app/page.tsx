@@ -1,11 +1,5 @@
-import Hero from "@/components/Hero/Hero";
-import styles from "./page.module.css";
+import { redirect } from "next/navigation";
 
-export default function Home() {
-    return (
-        <div className={styles.page}>
-            <Hero />
-            <main className={styles.main}></main>
-        </div>
-    );
+export default function RootPage() {
+    redirect("/recipes");
 }
