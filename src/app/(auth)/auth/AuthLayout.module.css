@@ -1,6 +1,6 @@
 .pageContent {
-    height: 100%;
-    padding-inline: 16px;
+    min-height: calc(100vh - 271px);
+    padding: 20px 16px;
 
     display: flex;
     align-items: center;
@@ -10,5 +10,11 @@
 @media (min-width: 768px) {
     .pageContent {
         padding-inline: 123px;
+    }
+}
+
+@media (min-width: 1440px) {
+    .pageContent {
+        min-height: calc(100vh - 168px);
     }
 }
