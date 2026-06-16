@@ -9,8 +9,10 @@ function getToken(req: Request) {
 
 export async function GET(req: Request) {
   const token = getToken(req);
+  const { searchParams } = new URL(req.url);
+  const query = searchParams.toString();
 
-  const res = await fetch(`${BACKEND_URL}/recipes`, {
+  const res = await fetch(`${BACKEND_URL}/recipes${query ? `?${query}` : ''}`, {
     headers: {
       Authorization: token ? `Bearer ${token}` : '',
     },
