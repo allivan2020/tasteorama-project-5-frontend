@@ -1,16 +1,40 @@
-import {Header} from '../Header/Header';
-import {Footer} from '../Footer/Footer';
+'use client';
 
-export const SharedLayout = ({children}: { children: React.ReactNode }) => {
-    return (
-        <div
-            style={{display: 'flex', flexDirection: 'column', height: '100dvh'}}
-        >
-            <Header/>
+import { Header } from '../Header/Header';
+import { Footer } from '../Footer/Footer';
+import { AuthModal } from '../AuthModal/AuthModal';
+import { useAuthModalStore } from '@/lib/store/authModalStore';
 
-            <main style={{flex: 1, minHeight: 0, overflowY: 'auto',}}>{children}</main>
+export const SharedLayout = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
+  const isOpen = useAuthModalStore((state) => state.isOpen);
+  const closeModal = useAuthModalStore((state) => state.closeModal);
 
-            <Footer/>
-        </div>
-    );
+  return (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100dvh',
+      }}
+    >
+      <Header />
+
+      <main
+        style={{
+          flex: 1,
+          minHeight: 0,
+        }}
+      >
+        {children}
+      </main>
+
+      <Footer />
+
+      {isOpen && <AuthModal onClose={closeModal} />}
+    </div>
+  );
 };
