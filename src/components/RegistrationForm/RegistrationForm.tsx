@@ -1,5 +1,5 @@
 'use client';
-import css from './RegistrationForm.module.css'
+import css from '../AuthForm/AuthForm.module.css'
 import {ErrorMessage, Field, Form, Formik, FormikHelpers} from "formik";
 import {useId, useState} from "react";
 import Link from "next/link";
@@ -12,6 +12,7 @@ import {register} from "@/lib/api/clientApi";
 import {useRouter} from "next/navigation";
 import {toast} from "react-hot-toast";
 import {useAuthStore} from "@/lib/store/authStore";
+import {Oval} from 'react-loader-spinner';
 
 interface RegisterFormValues {
     email: string,
@@ -70,13 +71,14 @@ const RegistrationForm = () => {
     return (
         <div className={css.formCard}>
             <h1 className={css.formTitle}>Register</h1>
-            <p className={css.formSubTitle}>Join our community of culinary enthusiasts, save your favorite recipes, and
+            <p className={css.formSubTitle}>Join our community of culinary enthusiasts, save your favorite
+                recipes, and
                 share your cooking
                 creations</p>
 
             <Formik initialValues={initialValues} validateOnMount onSubmit={handleSubmit}
                     validationSchema={RegistrationFormValidationSchema}>
-                {({isValid, dirty, isSubmitting}) => (
+                {({isValid, dirty}) => (
                     <Form className={css.form}>
                         <div className={css.formGroup}>
                             <label className={css.label} htmlFor={`${fieldId}-email`}>
@@ -155,9 +157,21 @@ const RegistrationForm = () => {
                         </div>
 
 
-                        <button type="submit" className={css.submitButton}
-                                disabled={!dirty || !isValid || isSubmitting}>
-                            Create account
+                        <button
+                            type="submit"
+                            className={css.submitButton}
+                            disabled={!dirty || !isValid || mutation.isPending}
+                        >
+                            {mutation.isPending ? (
+                                <Oval
+                                    height={20}
+                                    width={20}
+                                    strokeWidth={5}
+                                    color="#fff"
+                                />
+                            ) : (
+                                'Create account'
+                            )}
                         </button>
                     </Form>
                 )}

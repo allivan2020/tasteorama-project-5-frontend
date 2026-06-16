@@ -8,7 +8,7 @@ export const SharedLayout = ({children}: { children: React.ReactNode }) => {
         >
             <Header/>
 
-            <main style={{flex: 1, minHeight: 0,}}>{children}</main>
+            <main style={{flex: 1, minHeight: 0, overflowY: 'auto',}}>{children}</main>
 
             <Footer/>
         </div>
