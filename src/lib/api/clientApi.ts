@@ -18,20 +18,20 @@ type RegisterResponse = {
 };
 
 export const login = async (userData: UserAuthDataProps): Promise<User> => {
-  const { data } = await nextServer.post<User>('/auth/login', userData);
+  const { data } = await nextServer.post<User>("/auth/login", userData);
   return data;
 };
 
 export const register = async (
   data: UserRegisterProps,
 ): Promise<RegisterResponse> => {
-  const res = await nextServer.post('/auth/register', data);
+  const res = await nextServer.post("/auth/register", data);
   return res.data;
 };
 
 export const logout = async () => {
   const res = await nextServer.post(
-    '/auth/logout',
+    "/auth/logout",
     {},
     {
       withCredentials: true,
@@ -41,8 +41,8 @@ export const logout = async () => {
 };
 
 export const getProfile = async (): Promise<User> => {
-  const res = await nextServer.get("api/profile", {
-    withCredentials: true,
+  const res = await nextServer.get("/profile", {
+      withCredentials: true,
   });
   return res.data?.user;
 };
@@ -53,6 +53,18 @@ export const getFavoriteRecipes = async () => {
     { withCredentials: true },
   );
   return data.recipes;
+};
+
+export const addFavoriteRecipe = async (recipeId: string) => {
+  const { data } = await nextServer.post(
+    `/recipes/favorites/${recipeId}`,
+    {},
+    {
+      withCredentials: true,
+    },
+  );
+
+  return data;
 };
 
 export const removeFavoriteRecipe = async (recipeId: string) => {
