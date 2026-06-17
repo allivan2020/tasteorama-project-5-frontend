@@ -1,7 +1,6 @@
 import { nextServer } from './api';
 import { User } from '@/app/types/user';
-import {Recipe} from "@/app/types/recipe";
-
+import { Recipe } from '@/app/types/recipe';
 
 export type UserRegisterProps = {
   email: string;
@@ -45,15 +44,13 @@ export const getProfile = async (): Promise<User> => {
   const res = await nextServer.get("api/profile", {
     withCredentials: true,
   });
-
   return res.data?.user;
 };
 
-
 export const getFavoriteRecipes = async () => {
   const { data } = await nextServer.get<{ recipes: Recipe[] }>(
-      '/recipes/favorites',
-      { withCredentials: true },
+    '/recipes/favorites',
+    { withCredentials: true },
   );
   return data.recipes;
 };
