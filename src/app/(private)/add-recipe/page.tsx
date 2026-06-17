@@ -102,7 +102,7 @@ export default function AddRecipePage() {
           body: formData,
           headers: {
             ...(token && { Authorization: `Bearer ${token}` }),
-          }
+          },
         });
 
         if (response.ok) {
@@ -241,7 +241,7 @@ export default function AddRecipePage() {
   };
 
   return (
-    <main className={styles.pageContainer}>
+    <main className="container">
       <h1 className={styles.mainTitle}>Add Recipe</h1>
       <form onSubmit={formik.handleSubmit} className={styles.mainForm}>
         {/* ЛІВА ЧАСТИНА МАКEТА */}
@@ -342,54 +342,58 @@ export default function AddRecipePage() {
           </section>
 
           {/* БЛОК 2: Ingredients */}
-          <section className={styles.formSection}>
+          <section className={`${styles.formSection} ${styles.ingredientsSection}`}>
             <h2 className={styles.sectionTitle}>Ingredients</h2>
-            <div className={styles.inputsRow}>
-              <div className={styles.inputGroup}>
-                <label className={styles.label}>Name</label>
-                <select
-                  style={{ color: currentIngredientId ? "inherit" : "#595d62" }}
-                  className={styles.select}
-                  value={currentIngredientId || ""}
-                  onChange={(e) => setCurrentIngredientId(e.target.value)}
-                >
-                  <option value="" disabled hidden>
-                    Broccoli
-                  </option>
-                  {ingredientsList.map((ingredient) => (
-                    <option key={ingredient._id} value={ingredient._id}>
-                      {ingredient.name}
+            <div className={styles.ingredientscontrolsBlock}>
+              <div className={styles.inputsRow}>
+                <div className={styles.inputGroup}>
+                  <label className={styles.label}>Name</label>
+                  <select
+                    style={{
+                      color: currentIngredientId ? "inherit" : "#595d62",
+                    }}
+                    className={styles.select}
+                    value={currentIngredientId || ""}
+                    onChange={(e) => setCurrentIngredientId(e.target.value)}
+                  >
+                    <option value="" disabled hidden>
+                      Broccoli
                     </option>
-                  ))}
-                </select>
-              </div>
-              <div className={styles.inputGroup}>
-                <label className={styles.label}>Amount</label>
-                <input
-                  type="text"
-                  placeholder="100g"
-                  className={styles.input}
-                  value={amount || ""}
-                  onChange={(e) => setAmount(e.target.value)}
-                />
-              </div>
-            </div>
-            <div className={styles.btnRow}>
-              <button
-                type="button"
-                className={styles.addIngredientBtn}
-                onClick={handleAddIngredient}
-              >
-                Add new Ingredient
-              </button>
-            </div>
-            {recipeIngredients.length > 0 && (
-              <div className={styles.listSection}>
-                <div className={styles.listHeader}>
-                  <span className={styles.headerName}>Name:</span>
-                  <span className={styles.headerAmount}>Amount:</span>
-                  <span className={styles.headerSpacer}></span>
+                    {ingredientsList.map((ingredient) => (
+                      <option key={ingredient._id} value={ingredient._id}>
+                        {ingredient.name}
+                      </option>
+                    ))}
+                  </select>
                 </div>
+                <div className={styles.inputGroup}>
+                  <label className={styles.label}>Amount</label>
+                  <input
+                    type="text"
+                    placeholder="100g"
+                    className={styles.input}
+                    value={amount || ""}
+                    onChange={(e) => setAmount(e.target.value)}
+                  />
+                </div>
+              </div>
+              <div className={styles.btnRow}>
+                <button
+                  type="button"
+                  className={styles.addIngredientBtn}
+                  onClick={handleAddIngredient}
+                >
+                  Add new Ingredient
+                </button>
+              </div>
+            </div>
+            <div className={styles.listSection}>
+              <div className={styles.listHeader}>
+                <span className={styles.headerName}>Name:</span>
+                <span className={styles.headerAmount}>Amount:</span>
+                <span className={styles.headerSpacer}></span>
+              </div>
+              {recipeIngredients.length > 0 && (
                 <ul className={styles.ingredientsList}>
                   {recipeIngredients.map((item) => (
                     <li key={item.ingredient} className={styles.listItem}>
@@ -414,8 +418,8 @@ export default function AddRecipePage() {
                     </li>
                   ))}
                 </ul>
-              </div>
-            )}
+              )}
+            </div>
           </section>
 
           {/* БЛОК 3: Instructions */}

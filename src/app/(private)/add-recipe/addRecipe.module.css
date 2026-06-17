@@ -1,89 +1,112 @@
-/* Базовий контейнер сторінки */
-.pageContainer {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 40px 20px;
-  font-family: sans-serif; /* або ваш глобальний шрифт */
-}
+/* ==========================================================================
+   1. БАЗОВА МОБІЛЬНА ВЕРСІЯ (Екрани до 1439px)
+   ========================================================================== */
 
 .mainTitle {
-  font-size: 48px;
+  font-size: 40px;
   font-weight: 600;
   color: #000;
-  margin-bottom: 40px;
+  margin-top: 48px;
+  margin-bottom: 16px;
 }
 
-/* Створення сітки макета: на мобілці 1 колонка, на десктопі — 2 */
 .mainForm {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 40px;
-  align-items: start;
-}
-
-@media (min-width: 992px) {
-  .mainForm {
-    /* Ліва колонка займає більше простору (наприклад, 650px), права — решту */
-    grid-template-columns: 1.8fr 1fr;
-  }
-}
-
-/* Колонки та секції */
-.leftColumn {
   display: flex;
   flex-direction: column;
-  gap: 72px;
+  gap: 24px;
+  padding-bottom: 48px;
+}
+
+.rightColumn {
+  order: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px !important;
+}
+
+.leftColumn {
+  order: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.dropzone {
+  position: relative;
+  width: 100%;
+  max-width: 361px;
+  height: 383px;
+  background-color: #9f9f9f;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
 }
 
 .formSection {
   display: flex;
   flex-direction: column;
+  gap: 16px;
+}
+
+.ingredientsSection {
   gap: 32px;
 }
 
 .instructionsSection {
-  gap: 16px; /* Перебиваємо базові 32px на потрібні 16px */
+  gap: 16px;
 }
 
 .sectionTitle {
-  font-size: 32px;
+  font-size: 24px;
   font-weight: 600;
   color: #000;
 }
 
-/* Елементи форм (Інпути, Селекти, Текстареа) */
+/* Елементи форм */
 .inputGroup {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
   width: 100%;
 }
 
-.inputsRow {
+.rowGrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
   width: 100%;
 }
 
+.inputsRow {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}
+
+.btnRow,
 .actionRow {
   display: flex;
-  justify-content: flex-end;
   width: 100%;
-  margin-top: 8px; /* невеликий відступ від інпутів */
 }
 
 .label {
-  font-size: 14px;
-  color: #555;
+  font-weight: 400;
+  font-size: 18px;
+  color: #000;
 }
 
 .input,
 .select,
 .textarea {
   width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
   padding: 12px 16px;
-  border: 1px solid #ccc;
+  border: 1px solid #d9d9d9;
   border-radius: 8px;
   font-size: 16px;
   outline: none;
@@ -91,6 +114,7 @@
   box-sizing: border-box;
   resize: none;
   overflow-y: hidden;
+  font-family: var(--font-family);
 }
 
 .input:focus,
@@ -118,50 +142,43 @@
   color: #000000;
 }
 
-/* Сітка для Калорій/Категорій та Інгредієнтів (2 інпути в рядок) */
-.rowGrid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-}
-
-/* Кнопка "Add new Ingredient" зміщена вправо */
-.btnRow {
-  display: flex;
-  justify-content: flex-end;
-}
-
 .addIngredientBtn {
   background-color: #9b6c43;
   color: #fff;
-  padding: 4px 8px;
+  padding: 12px 16px;
   border: none;
   border-radius: 8px;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
-  font-size: 14px;
-  width: 258px;
-  height: 23px;
+  font-size: 16px;
+  width: 100%;
+  height: 44px;
 }
 
-/* Контейнер списку інгредієнтів */
+/* Список інгредієнтів */
 .listSection {
-  width: 332px;
+  width: 100%;
+  max-width: 373px;
   margin-top: 16px;
 }
 
-/* Налаштування сітки для ідеального вертикального вирівнювання колонок */
+.listSection:not(:has(li)) {
+  display: none;
+}
+
 .listHeader,
 .listItem {
   display: grid;
-  /* 150px — назва, 158px — кількість із відступом, 24px — кошик */
-  grid-template-columns: 150px 158px 24px;
+  grid-template-columns: 1fr 120px 24px;
   align-items: center;
+  width: 100%;
 }
 
 .listHeader {
-  padding-bottom: 8px;
-  border-bottom: 1px solid #c5c5c5; /* Сіра лінія під шапкою з макета */
+  gap: 4px;
+  border-bottom: 1px solid #c5c5c5;
+  padding-block: 16px;
+  padding-inline: 0px;
 }
 
 .headerName,
@@ -171,28 +188,30 @@
   color: #000000;
 }
 
-.headerSpacer {
-  width: 24px;
-}
-
 .ingredientsList {
-  list-style: none;
-  padding: 0;
-  margin: 0;
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
 
+.ingredientscontrolsBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
 .listItem {
-  height: 28px; /* Висота кожного рядка */
-  border-bottom: 1px solid #e0e0e0; /* Тонка лінія розділювача */
+  gap: 4px;
+  border-bottom: 1px solid #c5c5c5;
+  padding-block: 16px;
+  padding-inline: 0px;
 }
 
 .itemName,
 .itemAmount {
   font-size: 16px;
-  color: #000000;
+  color: #000;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -208,15 +227,10 @@
   justify-content: center;
   width: 24px;
   height: 28px;
-  transition: opacity 0.2s ease;
 }
 
 .removeBtn:hover {
   opacity: 0.6;
-}
-
-.removeIngredientIcon {
-  display: block;
 }
 
 .publishBtn {
@@ -233,24 +247,8 @@
   height: 44px;
 }
 
-/* Блок завантаження фото (права колонка) */
-.rightColumn {
-  position: sticky;
-  top: 20px;
-  gap: 4px;
-}
-
-.dropzone {
-  width: 100%;  
-  max-width: 391px;
-  height: 374px;
-  background-color: #9f9f9f;
-  border-radius: 16px;
-  overflow: hidden;
-  position: relative;
-}
-
-.dropzoneLabel {
+.dropzoneLabel,
+.previewLabel {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -270,45 +268,175 @@
   position: absolute;
   top: 14px;
   right: 14px;
-  z-index: 10;  
-  
+  z-index: 10;
   background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  
-  transition: transform 0.2s ease; 
-}
-
-.deletePhotoBtn:hover {
-  transform: scale(1.15); 
-}
-
-.deletePhotoIcon {
-  display: block;
-}
-
-.previewLabel {
-  display: block;
-  width: 100%;
-  height: 100%;
   cursor: pointer;
 }
 
 .previewImage {
   object-fit: cover;
-  border-radius: 16px;
-}
-
-.previewImage {
-  object-fit: cover; 
-  border-radius: 16px;
-}
-
-.cameraIcon {
-  font-size: 48px;
+  border-radius: 20px;
 }
 
 .hiddenInput {
   display: none;
+}
+
+/* ==========================================================================
+   2. ПЛАНШЕТНА ВЕРСІЯ (Екрани від 768px)
+   ========================================================================== */
+
+@media (min-width: 768px) {
+  .formSection {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 32px;
+    width: 100%;
+  }
+
+  .mainTitle {
+    font-size: 48px;
+  }
+
+  .formSection .inputGroup {
+    margin-bottom: 0;
+    width: 100%;
+  }
+
+  .sectionTitle {
+    font-size: 32px;
+    line-height: 39px;
+  }
+
+  .rightColumn .sectionTitle {
+    line-height: 70px;
+  }
+
+  .instructionsSection {
+    gap: 16px;
+  }
+
+  .rowGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    width: 100%;
+  }
+
+  .rowGrid .inputGroup {
+    margin-bottom: 0;
+    width: 100%;
+  }
+
+  .caloriesCategoryRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    width: 100%;
+  }
+
+  .inputsRow {
+    display: grid;
+    grid-template-columns: 431fr 249fr;
+    gap: 24px;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .btnRow {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+  }
+
+  .addIngredientBtn {
+    padding: 8px;
+    height: 36px;
+    width: 100%;
+    max-width: 249px;
+  }
+
+  .listSection {
+    width: 100%;
+    max-width: 431px;
+    margin-top: 0;
+  }
+
+  .listSection:not(:has(li)) {
+    display: block;
+  }
+
+  .listItem {
+    padding-block: 8px;
+  }
+
+  .dropzone {
+    max-width: 704px;
+  }
+}
+
+/* ==========================================================================
+   3. ДЕСКТОПНА ВЕРСІЯ (Екрани від 1440px і більше)
+   ========================================================================== */
+
+@media screen and (min-width: 1440px) {
+  .mainTitle {
+    margin-bottom: 40px;
+  }
+
+  .mainForm {
+    display: grid;
+    /* Ділимо екран на дві колонки: ліва ширша під інпути, права вужча під фото */
+    grid-template-columns: 809px 391px;
+    gap: 24px;
+    align-items: start;
+  }
+
+  .leftColumn {
+    order: unset;
+    gap: 72px;
+  }
+
+  .rowGrid {
+    display: grid;
+    grid-template-columns: 392px 392px;
+    gap: 24px;
+  }
+
+  .addIngredientBtn {
+    padding: 4px 8px;
+    height: 23px;
+    width: 100%;
+    max-width: 247px;
+    font-size: 12px;
+  }
+
+  .rightColumn {
+    order: unset;
+    top: 40px;
+  }
+
+  .dropzone {
+    width: 391px;
+    height: 374px;
+    max-width: none;
+    margin: 0;
+  }
+
+  .btnRow,
+  .actionRow {
+    justify-content: flex-end;
+  }
+
+  .listSection {
+    width: 100%;
+    max-width: 332px;
+  }
+
+  .listItem,
+  .listHeader {
+    padding-block: 0px;
+  }
 }

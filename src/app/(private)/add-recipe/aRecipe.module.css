@@ -1,0 +1,292 @@
+
+@media (min-width: 992px) {
+  .mainForm {
+    /* Ліва колонка займає більше простору (наприклад, 650px), права — решту */
+    grid-template-columns: 1.8fr 1fr;
+  }
+}
+
+/* Колонки та секції */
+.leftColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 72px;
+}
+
+.formSection {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.instructionsSection {
+  gap: 16px; /* Перебиваємо базові 32px на потрібні 16px */
+}
+
+.sectionTitle {
+  font-size: 32px;
+  font-weight: 600;
+  color: #000;
+}
+
+/* Елементи форм (Інпути, Селекти, Текстареа) */
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.inputsRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  width: 100%;
+}
+
+.actionRow {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  margin-top: 8px; /* невеликий відступ від інпутів */
+}
+
+.label {
+  font-size: 14px;
+  color: #555;
+}
+
+.input,
+.select,
+.textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #d9d9d9;
+  border-radius: 8px;
+  font-size: 16px;
+  outline: none;
+  background-color: #fff;
+  box-sizing: border-box;
+  resize: none;
+  overflow-y: hidden;
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+  border-color: #8b6e4e;
+}
+
+.inputError {
+  border-color: #ff4d4f !important;
+}
+
+.errorText {
+  color: #ff4d4f;
+  font-size: 14px;
+  margin-top: 5px;
+  display: block;
+}
+
+.select:invalid {
+  color: #595d62;
+}
+
+.select option {
+  color: #000000;
+}
+
+/* Сітка для Калорій/Категорій та Інгредієнтів (2 інпути в рядок) */
+.rowGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+/* Кнопка "Add new Ingredient" зміщена вправо */
+.btnRow {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.addIngredientBtn {
+  background-color: #9b6c43;
+  color: #fff;
+  padding: 4px 8px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  font-size: 14px;
+  width: 258px;
+  height: 23px;
+}
+
+/* Контейнер списку інгредієнтів */
+.listSection {
+  width: 332px;
+  margin-top: 16px;
+}
+
+/* Налаштування сітки для ідеального вертикального вирівнювання колонок */
+.listHeader,
+.listItem {
+  display: grid;
+  /* 150px — назва, 158px — кількість із відступом, 24px — кошик */
+  grid-template-columns: 150px 158px 24px;
+  align-items: center;
+}
+
+.listHeader {
+  padding-bottom: 8px;
+  border-bottom: 1px solid #c5c5c5; /* Сіра лінія під шапкою з макета */
+}
+
+.headerName,
+.headerAmount {
+  font-weight: 600;
+  font-size: 16px;
+  color: #000000;
+}
+
+.headerSpacer {
+  width: 24px;
+}
+
+.ingredientsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.listItem {
+  height: 28px; /* Висота кожного рядка */
+  border-bottom: 1px solid #e0e0e0; /* Тонка лінія розділювача */
+}
+
+.itemName,
+.itemAmount {
+  font-size: 16px;
+  color: #000000;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.removeBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 28px;
+  transition: opacity 0.2s ease;
+}
+
+.removeBtn:hover {
+  opacity: 0.6;
+}
+
+.removeIngredientIcon {
+  display: block;
+}
+
+.publishBtn {
+  background-color: #9b6c43;
+  color: #fff;
+  padding-block: 12px;
+  padding-inline: 16px;
+  font-size: 18px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  height: 44px;
+}
+
+/* Блок завантаження фото (права колонка) */
+.rightColumn {
+  position: sticky;
+  top: 20px;
+  gap: 4px;
+}
+
+.dropzone {
+  width: 100%;  
+  max-width: 391px;
+  height: 374px;
+  background-color: #9f9f9f;
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+}
+
+.dropzoneLabel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.previewContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.deletePhotoBtn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 10;  
+  
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  
+  transition: transform 0.2s ease; 
+}
+
+.deletePhotoBtn:hover {
+  transform: scale(1.15); 
+}
+
+.deletePhotoIcon {
+  display: block;
+}
+
+.previewLabel {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.previewImage {
+  object-fit: cover;
+  border-radius: 16px;
+}
+
+.previewImage {
+  object-fit: cover; 
+  border-radius: 16px;
+}
+
+.cameraIcon {
+  font-size: 48px;
+}
+
+.hiddenInput {
+  display: none;
+}
