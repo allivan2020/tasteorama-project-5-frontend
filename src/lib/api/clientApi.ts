@@ -1,5 +1,6 @@
 import { nextServer } from './api';
 import { User } from '@/app/types/user';
+import {Recipe} from "@/app/types/recipe";
 
 
 export type UserRegisterProps = {
@@ -16,7 +17,6 @@ export type UserAuthDataProps = {
 type RegisterResponse = {
   newUser: User;
 };
-
 
 export const login = async (userData: UserAuthDataProps): Promise<User> => {
   const { data } = await nextServer.post<User>('/auth/login', userData);
@@ -46,5 +46,20 @@ export const getProfile = async (): Promise<User> => {
     withCredentials: true,
   });
 
-  return res.data;
+  return res.data?.user;
+};
+
+
+export const getFavoriteRecipes = async () => {
+  const { data } = await nextServer.get<{ recipes: Recipe[] }>(
+      '/recipes/favorites',
+      { withCredentials: true },
+  );
+  return data.recipes;
+};
+
+export const removeFavoriteRecipe = async (recipeId: string) => {
+  await nextServer.delete(`/recipes/favorites/${recipeId}`, {
+    withCredentials: true,
+  });
 };
