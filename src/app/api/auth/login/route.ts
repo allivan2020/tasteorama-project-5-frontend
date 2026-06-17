@@ -1,3 +1,4 @@
+import axios from "axios";
 import { NextResponse } from "next/server";
 
 const BACKEND_URL = process.env.BACKEND_URL!;
@@ -5,22 +6,19 @@ const BACKEND_URL = process.env.BACKEND_URL!;
 export async function POST(req: Request) {
   const body = await req.json();
 
- const res = await fetch(`${BACKEND_URL}/auth/login`, {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify(body),
-});
+  const res = await axios.post(`${BACKEND_URL}/auth/login`, body, {
+    withCredentials: true,
+  });
+  
+  const response = NextResponse.json(res.data);
 
-const response = NextResponse.json(await res.json());
+  const setCookie = res.headers["set-cookie"];
 
-// ❗ ПРОПУСТИТИ COOKIE З BACKEND
-const setCookie = res.headers.get("set-cookie");
+  if (setCookie) {
+    for (const cookie of setCookie) {
+      response.headers.append("set-cookie", cookie);
+    }
+  }
 
-if (setCookie) {
-  response.headers.set("set-cookie", setCookie);
-}
-
-return response;
+  return response;
 }

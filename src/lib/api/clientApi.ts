@@ -42,7 +42,7 @@ export const logout = async () => {
 
 export const getProfile = async (): Promise<User> => {
   const res = await nextServer.get("/profile", {
-    withCredentials: true,
+      withCredentials: true,
   });
 
   return res.data?.user;
