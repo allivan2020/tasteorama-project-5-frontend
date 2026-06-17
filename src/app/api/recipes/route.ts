@@ -7,7 +7,7 @@ function getToken(req: Request) {
     return cookie.match(/accessToken=([^;]+)/)?.[1];
 }
 
-/* ========== Mock — працює поки бек не підключено ========== */
+
 
 const MOCK_RECIPES = [
     {
@@ -58,7 +58,7 @@ const MOCK_RECIPES = [
         ingredients: ['eggs', 'mushrooms', 'herbs'],
         cookingTime: 6,
         calories: 150,
-        image: '/recipe-5.jpg'
+        image: '/recipe-8.jpg'
     },
     {
         _id: '6',
@@ -68,7 +68,7 @@ const MOCK_RECIPES = [
         ingredients: ['shrimp', 'lemongrass', 'chili', 'lime'],
         cookingTime: 14,
         calories: 500,
-        image: '/recipe-6.jpg'
+        image: '/recipe-7.jpg'
     },
     {
         _id: '7',
@@ -78,7 +78,7 @@ const MOCK_RECIPES = [
         ingredients: ['salmon', 'cream cheese', 'avocado', 'rice'],
         cookingTime: 9,
         calories: 300,
-        image: '/recipe-7.jpg'
+        image: '/recipe-6.jpg'
     },
     {
         _id: '8',
@@ -88,7 +88,7 @@ const MOCK_RECIPES = [
         ingredients: ['lettuce', 'croutons', 'parmesan', 'caesar dressing'],
         cookingTime: 5,
         calories: 180,
-        image: '/recipe-8.jpg'
+        image: '/recipe-5.jpg'
     },
     {
         _id: '9',
@@ -98,7 +98,7 @@ const MOCK_RECIPES = [
         ingredients: ['eggs', 'goat cheese', 'spinach'],
         cookingTime: 7,
         calories: 200,
-        image: '/recipe-1.jpg'
+        image: '/recipe-9.jpg'
     },
     {
         _id: '10',
@@ -108,7 +108,7 @@ const MOCK_RECIPES = [
         ingredients: ['eggs', 'smoked salmon', 'dill'],
         cookingTime: 5,
         calories: 180,
-        image: '/recipe-2.jpg'
+        image: '/recipe-10.jpg'
     },
     {
         _id: '11',
@@ -118,7 +118,7 @@ const MOCK_RECIPES = [
         ingredients: ['eggs', 'zucchini', 'eggplant', 'pepper'],
         cookingTime: 11,
         calories: 350,
-        image: '/recipe-3.jpg'
+        image: '/recipe-11.jpg'
     },
     {
         _id: '12',
@@ -128,48 +128,8 @@ const MOCK_RECIPES = [
         ingredients: ['eggs', 'peppers', 'tomatoes', 'zucchini'],
         cookingTime: 10,
         calories: 400,
-        image: '/recipe-4.jpg'
-    },
-    {
-        _id: '13',
-        title: 'Grilled Salmon',
-        description: 'Perfectly grilled salmon fillet with lemon and herbs.',
-        category: 'Main',
-        ingredients: ['salmon', 'lemon', 'dill', 'olive oil'],
-        cookingTime: 20,
-        calories: 350,
-        image: '/recipe-5.jpg'
-    },
-    {
-        _id: '14',
-        title: 'Mushroom Risotto',
-        description: 'Creamy Italian risotto with porcini mushrooms.',
-        category: 'Main',
-        ingredients: ['arborio rice', 'mushrooms', 'parmesan', 'broth'],
-        cookingTime: 25,
-        calories: 280,
-        image: '/recipe-6.jpg'
-    },
-    {
-        _id: '15',
-        title: 'Spicy Tuna Roll',
-        description: 'Fresh tuna with spicy mayo and crispy tempura flakes.',
-        category: 'Sushi',
-        ingredients: ['tuna', 'spicy mayo', 'tempura flakes', 'rice'],
-        cookingTime: 10,
-        calories: 220,
-        image: '/recipe-7.jpg'
-    },
-    {
-        _id: '16',
-        title: 'Greek Salad',
-        description: 'Fresh vegetables with feta cheese and olives.',
-        category: 'Salad',
-        ingredients: ['tomato', 'cucumber', 'feta', 'olives'],
-        cookingTime: 5,
-        calories: 160,
-        image: '/recipe-8.jpg'
-    },
+        image: '/recipe-12.jpg'
+    }
 ];
 
 function getMockResponse(searchParams: URLSearchParams) {
