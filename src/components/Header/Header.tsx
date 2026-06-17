@@ -18,19 +18,19 @@ export const Header = () => {
 
   const isAuth = !!user;
 
-  // LOAD USER FROM COOKIE SESSION
-  useEffect(() => {
-    const loadUser = async () => {
-      try {
-        const data = await getProfile();
-        setUser(data);
-      } catch {
-        clearAuth();
-      }
-    };
+useEffect(() => {
+  async function loadUser() {
+    try {
+      const user = await getProfile();
+      setUser(user);
+    } catch {
+      clearAuth();
+    }
+  }
 
-    loadUser();
-  }, [setUser, clearAuth]);
+  loadUser();
+}, [setUser, clearAuth]);
+
 
   //  LOGOUT
   const logout = async () => {
