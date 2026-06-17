@@ -1,4 +1,3 @@
-
 import { nextServer } from './api';
 import { User } from '@/app/types/user';
 
@@ -43,9 +42,9 @@ export const logout = async () => {
 };
 
 export const getProfile = async (): Promise<User> => {
-  const res = await nextServer.get('/profile', {
+  const res = await nextServer.get("api/profile", {
     withCredentials: true,
   });
 
-  return res.data?.user;
+  return res.data;
 };
