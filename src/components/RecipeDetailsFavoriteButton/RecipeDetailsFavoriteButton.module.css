@@ -1,0 +1,31 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 48px;
+  border-radius: 8px;
+  background-color: var(--light-brown);
+  color: var(--white);
+  font-family: var(--font-family);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.button:hover,
+.button:focus-visible {
+  background-color: var(--brown);
+}
+
+.button:disabled {
+  cursor: default;
+  opacity: 0.7;
+}
+
+.icon {
+  width: 18px;
+  height: 18px;
+  color: currentColor;
+}

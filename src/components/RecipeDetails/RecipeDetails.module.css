@@ -1,0 +1,173 @@
+.section {
+  padding: 40px 0 64px;
+}
+
+.title {
+  margin-bottom: 24px;
+  color: var(--black);
+  font-family: var(--font-family);
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.imageFrame {
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  width: 100%;
+  min-height: 260px;
+  margin-bottom: 32px;
+  border-radius: 8px;
+  background-color: #282b2f;
+}
+
+.image {
+  width: 100%;
+  max-width: 586px;
+  height: auto;
+  object-fit: cover;
+}
+
+.imagePlaceholder {
+  width: 100%;
+  max-width: 586px;
+  min-height: 260px;
+  background:
+    linear-gradient(135deg, rgba(227, 202, 165, 0.25), transparent),
+    var(--darck-gray);
+}
+
+.content {
+  display: grid;
+  gap: 32px;
+}
+
+.mainColumn {
+  display: grid;
+  gap: 32px;
+}
+
+.textBlock {
+  display: grid;
+  gap: 12px;
+}
+
+.textBlock h2 {
+  color: var(--black);
+  font-family: var(--font-family);
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.textBlock p,
+.ingredients {
+  color: var(--black);
+  font-family: var(--font-family);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.55;
+}
+
+.ingredients {
+  display: grid;
+  gap: 8px;
+}
+
+.ingredients li {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.ingredients li::before {
+  content: "-";
+}
+
+.ingredients li span + span::before {
+  content: "— ";
+}
+
+.steps {
+  display: grid;
+  gap: 16px;
+}
+
+.aside {
+  display: grid;
+  align-content: start;
+  gap: 24px;
+}
+
+.infoCard {
+  padding: 24px;
+  border-radius: 12px;
+  background-color: var(--light-beige);
+}
+
+.infoCard h2 {
+  margin-bottom: 16px;
+  color: var(--black);
+  font-family: var(--font-family);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.infoList {
+  display: grid;
+  gap: 12px;
+}
+
+.infoList div {
+  display: grid;
+  gap: 4px;
+}
+
+.infoList dt,
+.infoList dd {
+  color: var(--black);
+  font-family: var(--font-family);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.infoList dt {
+  font-weight: 700;
+}
+
+@media screen and (min-width: 768px) {
+  .section {
+    padding: 48px 0 72px;
+  }
+
+  .title {
+    font-size: 36px;
+  }
+
+  .imageFrame {
+    min-height: 390px;
+  }
+
+  .image,
+  .imagePlaceholder {
+    min-height: 390px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .content {
+    grid-template-columns: minmax(0, 1fr) 392px;
+    gap: 72px;
+  }
+
+  .imageFrame {
+    min-height: 493px;
+  }
+
+  .image,
+  .imagePlaceholder {
+    min-height: 493px;
+  }
+}
