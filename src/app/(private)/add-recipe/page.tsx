@@ -7,8 +7,6 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Toaster, toast } from "react-hot-toast";
 
-const API_BASE_URL = "https://tasteorama-project-5-backend.onrender.com";
-
 interface IngredientFromDB {
   _id: string;
   name: string;
@@ -97,7 +95,7 @@ export default function AddRecipePage() {
 
         const token = localStorage.getItem("accessToken");
 
-        const response = await fetch(`${API_BASE_URL}/recipes`, {
+        const response = await fetch(`${process.env.BACKEND_URL}/recipes`, {
           method: "POST",
           body: formData,
           headers: {
@@ -135,7 +133,7 @@ export default function AddRecipePage() {
     const fetchData = async () => {
       try {
         // 1. Завантажуємо категорії
-        const catRes = await fetch(`${API_BASE_URL}/categories`);
+        const catRes = await fetch(`${process.env.BACKEND_URL}/categories`);
         if (catRes.ok) {
           const catData = await catRes.json();
           setCategoriesList(catData);
@@ -144,7 +142,7 @@ export default function AddRecipePage() {
         }
 
         // 2. Завантажуємо інгредієнти
-        const ingRes = await fetch(`${API_BASE_URL}/ingredients`);
+        const ingRes = await fetch(`${process.env.BACKEND_URL}/ingredients`);
         if (ingRes.ok) {
           const ingData = await ingRes.json();
           setIngredientsList(ingData);

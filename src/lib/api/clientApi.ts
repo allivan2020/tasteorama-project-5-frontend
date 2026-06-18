@@ -1,7 +1,6 @@
-
 import { nextServer } from './api';
 import { User } from '@/app/types/user';
-
+import { Recipe } from '@/app/types/recipe';
 
 export type UserRegisterProps = {
   email: string;
@@ -18,22 +17,21 @@ type RegisterResponse = {
   newUser: User;
 };
 
-
 export const login = async (userData: UserAuthDataProps): Promise<User> => {
-  const { data } = await nextServer.post<User>('/auth/login', userData);
+  const { data } = await nextServer.post<User>("/auth/login", userData);
   return data;
 };
 
 export const register = async (
   data: UserRegisterProps,
 ): Promise<RegisterResponse> => {
-  const res = await nextServer.post('/auth/register', data);
+  const res = await nextServer.post("/auth/register", data);
   return res.data;
 };
 
 export const logout = async () => {
   const res = await nextServer.post(
-    '/auth/logout',
+    "/auth/logout",
     {},
     {
       withCredentials: true,
@@ -43,9 +41,34 @@ export const logout = async () => {
 };
 
 export const getProfile = async (): Promise<User> => {
-  const res = await nextServer.get('/profile', {
+  const res = await nextServer.get("/profile", {
+      withCredentials: true,
+  });
+  return res.data?.user;
+};
+
+export const getFavoriteRecipes = async () => {
+  const { data } = await nextServer.get<{ recipes: Recipe[] }>(
+    '/recipes/favorites',
+    { withCredentials: true },
+  );
+  return data.recipes;
+};
+
+export const addFavoriteRecipe = async (recipeId: string) => {
+  const { data } = await nextServer.post(
+    `/recipes/favorites/${recipeId}`,
+    {},
+    {
+      withCredentials: true,
+    },
+  );
+
+  return data;
+};
+
+export const removeFavoriteRecipe = async (recipeId: string) => {
+  await nextServer.delete(`/recipes/favorites/${recipeId}`, {
     withCredentials: true,
   });
-
-  return res.data?.user;
 };
