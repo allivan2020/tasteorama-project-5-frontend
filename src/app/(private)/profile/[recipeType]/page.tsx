@@ -1,18 +1,21 @@
-import {notFound} from "next/navigation";
+import { notFound } from 'next/navigation';
 
 type Props = {
-    params: Promise<{ recipeType: string }>;
+  params: Promise<{ recipeType: string }>;
 };
-export default async function RecipeTypePage({params}: Props) {
-    const {recipeType} = await params;
 
-    if (recipeType === 'favorites') {
-        return <p>Favorites tab</p>;
-    }
+const PROFILE_RECIPE_TYPES = ['own', 'favorites'] as const;
 
-    if (recipeType === 'own') {
-        return <p>My recipes</p>;
-    }
+function isProfileRecipeType(recipeType: string) {
+  return PROFILE_RECIPE_TYPES.some((type) => type === recipeType);
+}
 
+export default async function RecipeTypePage({ params }: Props) {
+  const { recipeType } = await params;
+
+  if (!isProfileRecipeType(recipeType)) {
     notFound();
+  }
+
+  return null;
 }
