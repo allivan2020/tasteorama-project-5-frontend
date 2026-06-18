@@ -12,24 +12,27 @@ export const Header = () => {
   const pathname = usePathname();
   const router = useRouter();
 
-  const { user, setUser, clearAuth } = useAuthStore();
+  const { user, setUser, clearAuth, setHydrated, isHydrated } = useAuthStore();
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const isAuth = !!user;
 
-useEffect(() => {
+
+ useEffect(() => {
   async function loadUser() {
     try {
-      const user = await getProfile();
-      setUser(user);
+      const profile = await getProfile();
+      setUser(profile);
     } catch {
       clearAuth();
+    } finally {
+      setHydrated(); 
     }
   }
 
   loadUser();
-}, [setUser, clearAuth]);
+}, [setUser, clearAuth, setHydrated]);
 
 
   //  LOGOUT
@@ -42,6 +45,8 @@ useEffect(() => {
       router.refresh();
     }
   };
+  
+if (!isHydrated) return null;
 
   return (
     <header className={styles.header}>

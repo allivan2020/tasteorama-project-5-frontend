@@ -9,7 +9,7 @@ export async function POST(req: Request) {
   const res = await axios.post(`${BACKEND_URL}/auth/login`, body, {
     withCredentials: true,
   });
-  
+
   const response = NextResponse.json(res.data);
 
   const setCookie = res.headers["set-cookie"];

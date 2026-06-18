@@ -37,7 +37,7 @@ export default function LoginForm() {
         onSuccess: (res) => {
             if (res) {
                 toast.success('Login successful!');
-                setUser(res);
+                setUser(res.user);
                 router.push('/');
             }
         },
