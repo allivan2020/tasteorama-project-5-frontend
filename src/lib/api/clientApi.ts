@@ -41,10 +41,12 @@ export const logout = async () => {
 };
 
 export const getProfile = async (): Promise<User> => {
-  const res = await nextServer.get("/profile", {
-      withCredentials: true,
-  });
-  return res.data?.user;
+  const { data } = await nextServer.get<User>(
+    '/users/current',
+    { withCredentials: true },
+  );
+
+  return data;
 };
 
 export const getFavoriteRecipes = async () => {
