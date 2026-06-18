@@ -1,157 +1,239 @@
-.card {
-  width: 288px;
-  height: 431px;
-  padding: 12px;
+.recipeCard,
+.recipeCard * {
+  box-sizing: border-box;
+}
+
+.recipeCard {
+  width: 100%;
   border-radius: 16px;
-  border: 1px solid var(--light-beige-3);
-  background-color: var(--light-beige);
-  display: flex;
-  flex-direction: column;
-  list-style: none;
+  background-color: #faf3e0;
+  padding: 8px;
 }
 
-.thumbnail {
-  position: relative;
-  width: 264px;
-  height: 178px;
+.recipeImage {
+  width: 100%;
+  height: 210px;
   border-radius: 8px;
-  overflow: hidden;
-  flex-shrink: 0;
-}
-
-.photo {
+  margin-bottom: 16px;
   object-fit: cover;
+  object-position: center;
 }
 
-.content {
+.cardHeader {
+  width: 100%;
   display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  padding-top: 12px;
-}
-
-.titleRow {
-  display: flex;
-  align-items: flex-start;
   justify-content: space-between;
-  gap: 8px;
-  margin-bottom: 8px;
+  margin-bottom: 16px;
 }
 
-.title {
-  font-family: var(--font-family);
+.recipeTitle {
+  width: 203px;
   font-weight: 700;
-  font-size: 24px;
+  font-size: 20px;
   line-height: 1.2;
-  color: var(--black);
 }
 
-.cookingTime {
+.timeBadge {
+  max-width: 75px;
+  height: 28px;
+  border-radius: 8px;
+  padding: 2px 8px;
   display: flex;
   align-items: center;
   gap: 4px;
-  flex-shrink: 0;
-  font-family: var(--font-family);
-  font-weight: 400;
-  font-size: 14px;
-  color: var(--gray);
-  padding-top: 4px;
+  justify-content: center;
+  background-color: #ffffff;
 }
 
-.clockIcon {
-  width: 18px;
-  height: 18px;
-  color: var(--gray);
+.timeText {
+  font-weight: 600;
+  font-size: 12px;
 }
 
-.description {
-  font-family: var(--font-family);
+.timeIcon {
+  width: 24px;
+  height: 24px;
+}
+
+.recipeInfo {
+  height: 83px;
   font-weight: 400;
   font-size: 16px;
-  line-height: 155%;
-  color: var(--black);
-  margin-bottom: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.recipeInfo p {
   display: -webkit-box;
   -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
   overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 155%;
 }
 
-.calories {
-  font-family: var(--font-family);
-  font-weight: 400;
-  font-size: 14px;
-  color: var(--gray-3);
-  margin-bottom: 12px;
-}
-
-.footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: auto;
-}
-
-.detailsLink {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-grow: 1;
-  height: 45px;
-  border: 1px solid var(--light-gray-3);
-  border-radius: 24px;
-  font-family: var(--font-family);
-  font-weight: 600;
-  font-size: 16px;
-  color: var(--black);
-  text-decoration: none;
-  transition: background-color var(--transition-fast);
-  margin-right: 8px;
-}
-
-.detailsLink:hover {
-  background-color: var(--light-beige);
-}
-
-.saveButton {
-  width: 40px;
+.actions {
   height: 40px;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  background: none;
-  border: 1px solid var(--light-gray-3);
-  border-radius: 50%;
-  cursor: pointer;
-  transition: background-color var(--transition-fast);
+  flex-direction: row;
+  gap: 2.7%;
 }
 
-.saveButton:hover {
-  background-color: var(--light-beige);
+.detailsButton {
+  display: block;
+  width: 83%;
+  height: 40px;
+  background-color: inherit;
+  border: 1px solid #000000;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #000000;
+  cursor: pointer;
+  text-align: center;
+  align-content: center;
+  transition: background-color 0.3s;
+}
+
+.favoriteButton {
+  color: #000000;
+  transition: background-color 0.3s;
+  cursor: pointer;
+}
+
+.detailsButton:hover,
+.favoriteButton:hover {
+  background-color: #9b6c43;
+  border-color: #9b6c43;
+  color: #ffffff;
+}
+
+.detailsButton:active,
+.favoriteButton:active {
+  background-color: #9b6c43;
+  border-color: #ffffff;
+  color: #ffffff;
+  box-shadow:
+    0px 0px 0px 6px #4e46b41f,
+    0px 0px 0px 2px #ffffff;
+}
+
+.favoriteButton {
+  width: 14%;
+  background-color: inherit;
+  border: 1px solid #000000;
+  border-radius: 8px;
 }
 
 .bookmarkIcon {
-  width: 20px;
-  height: 20px;
-  color: var(--icon-gray);
+  width: 24px;
+  height: 24px;
+  display: block;
+  color: currentColor;
 }
 
-/* Tablet */
-@media screen and (max-width: 768px) {
-  .card {
-    width: 100%;
-    height: auto;
-    min-height: 400px;
+.isActive {
+  background-color: #9b6c43;
+  border: none !important;
+  color: #ffffff !important;
+}
+
+.isActive:hover {
+  background-color: #b9916d;
+}
+
+.isActive:active {
+  background-color: #c80000;
+  border-color: #c80000;
+}
+
+@media screen and (min-width: 393px) {
+  .recipeCard {
+    width: 361px;
+    height: 483px;
+    padding: 12px;
   }
 
-  .thumbnail {
-    width: 100%;
+  .recipeImage {
+    width: 337px;
+    height: 230px;
+  }
+
+  .cardHeader {
+    width: 337px;
+    height: 58px;
+    gap: 8px;
+  }
+
+  .recipeTitle {
+    width: 276px;
+  }
+
+  .actions {
+    gap: 8px;
+  }
+
+  .detailsButton {
+    width: 289px;
+  }
+
+  .favoriteButton {
+    width: 40px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .recipeCard {
+    width: 339px;
+  }
+
+  .recipeImage {
+    width: 315px;
+  }
+
+  .cardHeader {
+    width: 315px;
+  }
+
+  .recipeTitle {
+    width: 253px;
+  }
+
+  .detailsButton {
+    width: 267px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .recipeCard {
+    width: 288px;
+    height: 431px;
+  }
+
+  .recipeImage {
+    width: 264px;
     height: 178px;
   }
-}
 
-/* Mobile */
-@media screen and (max-width: 393px) {
-  .card {
-    min-height: auto;
+  .cardHeader {
+    width: 264px;
+  }
+
+  .recipeTitle {
+    width: 203px;
+  }
+
+  .actions {
+    width: 264px;
+  }
+
+  .detailsButton {
+    width: 216px;
+  }
+
+  .favoriteButton {
+    cursor: pointer;
   }
 }
