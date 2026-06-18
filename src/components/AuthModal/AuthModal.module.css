@@ -4,78 +4,138 @@
     z-index: 1000;
 
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
 
     padding: 16px;
 
-    background-color: rgba(0, 0, 0, 0.45);
+    background: rgba(0, 0, 0, 0.55);
 }
 
 .modal {
-    box-sizing: border-box;
-    flex: 0 0 auto;
-    overflow: auto;
+    position: relative;
 
-    background: #faf3e0;
-    border-radius: 30px;
+    width: 100%;
+    max-width: 362px;
 
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 20px;
+
+    padding: 56px 24px 32px;
+
+    border-radius: 32px;
+    background: #faf3e0;
 
     text-align: center;
 }
 
-.modal>* {
-    max-width: 100%;
+.closeBtn {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+
+    width: 24px;
+    height: 24px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    border: none;
+    background: transparent;
+
+    font-size: 32px;
+    line-height: 1;
+    color: #1e1e1e;
+    cursor: pointer;
 }
-/* MOBILE */
 
-.loginModal {
-    width: 362px;
-    height: 399px;
-    padding: 48px 32px;
+.title {
+    margin: 0;
+
+    font-family: var(--font-montserrat);
+    font-size: 40px;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.04em;
+
+    color: #1e1e1e;
 }
 
-.registerModal {
-    width: 362px;
-    height: 671px;
+.text {
+    margin: 0;
 
-    padding: 48px 32px;
+    font-family: var(--font-dm-sans);
+    font-size: 16px;
+    line-height: 1.5;
+
+    color: #1e1e1e;
 }
 
-/* TABLET */
+.actions {
+    width: 100%;
 
-@media screen and (min-width: 768px) {
-    .loginModal {
-            width: 522px;
-            height: 399px;
-        }
+    display: flex;
+    gap: 12px;
+}
 
-    .registerModal {
-        width: 522px;
-        height: 621px;
+.primaryLink,
+.secondaryLink {
+    flex: 1;
 
-        padding: 48px 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 48px;
+
+    border-radius: 8px;
+
+    font-family: var(--font-dm-sans);
+    font-size: 16px;
+    font-weight: 700;
+
+    text-decoration: none;
+
+    transition: .3s;
+}
+
+.primaryLink {
+    border: 1px solid #1e1e1e;
+    background: #fff;
+    color: #1e1e1e;
+}
+
+.primaryLink:hover {
+    background: #f4f4f4;
+}
+
+.secondaryLink {
+    background: #9b6c43;
+    color: #fff;
+}
+
+.secondaryLink:hover {
+    background: #7b5636;
+}
+
+@media (min-width: 768px) {
+    .modal {
+        max-width: 420px;
+        padding: 56px 32px;
+    }
+
+    .actions {
+        gap: 16px;
     }
 }
 
-/* DESKTOP */
-
-@media screen and (min-width: 1440px) {
-.loginModal {
-        width: 420px;
-        height: 399px;
-    }
-
-    .registerModal {
-        width: 420px;
-        height: 646px;
-
-        padding: 48px 32px;
+@media (min-width: 1440px) {
+    .modal {
+        max-width: 420px;
     }
 }
-
-
-
