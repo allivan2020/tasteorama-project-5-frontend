@@ -95,7 +95,7 @@ export default function AddRecipePage() {
 
         const token = localStorage.getItem("accessToken");
 
-        const response = await fetch(`${process.env.BACKEND_URL}/recipes`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/recipes`, {
           method: "POST",
           body: formData,
           headers: {
@@ -133,7 +133,7 @@ export default function AddRecipePage() {
     const fetchData = async () => {
       try {
         // 1. Завантажуємо категорії
-        const catRes = await fetch(`${process.env.BACKEND_URL}/categories`);
+        const catRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/categories`);
         if (catRes.ok) {
           const catData = await catRes.json();
           setCategoriesList(catData);
@@ -142,7 +142,7 @@ export default function AddRecipePage() {
         }
 
         // 2. Завантажуємо інгредієнти
-        const ingRes = await fetch(`${process.env.BACKEND_URL}/ingredients`);
+        const ingRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/ingredients`);
         if (ingRes.ok) {
           const ingData = await ingRes.json();
           setIngredientsList(ingData);
