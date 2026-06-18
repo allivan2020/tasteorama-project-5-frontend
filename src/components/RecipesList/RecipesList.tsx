@@ -1,19 +1,19 @@
 'use client';
 
-import {useState} from 'react';
 import {useInfiniteQuery} from '@tanstack/react-query';
 import {getRecipes} from '@/lib/api/recipesApi';
 import {RecipeCard} from '@/components/RecipeCard/RecipeCard';
 import {LoadMoreBtn} from '@/components/LoadMoreBtn/LoadMoreBtn';
 import {Pagination} from '@/components/Pagination/Pagination';
 import styles from './RecipesList.module.css';
+import RecipesFilters from '../RecipesFilters/RecipesFilters';
+import { useRecipesQueryParamsStore } from '@/lib/store/recipesQueryParamsStore';
 
 const LIMIT = 12;
 const PAGINATION_THRESHOLD = 4; // показуємо пагінацію замість Load More від 4 сторінок
 
 export const RecipesList = () => {
-    const [category, setCategory] = useState('');
-    const [ingredient, setIngredient] = useState('');
+    const { category, ingredient } = useRecipesQueryParamsStore();
 
     const {
         data,
@@ -44,23 +44,14 @@ export const RecipesList = () => {
         }
     };
 
-    const handleResetFilters = () => {
-        setCategory('');
-        setIngredient('');
-    };
-
-    const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setCategory(e.target.value);
-    };
-
-    const handleIngredientChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setIngredient(e.target.value);
-    };
+    
 
     return (
         <section className={styles.section}>
             <div className="container">
-                <div className={styles.heading}>
+                <h2 className={styles.title}>Recipes</h2>    
+                <RecipesFilters totalRecipes={totalRecipes} />
+                {/* <div className={styles.heading}>
                     <div className={styles.counter}>
                         <h1 className={styles.title}>Recipes</h1>
                         <p className={styles.total}>{totalRecipes} recipes</p>
@@ -98,7 +89,7 @@ export const RecipesList = () => {
                             <option value="mushrooms">Mushrooms</option>
                         </select>
                     </div>
-                </div>
+                </div> */}
 
                 {isFetching && !isFetchingNextPage && recipes.length === 0 && (
                     <p className={styles.loading}>Loading...</p>
@@ -106,7 +97,7 @@ export const RecipesList = () => {
 
                 <ul className={styles.list}>
                     {recipes.map((recipe, index) => (
-                        <RecipeCard key={recipe._id} recipe={recipe} index={index}/>
+                        <RecipeCard key={recipe._id} recipe={recipe} index={index} />
                     ))}
                 </ul>
 

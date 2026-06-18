@@ -21,7 +21,9 @@ export const AuthModal = ({ onClose, mode = 'login' }: AuthModalProps) => {
         }`}
         onClick={(event) => event.stopPropagation()}
       >
-        {isLogin ? <LoginForm /> : <RegistrationForm />}
+        <div className={styles.formSlot}>
+          {isLogin ? <LoginForm /> : <RegistrationForm />}
+        </div>
       </div>
     </div>
   );

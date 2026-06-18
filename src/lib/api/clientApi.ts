@@ -1,6 +1,9 @@
 import { nextServer } from './api';
 import { User } from '@/app/types/user';
 import { Recipe } from '@/app/types/recipe';
+import { Category } from '@/app/types/categories';
+import { Ingredient } from '@/app/types/ingredient';
+
 
 export type UserRegisterProps = {
   email: string;
@@ -41,10 +44,12 @@ export const logout = async () => {
 };
 
 export const getProfile = async (): Promise<User> => {
-  const res = await nextServer.get("/profile", {
-      withCredentials: true,
-  });
-  return res.data?.user;
+  const { data } = await nextServer.get<User>(
+    '/users/current',
+    { withCredentials: true },
+  );
+
+  return data;
 };
 
 export const getFavoriteRecipes = async () => {
@@ -72,3 +77,14 @@ export const removeFavoriteRecipe = async (recipeId: string) => {
     withCredentials: true,
   });
 };
+
+
+export const getCategories = async (): Promise<Category[]> => {
+  const res = await nextServer.get<Category[]>('/categories');
+  return res.data;
+};
+
+export const getIngredients = async (): Promise<Ingredient[]> => {
+  const res = await nextServer.get<Ingredient[]>('/ingredients');
+  return res.data;
+}
