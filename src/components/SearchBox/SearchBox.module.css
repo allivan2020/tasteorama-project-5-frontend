@@ -4,7 +4,11 @@
     flex-direction: column;
     gap: 24px;
 }
-
+.error {
+    margin-top: 8px;
+    color: red;
+    font-size: 14px;
+}
 .input,
 .button {
     width: 100%;
