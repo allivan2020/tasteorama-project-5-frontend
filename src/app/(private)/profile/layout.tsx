@@ -1,4 +1,4 @@
-import ProfileNavigation from "@/components/Profile/ProfileNavigation";
+import ProfileNavigation from "@/components/ProfileNavigation/ProfileNavigation";
 import css from "./ProfileLayout.module.css";
 
 export default function ProfileLayout({

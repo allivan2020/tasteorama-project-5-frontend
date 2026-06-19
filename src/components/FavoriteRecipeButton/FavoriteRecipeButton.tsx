@@ -13,6 +13,7 @@ import { useAuthModalStore } from "@/lib/store/authModalStore";
 import stylesCard from "@/components/RecipeCard/RecipeCard.module.css";
 import TrashIcon from '@/assets/icons/trash.svg'
 import {toast} from "react-hot-toast";
+import {Oval} from "react-loader-spinner";
 
 type Props = {
   recipeId: string;
@@ -29,7 +30,7 @@ export const FavoriteRecipeButton = ({ recipeId }: Props) => {
 
   const { data: favorites = [] } = useQuery({
     queryKey: ["favoriteRecipes"],
-    queryFn: getFavoriteRecipes,
+    queryFn: () => getFavoriteRecipes(),
     enabled: isAuthenticated,
   });
 
@@ -87,7 +88,13 @@ export const FavoriteRecipeButton = ({ recipeId }: Props) => {
       onMouseLeave={() => setIsHovered(false)}
     >
       {mutation.isPending ? (
-          "..."
+          <Oval
+              height={24}
+              width={24}
+              color="#9b6c43"
+              secondaryColor="#3d2218"
+              strokeWidth={9}
+          />
       ) : isFavorite && isHovered ? (
           <TrashIcon className={stylesCard.bookmarkIcon} />
       ) : (
