@@ -9,13 +9,10 @@
   border: 2px solid #1a9fff;
 }
 
-.imagePlaceholder {
-  width: min(100%, 586px);
-  aspect-ratio: 586 / 336;
-  background:
-    radial-gradient(circle at 50% 48%, rgba(61, 34, 24, 0.55) 0 9%, transparent 10%),
-    radial-gradient(circle at 50% 50%, #f7f5ee 0 44%, transparent 45%),
-    linear-gradient(135deg, #f2efe6, #ffffff);
+.image {
+  display: block;
+  width: min(100%, 600px);
+  height: auto;
 }
 
 .content {
