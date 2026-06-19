@@ -1,20 +1,18 @@
 "use client";
 
-import { useMemo } from "react";
+import {useMemo, useState} from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-
 import BookmarkIcon from "@/assets/icons/Generic-bookmark-alternative.svg";
-
 import {
   addFavoriteRecipe,
   getFavoriteRecipes,
   removeFavoriteRecipe,
 } from "@/lib/api/clientApi";
-
 import { useAuthStore } from "@/lib/store/authStore";
 import { useAuthModalStore } from "@/lib/store/authModalStore";
-
 import stylesCard from "@/components/RecipeCard/RecipeCard.module.css";
+import TrashIcon from '@/assets/icons/trash.svg'
+import {toast} from "react-hot-toast";
 
 type Props = {
   recipeId: string;
@@ -26,6 +24,8 @@ export const FavoriteRecipeButton = ({ recipeId }: Props) => {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
 
   const openModal = useAuthModalStore((state) => state.openModal);
+
+  const [isHovered, setIsHovered] = useState(false);
 
   const { data: favorites = [] } = useQuery({
     queryKey: ["favoriteRecipes"],
@@ -42,15 +42,24 @@ export const FavoriteRecipeButton = ({ recipeId }: Props) => {
     mutationFn: async () => {
       if (isFavorite) {
         await removeFavoriteRecipe(recipeId);
+        return "removed";
       } else {
         await addFavoriteRecipe(recipeId);
+        return "added";
       }
     },
 
-    onSuccess: () => {
+    onSuccess: (action) => {
       queryClient.invalidateQueries({
         queryKey: ["favoriteRecipes"],
       });
+
+      toast.success(
+          action === "added"
+              ? "Recipe added to favorites ⭐"
+              : "Recipe removed from favorites 🗑️"
+      );
+
     },
   });
 
@@ -72,12 +81,17 @@ export const FavoriteRecipeButton = ({ recipeId }: Props) => {
       className={`
         ${stylesCard.favoriteButton}
         ${isFavorite ? stylesCard.isActive : ""}
+        ${isFavorite && isHovered ? stylesCard.isDeleteHover : ""}
       `}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       {mutation.isPending ? (
-        "..."
+          "..."
+      ) : isFavorite && isHovered ? (
+          <TrashIcon className={stylesCard.bookmarkIcon} />
       ) : (
-        <BookmarkIcon className={stylesCard.bookmarkIcon} />
+          <BookmarkIcon className={stylesCard.bookmarkIcon} />
       )}
     </button>
   );

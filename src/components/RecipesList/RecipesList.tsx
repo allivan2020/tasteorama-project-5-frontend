@@ -1,16 +1,17 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import {useState, useMemo} from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { getRecipes, Recipe, RecipesResponse } from '@/lib/api/recipesApi';
+import { getRecipes } from '@/lib/api/recipesApi';
 import { RecipeCard } from '@/components/RecipeCard/RecipeCard';
 import { LoadMoreBtn } from '@/components/LoadMoreBtn/LoadMoreBtn';
 import { Pagination } from '@/components/Pagination/Pagination';
 import RecipesFilters from '../RecipesFilters/RecipesFilters';
 import { useRecipesQueryParamsStore } from '@/lib/store/recipesQueryParamsStore';
 import styles from './RecipesList.module.css';
+import {Recipe, RecipesResponse} from "@/app/types/recipe";
 
-const PER_PAGE = 4;
+const PER_PAGE = 12;
 const PAGINATION_THRESHOLD = 4;
 
 export const RecipesList = () => {
@@ -19,7 +20,6 @@ export const RecipesList = () => {
   const [reachedEnd, setReachedEnd] = useState(false);
   const queryClient = useQueryClient();
 
-  // Скидаємо сторінку при зміні фільтрів
   const [prevFilters, setPrevFilters] = useState({ category, ingredient });
   if (prevFilters.category !== category || prevFilters.ingredient !== ingredient) {
     setPrevFilters({ category, ingredient });

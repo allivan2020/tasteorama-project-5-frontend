@@ -1,9 +1,7 @@
 import Image from 'next/image';
-
-import type { RecipeDetail } from '@/lib/api/recipesApi';
 import { RecipeDetailsFavoriteButton } from '@/components/RecipeDetailsFavoriteButton/RecipeDetailsFavoriteButton';
-
 import styles from './RecipeDetails.module.css';
+import {RecipeDetail} from "@/app/types/recipe";
 
 type RecipeDetailsProps = {
   recipe: RecipeDetail;
