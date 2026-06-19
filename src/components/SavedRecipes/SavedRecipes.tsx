@@ -1,5 +1,5 @@
 'use client'
-import {useQuery, useQueryClient} from "@tanstack/react-query";
+import {useQuery} from "@tanstack/react-query";
 import {getFavoriteRecipes} from "@/lib/api/clientApi";
 import {RecipeCard} from "@/components/RecipeCard/RecipeCard";
 import css from './SavedRecipes.module.css'
@@ -36,7 +36,6 @@ export const SavedRecipes = () => {
     return (
         <>
             <RecipesFilters totalRecipes={data.length}/>
-            {/*<p className={css.recipeCount}>{data.length} recipes </p>*/}
             <ul className={css.list}>
                 {data.map((recipe, index) => (
                     <RecipeCard
