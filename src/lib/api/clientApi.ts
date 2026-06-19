@@ -63,10 +63,15 @@ export const getProfile = async (): Promise<User> => {
   return data;
 };
 
-export const getFavoriteRecipes = async () => {
+export const getFavoriteRecipes = async ( category?: string, ingredient?: string) => {
   const { data } = await nextServer.get<{ recipes: Recipe[] }>(
     '/recipes/favorites',
-    { withCredentials: true },
+    {
+        params: {
+            category,
+            ingredient,
+        },
+        withCredentials: true },
   );
   return data.recipes;
 };
