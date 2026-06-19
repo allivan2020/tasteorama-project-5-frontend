@@ -16,10 +16,6 @@ const FALLBACK_IMAGES = [
     '/recipe-6.jpg',
     '/recipe-7.jpg',
     '/recipe-8.jpg',
-    '/recipe-9.jpg',
-    '/recipe-10.jpg',
-    '/recipe-11.jpg',
-    '/recipe-12.jpg',
 ];
 
 type Props = {

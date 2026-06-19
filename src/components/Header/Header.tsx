@@ -2,44 +2,31 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styles from "./Header.module.css";
 
 import { useAuthStore } from "@/lib/store/authStore";
-import { getProfile, logout as logoutApi } from "@/lib/api/clientApi";
+import { logout as logoutApi } from "@/lib/api/clientApi";
 
 export const Header = () => {
   const pathname = usePathname();
   const router = useRouter();
 
-  const { user, setUser, clearAuth } = useAuthStore();
+  const { user, clearAuth } = useAuthStore();
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const isAuth = !!user;
 
-useEffect(() => {
-  async function loadUser() {
-    try {
-      const user = await getProfile();
-      setUser(user);
-    } catch {
-      clearAuth();
-    }
-  }
-
-  loadUser();
-}, [setUser, clearAuth]);
-
-
-  //  LOGOUT
   const logout = async () => {
     try {
       await logoutApi();
+    } catch (e) {
+      // навіть якщо бекенд впаде — чистимо локальний стан
+      console.error("Logout error:", e);
     } finally {
       clearAuth();
       router.push("/");
-      router.refresh();
     }
   };
 
