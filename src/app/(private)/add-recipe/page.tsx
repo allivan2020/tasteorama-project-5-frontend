@@ -6,6 +6,7 @@ import { useState, ChangeEvent, useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Toaster, toast } from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 interface IngredientFromDB {
   _id: string;
@@ -26,17 +27,19 @@ interface SelectedIngredient {
 }
 
 const recipeValidationSchema = Yup.object({
-  name: Yup.string().max(64, "Max 64 characters").required("Required"),
-  decr: Yup.string().max(200, "Max 200 characters").required("Required"),
-  cookiesTime: Yup.number().min(1).max(360).required("Required"),
+  title: Yup.string().max(64, "Max 64 characters").required("Required"),
+  description: Yup.string().max(200, "Max 200 characters").required("Required"),
+  time: Yup.number().min(1).max(360).required("Required"),
   cals: Yup.number().min(1).max(10000).notRequired(),
   category: Yup.string().required("Required"),
-  instruction: Yup.string()
+  thumb: Yup.mixed().nullable(),
+  instructions: Yup.string()
     .max(1200, "Max 1200 characters")
     .required("Required"),
 });
 
 export default function AddRecipePage() {
+  const router = useRouter();
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
   const [photoFile, setPhotoFile] = useState<File | null>(null);
 
@@ -54,15 +57,16 @@ export default function AddRecipePage() {
 
   const formik = useFormik({
     initialValues: {
-      name: "",
-      decr: "",
-      cookiesTime: "",
+      title: "",
+      description: "",
+      time: "",
       cals: "",
       category: "",
-      instruction: "",
+      instructions: "",
+      thumb: null,
     },
     validationSchema: recipeValidationSchema,
-    onSubmit: async (values, { resetForm }) => {
+    onSubmit: async (values, { resetForm, setSubmitting }) => {
       if (recipeIngredients.length === 0) {
         setIngredientsError(
           "Please add at least one ingredient to your recipe",
@@ -74,36 +78,37 @@ export default function AddRecipePage() {
       try {
         const formData = new FormData();
 
-        formData.append("name", values.name);
-        formData.append("desc", values.decr);
-        formData.append("cookiesTime", values.cookiesTime);
-        if (values.cals) {
-          formData.append("cals", values.cals);
-        }
+        formData.append("title", values.title);
         formData.append("category", values.category);
-        formData.append("instruction", values.instruction);
+        formData.append("instructions", values.instructions);
+        formData.append("description", values.description);
+        formData.append("time", values.time);
+        formData.append("cals", values.cals || "0");
 
         const ingredientsForBackend = recipeIngredients.map((item) => ({
-          ingredient: item.ingredient,
-          ingredientAmount: item.ingredientAmount,
+          id: item.ingredient,
+          measure: item.ingredientAmount.trim(),
         }));
         formData.append("ingredients", JSON.stringify(ingredientsForBackend));
 
         if (photoFile) {
-          formData.append("recipeImg", photoFile);
+          formData.append("thumb", photoFile);
         }
 
-        const token = localStorage.getItem("accessToken");
-
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/recipes`, {
-          method: "POST",
-          body: formData,
-          headers: {
-            ...(token && { Authorization: `Bearer ${token}` }),
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/recipes`,
+          {
+            method: "POST",
+            body: formData,
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
+            },
+            credentials: "include",
           },
-        });
+        );
 
         if (response.ok) {
+          const resultData = await response.json();
           toast.success("Recipe successfully published!", {
             duration: 4000,
             style: {
@@ -118,13 +123,19 @@ export default function AddRecipePage() {
           setRecipeIngredients([]);
           setPhotoPreview(null);
           setPhotoFile(null);
+
+          const recipeId = resultData._id || resultData.id;
+          if (recipeId) {
+            router.push(`/recipes/${recipeId}`);
+          }
         } else {
           const errorData = await response.json();
           toast.error(errorData.message || "Failed to publish recipe");
         }
-      } catch (error) {
-        console.error("Error submitting recipe:", error);
+      } catch {
         toast.error("Something went wrong. Please try again.");
+      } finally {
+        setSubmitting(false);
       }
     },
   });
@@ -132,26 +143,21 @@ export default function AddRecipePage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // 1. Завантажуємо категорії
-        const catRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/categories`);
+        const [catRes, ingRes] = await Promise.all([
+          fetch(`${process.env.NEXT_PUBLIC_API_URL}/categories`),
+          fetch(`${process.env.NEXT_PUBLIC_API_URL}/ingredients`),
+        ]);
+
         if (catRes.ok) {
           const catData = await catRes.json();
           setCategoriesList(catData);
-        } else {
-          console.error("The categories request failed:", catRes.statusText);
         }
 
-        // 2. Завантажуємо інгредієнти
-        const ingRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/ingredients`);
         if (ingRes.ok) {
           const ingData = await ingRes.json();
           setIngredientsList(ingData);
-        } else {
-          console.error("The ingredients request failed:", ingRes.statusText);
         }
-      } catch (error) {
-        console.error("The backend connection failed:", error);
-      }
+      } catch {}
     };
 
     fetchData();
@@ -171,11 +177,9 @@ export default function AddRecipePage() {
       );
       return;
     }
-
-    const isDuplicate = recipeIngredients.some(
-      (item) => item.ingredient === currentIngredientId,
-    );
-    if (isDuplicate) {
+    if (
+      recipeIngredients.some((item) => item.ingredient === currentIngredientId)
+    ) {
       alert("This ingredient is already added!");
       return;
     }
@@ -184,16 +188,17 @@ export default function AddRecipePage() {
       (ing) => ing._id === currentIngredientId,
     );
     if (found) {
-      const newIngredient: SelectedIngredient = {
-        ingredient: found._id,
-        name: found.name,
-        ingredientAmount: trimmedAmount,
-      };
+      setRecipeIngredients([
+        ...recipeIngredients,
+        {
+          ingredient: found._id,
+          name: found.name,
+          ingredientAmount: trimmedAmount,
+        },
+      ]);
 
-      setRecipeIngredients([...recipeIngredients, newIngredient]);
       setCurrentIngredientId("");
       setAmount("");
-
       setIngredientsError(null);
     }
   };
@@ -215,12 +220,14 @@ export default function AddRecipePage() {
         alert("Image size must be less than 2Mb.");
         return;
       }
+
+      if (photoPreview) {
+        URL.revokeObjectURL(photoPreview);
+      }
+
       setPhotoFile(file);
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPhotoPreview(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+      const previewUrl = URL.createObjectURL(file);
+      setPhotoPreview(previewUrl);
     }
   };
 
@@ -247,29 +254,30 @@ export default function AddRecipePage() {
           {/* БЛОК 1: General Information + Category */}
           <section className={styles.formSection}>
             <h2 className={styles.sectionTitle}>General Information</h2>
+            {/* Title */}
             <div className={styles.inputGroup}>
               <label className={styles.label}>Recipe Title</label>
               <input
                 type="text"
-                name="name"
+                name="title"
                 placeholder="Enter the name of your recipe"
-                className={`${styles.input} ${formik.touched.name && formik.errors.name ? styles.inputError : ""}`}
-                value={formik.values.name}
+                className={`${styles.input} ${formik.touched.title && formik.errors.title ? styles.inputError : ""}`}
+                value={formik.values.title}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
               />
-              {formik.touched.name && formik.errors.name && (
-                <p className={styles.errorText}>{formik.errors.name}</p>
+              {formik.touched.title && formik.errors.title && (
+                <p className={styles.errorText}>{formik.errors.title}</p>
               )}
             </div>
             {/* Description */}
             <div className={styles.inputGroup}>
               <label className={styles.label}>Recipe Description</label>
               <textarea
-                name="decr"
+                name="description"
                 placeholder="Enter a brief description of your recipe"
-                className={`${styles.textarea} ${formik.touched.decr && formik.errors.decr ? styles.inputError : ""}`}
-                value={formik.values.decr}
+                className={`${styles.textarea} ${formik.touched.description && formik.errors.description ? styles.inputError : ""}`}
+                value={formik.values.description}
                 onChange={(e) => {
                   formik.handleChange(e);
                   handleInputResize(e);
@@ -277,24 +285,24 @@ export default function AddRecipePage() {
                 onBlur={formik.handleBlur}
                 rows={5}
               />
-              {formik.touched.decr && formik.errors.decr && (
-                <p className={styles.errorText}>{formik.errors.decr}</p>
+              {formik.touched.description && formik.errors.description && (
+                <p className={styles.errorText}>{formik.errors.description}</p>
               )}
             </div>
             {/* Cooking Time */}
             <div className={styles.inputGroup}>
               <label className={styles.label}>Cooking time in minutes</label>
               <input
-                name="cookiesTime"
+                name="time"
                 type="text"
                 placeholder="10"
-                className={`${styles.input} ${formik.touched.cookiesTime && formik.errors.cookiesTime ? styles.inputError : ""}`}
-                value={formik.values.cookiesTime}
+                className={`${styles.input} ${formik.touched.time && formik.errors.time ? styles.inputError : ""}`}
+                value={formik.values.time}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
               />
-              {formik.touched.cookiesTime && formik.errors.cookiesTime && (
-                <p className={styles.errorText}>{formik.errors.cookiesTime}</p>
+              {formik.touched.time && formik.errors.time && (
+                <p className={styles.errorText}>{formik.errors.time}</p>
               )}
             </div>
             <div className={styles.rowGrid}>
@@ -319,38 +327,41 @@ export default function AddRecipePage() {
                 <label className={styles.label}>Category</label>
                 <select
                   name="category"
-                  className={`${styles.select} ${formik.touched.category && formik.errors.category ? styles.inputError : ""}`}
+                  className={`${styles.select} 
+                  ${!formik.values.category ? styles.selectPlaceholder : ""}
+                  ${formik.touched.category && formik.errors.category ? styles.inputError : ""}`}
                   value={formik.values.category}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  required
                 >
                   <option value="" disabled hidden>
                     Soup
                   </option>
-                  {categoriesList.length > 0 &&
-                    categoriesList.map((category) => (
-                      <option key={category._id} value={category._id}>
-                        {category.name}
-                      </option>
-                    ))}
+                  {categoriesList.map((category) => (
+                    <option key={category._id} value={category._id}>
+                      {category.name}
+                    </option>
+                  ))}
                 </select>
+                {formik.touched.category && formik.errors.category && (
+                  <p className={styles.errorText}>{formik.errors.category}</p>
+                )}
               </div>
             </div>
           </section>
 
           {/* БЛОК 2: Ingredients */}
-          <section className={`${styles.formSection} ${styles.ingredientsSection}`}>
+          <section
+            className={`${styles.formSection} ${styles.ingredientsSection}`}
+          >
             <h2 className={styles.sectionTitle}>Ingredients</h2>
             <div className={styles.ingredientscontrolsBlock}>
               <div className={styles.inputsRow}>
                 <div className={styles.inputGroup}>
                   <label className={styles.label}>Name</label>
                   <select
-                    style={{
-                      color: currentIngredientId ? "inherit" : "#595d62",
-                    }}
-                    className={styles.select}
+                    name="ingredient"
+                    className={`${styles.select} ${!currentIngredientId ? styles.selectPlaceholder : ""}`}
                     value={currentIngredientId || ""}
                     onChange={(e) => setCurrentIngredientId(e.target.value)}
                   >
@@ -376,6 +387,9 @@ export default function AddRecipePage() {
                 </div>
               </div>
               <div className={styles.btnRow}>
+                {ingredientsError && (
+                  <p className={styles.errorText}>{ingredientsError}</p>
+                )}
                 <button
                   type="button"
                   className={styles.addIngredientBtn}
@@ -389,7 +403,7 @@ export default function AddRecipePage() {
               <div className={styles.listHeader}>
                 <span className={styles.headerName}>Name:</span>
                 <span className={styles.headerAmount}>Amount:</span>
-                <span className={styles.headerSpacer}></span>
+                <span></span>
               </div>
               {recipeIngredients.length > 0 && (
                 <ul className={styles.ingredientsList}>
@@ -427,10 +441,10 @@ export default function AddRecipePage() {
             <h2 className={styles.sectionTitle}>Instructions</h2>
             <div className={styles.inputGroup}>
               <textarea
-                name="instruction"
+                name="instructions"
                 placeholder="Enter a text"
-                className={`${styles.textarea} ${formik.touched.instruction && formik.errors.instruction ? styles.inputError : ""}`}
-                value={formik.values.instruction}
+                className={`${styles.textarea} ${formik.touched.instructions && formik.errors.instructions ? styles.inputError : ""}`}
+                value={formik.values.instructions}
                 onChange={(e) => {
                   formik.handleChange(e);
                   handleInputResize(e);
@@ -438,18 +452,20 @@ export default function AddRecipePage() {
                 onBlur={formik.handleBlur}
                 rows={5}
               />
-              {formik.touched.instruction && formik.errors.instruction && (
-                <p className={styles.errorText}>{formik.errors.instruction}</p>
+              {formik.touched.instructions && formik.errors.instructions && (
+                <p className={styles.errorText}>{formik.errors.instructions}</p>
               )}
             </div>
           </section>
-          {ingredientsError && (
-            <p className={styles.errorText}>{ingredientsError}</p>
-          )}
-          <button type="submit" className={styles.publishBtn}>
-            Publish Recipe
+          <button
+            type="submit"
+            className={styles.publishBtn}
+            disabled={formik.isSubmitting}
+          >
+            {formik.isSubmitting ? "Publishing..." : "Publish Recipe"}
           </button>
         </div>
+
         {/* ПРАВА ЧАСТИНА МАКЕТА (Upload Photo) */}
         <section className={`${styles.formSection} ${styles.rightColumn}`}>
           <h2 className={styles.sectionTitle}>Upload Photo</h2>
@@ -490,13 +506,23 @@ export default function AddRecipePage() {
               </div>
             ) : (
               <label htmlFor="photo-upload" className={styles.dropzoneLabel}>
+                {/* Мобілка + Планшет (82x82) */}
+                <Image
+                  src="/camera-mobile.svg"
+                  alt="Camera Mobile"
+                  width={82}
+                  height={82}
+                  className={styles.cameraMobile}
+                  priority
+                />
+                {/* Десктоп (162x136) */}
                 <Image
                   src="/camera.svg"
-                  alt="Camera Icon"
-                  className={styles.iconCamera}
+                  alt="Camera Desktop"
+                  className={styles.cameraDesktop}
                   width={162}
                   height={136}
-                  unoptimized
+                  priority
                 />
               </label>
             )}
