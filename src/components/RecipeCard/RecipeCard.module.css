@@ -101,6 +101,9 @@
   color: #000000;
   transition: background-color 0.3s;
   cursor: pointer;
+  display: flex;         
+  align-items: center;     
+  justify-content: center;
 }
 
 .detailsButton:hover,
