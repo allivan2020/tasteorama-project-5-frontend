@@ -19,6 +19,7 @@ export function getFallbackImage(index: number): string {
 export const getRecipes = async (
   params: RecipesParams = {},
 ): Promise<RecipesResponse> => {
+  console.log('params',params);
   const { data } = await nextServer.get<RecipesResponse>('/recipes', {
     params,
   });
