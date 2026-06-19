@@ -30,7 +30,7 @@ export function RecipeDetailsFavoriteButton({
 
   const { data: favorites = [] } = useQuery({
     queryKey: ['favoriteRecipes'],
-    queryFn: getFavoriteRecipes,
+    queryFn: ()=> getFavoriteRecipes(),
     enabled: isAuthenticated,
   });
 
