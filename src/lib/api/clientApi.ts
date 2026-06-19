@@ -3,7 +3,7 @@ import { User } from '@/app/types/user';
 import { Recipe } from '@/app/types/recipe';
 import { Category } from '@/app/types/categories';
 import { Ingredient } from '@/app/types/ingredient';
-
+import { useAuthStore } from "@/lib/store/authStore";
 
 export type UserRegisterProps = {
   email: string;
@@ -20,9 +20,20 @@ type RegisterResponse = {
   newUser: User;
 };
 
-export const login = async (userData: UserAuthDataProps): Promise<User> => {
-  const { data } = await nextServer.post<User>("/auth/login", userData);
-  return data;
+type LoginResponse = {
+  user: User;
+};
+
+export const login = async (userData: UserAuthDataProps) => {
+  const { data } = await nextServer.post<LoginResponse>(
+    "/auth/login",
+    userData
+  );
+
+  //  беремо саме user
+  useAuthStore.getState().setUser(data.user);
+
+  return data.user;
 };
 
 export const register = async (

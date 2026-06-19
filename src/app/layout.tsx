@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import { Montserrat, DM_Sans } from "next/font/google";
+import "./globals.css";
+
 import TanStackProvider from "@/components/TanStackProvider/TanStackProvider";
 import { Toaster } from "react-hot-toast";
-import "./globals.css";
 import { SharedLayout } from "@/components/SharedLayout/SharedLayout";
+import { AuthProvider } from "@/lib/providers/AuthProvider";
 
 const montserrat = Montserrat({
   subsets: ["latin", "cyrillic"],
@@ -32,16 +34,18 @@ export default function RootLayout({
   return (
     <html lang="uk" className={`${montserrat.variable} ${dmSans.variable}`}>
       <body>
-        <TanStackProvider>
-          <SharedLayout>{children}</SharedLayout>
+        <AuthProvider>
+          <TanStackProvider>
+            <SharedLayout>{children}</SharedLayout>
 
-          <Toaster
-            position="top-center"
-            toastOptions={{
-              duration: 4000,
-            }}
-          />
-        </TanStackProvider>
+            <Toaster
+              position="top-center"
+              toastOptions={{
+                duration: 4000,
+              }}
+            />
+          </TanStackProvider>
+        </AuthProvider>
       </body>
     </html>
   );
