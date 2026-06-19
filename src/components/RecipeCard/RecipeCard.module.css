@@ -1,239 +1,151 @@
-.recipeCard,
-.recipeCard * {
-  box-sizing: border-box;
-}
-
 .recipeCard {
-  width: 100%;
-  border-radius: 16px;
-  background-color: #faf3e0;
-  padding: 8px;
+    width: 100%;
+    border-radius: 16px;
+    background-color: var(--light-beige);
+    padding: 12px;
+
+    display: flex;
+    flex-direction: column;
 }
 
 .recipeImage {
-  width: 100%;
-  height: 210px;
-  border-radius: 8px;
-  margin-bottom: 16px;
-  object-fit: cover;
-  object-position: center;
+    width: 100%;
+    height: 230px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    object-fit: cover;
+    object-position: center;
 }
 
 .cardHeader {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 16px;
+    width: 100%;
+    min-height: 58px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    gap: 8px;
 }
 
 .recipeTitle {
-  width: 203px;
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 1.2;
+    font-weight: 700;
+    font-size: 24px;
 }
 
-.timeBadge {
-  max-width: 75px;
-  height: 28px;
-  border-radius: 8px;
-  padding: 2px 8px;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  justify-content: center;
-  background-color: #ffffff;
-}
-
-.timeText {
-  font-weight: 600;
-  font-size: 12px;
+.timeBox {
+    height: 28px;
+    width: 53px;
+    border-radius: 8px;
+    padding: 2px 8px 2px 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+    background-color: var(--white);
 }
 
 .timeIcon {
-  width: 24px;
-  height: 24px;
+    width: 24px;
+    height: 24px;
 }
 
-.recipeInfo {
-  height: 83px;
-  font-weight: 400;
-  font-size: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-bottom: 16px;
+.time{
+    font-size: 12px;
+    font-weight: 600;
 }
 
-.recipeInfo p {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  line-height: 155%;
+.desBox {
+    font-size: 16px;
+}
+
+.recipeDescription {
+    font-size: 16px;
+    margin-bottom: 8px;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+
+    overflow: hidden;
+}
+
+.recipeCalories {
+    margin-bottom: 16px;
 }
 
 .actions {
-  height: 40px;
-  display: flex;
-  flex-direction: row;
-  gap: 2.7%;
+    display: flex;
+    gap: 8px;
+    margin-top: auto;
 }
 
 .detailsButton {
-  display: block;
-  width: 83%;
-  height: 40px;
-  background-color: inherit;
-  border: 1px solid #000000;
-  border-radius: 8px;
-  text-decoration: none;
-  color: #000000;
-  cursor: pointer;
-  text-align: center;
-  align-content: center;
-  transition: background-color 0.3s;
-}
-
-.favoriteButton {
-  color: #000000;
-  transition: background-color 0.3s;
-  cursor: pointer;
+    width: 100%;
+    height: 40px;
+    background-color: inherit;
+    border: 1px solid var(--black);
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--black);
+    cursor: pointer;
+    text-align: center;
+    align-content: center;
+    font-weight: 600;
+    font-size: 16px;
+    transition: background-color 0.3s;
 }
 
 .detailsButton:hover,
 .favoriteButton:hover {
-  background-color: #9b6c43;
-  border-color: #9b6c43;
-  color: #ffffff;
+    background-color: #9b6c43;
+    border-color: #9b6c43;
+    color: #ffffff;
 }
 
 .detailsButton:active,
 .favoriteButton:active {
-  background-color: #9b6c43;
-  border-color: #ffffff;
-  color: #ffffff;
-  box-shadow:
-    0px 0px 0px 6px #4e46b41f,
+    background-color: #9b6c43;
+    border-color: #ffffff;
+    color: #ffffff;
+    box-shadow: 0px 0px 0px 6px #4e46b41f,
     0px 0px 0px 2px #ffffff;
 }
 
 .favoriteButton {
-  width: 14%;
-  background-color: inherit;
-  border: 1px solid #000000;
-  border-radius: 8px;
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    background-color: inherit;
+    border: 1px solid var(--black);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--black);
 }
 
 .bookmarkIcon {
-  width: 24px;
-  height: 24px;
-  display: block;
-  color: currentColor;
+    width: 24px;
+    height: 24px;
+    display: block;
+    color: currentColor;
+}
+
+.isDeleteHover {
+    background-color: #c80000 !important;
+    border-color: #c80000 !important;
+    color: #ffffff !important;
 }
 
 .isActive {
-  background-color: #9b6c43;
-  border: none !important;
-  color: #ffffff !important;
+    background-color: #9b6c43;
+    border: none !important;
+    color: #ffffff !important;
 }
 
 .isActive:hover {
-  background-color: #b9916d;
-}
-
-.isActive:active {
-  background-color: #c80000;
-  border-color: #c80000;
-}
-
-@media screen and (min-width: 393px) {
-  .recipeCard {
-    width: 361px;
-    height: 483px;
-    padding: 12px;
-  }
-
-  .recipeImage {
-    width: 337px;
-    height: 230px;
-  }
-
-  .cardHeader {
-    width: 337px;
-    height: 58px;
-    gap: 8px;
-  }
-
-  .recipeTitle {
-    width: 276px;
-  }
-
-  .actions {
-    gap: 8px;
-  }
-
-  .detailsButton {
-    width: 289px;
-  }
-
-  .favoriteButton {
-    width: 40px;
-  }
-}
-
-@media screen and (min-width: 768px) {
-  .recipeCard {
-    width: 339px;
-  }
-
-  .recipeImage {
-    width: 315px;
-  }
-
-  .cardHeader {
-    width: 315px;
-  }
-
-  .recipeTitle {
-    width: 253px;
-  }
-
-  .detailsButton {
-    width: 267px;
-  }
-}
-
-@media screen and (min-width: 1440px) {
-  .recipeCard {
-    width: 288px;
-    height: 431px;
-  }
-
-  .recipeImage {
-    width: 264px;
-    height: 178px;
-  }
-
-  .cardHeader {
-    width: 264px;
-  }
-
-  .recipeTitle {
-    width: 203px;
-  }
-
-  .actions {
-    width: 264px;
-  }
-
-  .detailsButton {
-    width: 216px;
-  }
-
-  .favoriteButton {
-    cursor: pointer;
-  }
+    background-color: #b9916d;
 }
