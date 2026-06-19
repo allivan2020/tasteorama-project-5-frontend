@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
+import toast from "react-hot-toast";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getRecipes } from "@/lib/api/recipesApi";
 import { RecipeCard } from "@/components/RecipeCard/RecipeCard";
@@ -36,7 +37,7 @@ export const RecipesList = () => {
         setReachedEnd(false);
     }
 
-    const { data, isFetching } = useQuery({
+    const { data, isFetching, isSuccess } = useQuery({
         queryKey: ["recipes", page, category, ingredient, search],
         queryFn: () =>
             getRecipes({
@@ -46,7 +47,6 @@ export const RecipesList = () => {
                 ingredient,
                 search,
             }),
-        placeholderData: (prev) => prev,
         staleTime: 60_000,
     });
 
@@ -71,6 +71,12 @@ export const RecipesList = () => {
         }
         return all;
     }, [data, page, category, ingredient, search, usePagination, queryClient]);
+
+    useEffect(() => {
+        if (isSuccess && search && data?.recipes.length === 0) {
+            toast.error(`No recipes found for "${search}"`);
+        }
+    }, [isSuccess, search, data]);
 
     const handleLoadMore = () => {
         if (hasMore) {

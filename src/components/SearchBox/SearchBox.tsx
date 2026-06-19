@@ -10,14 +10,14 @@ const SearchSchema = Yup.object({
 });
 
 export default function SearchBox() {
-    const { setSearch } = useRecipesQueryParamsStore();
+    const { search, setSearch } = useRecipesQueryParamsStore();
 
     return (
         <Formik
-            initialValues={{ search: "" }}
+            initialValues={{ search }}
+            enableReinitialize
             validationSchema={SearchSchema}
             onSubmit={(values) => {
-                console.log("SEARCH VALUE:", values.search.trim());
                 setSearch(values.search.trim());
             }}
         >
