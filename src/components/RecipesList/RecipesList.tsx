@@ -10,6 +10,7 @@ import RecipesFilters from '../RecipesFilters/RecipesFilters';
 import { useRecipesQueryParamsStore } from '@/lib/store/recipesQueryParamsStore';
 import styles from './RecipesList.module.css';
 import {Recipe, RecipesResponse} from "@/app/types/recipe";
+import NoRecipesResult from '../NoRecipesResult/NoRecipesResult';
 
 const PER_PAGE = 12;
 const PAGINATION_THRESHOLD = 4;
@@ -75,14 +76,16 @@ export const RecipesList = () => {
         {isFetching && displayRecipes.length === 0 && (
           <p className={styles.loading}>Loading...</p>
         )}
-
+        
         <ul className={styles.list}>
           {displayRecipes.map((recipe, index) => (
             <RecipeCard key={recipe._id} recipe={recipe} index={index} />
           ))}
         </ul>
-
-        {!usePagination && (
+        
+        {totalRecipes === 0 && <NoRecipesResult />}
+              
+        {!usePagination && totalRecipes !== 0 && (
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 40, gap: 12 }}>
             {reachedEnd ? (
               <p className={styles.noMore}>No more recipes</p>
