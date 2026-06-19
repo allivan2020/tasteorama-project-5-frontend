@@ -12,12 +12,19 @@ type recipesQuryParamsStore = {
     resetFilters: () => void;
 };
 
-export const useRecipesQueryParamsStore = create<recipesQuryParamsStore>((set) => ({
-    category: "",
-    ingredient: "",
-    search: "",
-    setCategory: (category) => set({ category }),
-    setIngredient: (ingredient) => set({ ingredient }),
-    setSearch: (search) => set({ search }),
-    resetFilters: () => set({ingredient: '', category: ''}),
-}))
+export const useRecipesQueryParamsStore = create<recipesQuryParamsStore>(
+    (set) => ({
+        category: "",
+        ingredient: "",
+        search: "",
+        setCategory: (category) => set({ category }),
+        setIngredient: (ingredient) => set({ ingredient }),
+        setSearch: (search) => set({ search }),
+        resetFilters: () =>
+            set({
+                ingredient: "",
+                category: "",
+                search: "",
+            }),
+    }),
+);

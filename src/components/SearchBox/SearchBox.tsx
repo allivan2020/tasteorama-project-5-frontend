@@ -1,17 +1,44 @@
+"use client";
+
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import { useRecipesQueryParamsStore } from "@/lib/store/recipesQueryParamsStore";
 import css from "./SearchBox.module.css";
 
-export default function SearchBox() {
-    return (
-        <form className={css.form}>
-            <input
-                className={css.input}
-                type="text"
-                placeholder="Search recipes"
-            />
+const SearchSchema = Yup.object({
+    search: Yup.string().trim().max(16, "Search must be 16 characters or less"),
+});
 
-            <button className={css.button} type="submit">
-                Search
-            </button>
-        </form>
+export default function SearchBox() {
+    const { search, setSearch } = useRecipesQueryParamsStore();
+
+    return (
+        <Formik
+            initialValues={{ search }}
+            enableReinitialize
+            validationSchema={SearchSchema}
+            onSubmit={(values) => {
+                setSearch(values.search.trim());
+            }}
+        >
+            <Form className={css.form}>
+                <Field
+                    className={css.input}
+                    type="text"
+                    name="search"
+                    placeholder="Search recipes"
+                />
+
+                <button className={css.button} type="submit">
+                    Search
+                </button>
+
+                <ErrorMessage
+                    name="search"
+                    component="p"
+                    className={css.error}
+                />
+            </Form>
+        </Formik>
     );
 }
