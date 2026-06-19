@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 import styles from './NotFoundRecipePage.module.css';
 
@@ -7,10 +8,13 @@ export function NotFoundRecipePage() {
     <section className={styles.section}>
       <div className="container">
         <div className={styles.card}>
-          <div
-            className={styles.imagePlaceholder}
-            role="img"
-            aria-label="Empty plate"
+          <Image
+            src="/404.jpg"
+            alt="Empty plate"
+            width={600}
+            height={438}
+            className={styles.image}
+            priority
           />
 
           <div className={styles.content}>

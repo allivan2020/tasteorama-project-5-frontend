@@ -29,27 +29,33 @@ export const RecipeCard = ({recipe, index = 0}: Props) => {
 
     return (
         <li className={styles.recipeCard}>
-            <Image
-                src={imageSrc}
-                alt={recipe.title}
-                width={337}
-                height={230}
-                className={styles.recipeImage}
-            />
+            <Link
+                href={`/recipes/${recipe._id}`}
+                className={styles.cardLink}
+                aria-label={`Open recipe ${recipe.title}`}
+            >
+                <Image
+                    src={imageSrc}
+                    alt={recipe.title}
+                    width={337}
+                    height={230}
+                    className={styles.recipeImage}
+                />
 
-            <div className={styles.cardHeader}>
-                <h3 className={styles.recipeTitle}>{recipe.title}</h3>
+                <div className={styles.cardHeader}>
+                    <h3 className={styles.recipeTitle}>{recipe.title}</h3>
 
-                <div className={styles.timeBox}>
-                    <ClockIcon className={styles.timeIcon}/>
-                    <span className={styles.time}>
-                        {recipe.time ? `${recipe.time}` : "—"}
-                     </span>
+                    <div className={styles.timeBox}>
+                        <ClockIcon className={styles.timeIcon}/>
+                        <span className={styles.time}>
+                            {recipe.time ? `${recipe.time}` : "—"}
+                         </span>
+                    </div>
                 </div>
-            </div>
 
-            <p className={styles.recipeDescription}>{recipe.description}</p>
-            <p className={styles.recipeCalories}> ~ {recipe.calories ? `${recipe.calories} cals` : "150 cals"}</p>
+                <p className={styles.recipeDescription}>{recipe.description}</p>
+                <p className={styles.recipeCalories}> ~ {recipe.calories ? `${recipe.calories} cals` : "150 cals"}</p>
+            </Link>
 
             <div className={styles.actions}>
                 <Link href={`/recipes/${recipe._id}`} className={styles.detailsButton}>
