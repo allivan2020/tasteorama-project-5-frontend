@@ -129,9 +129,17 @@ export const RecipesList = ({ recipeType = "all" }: Props) => {
     };
 
     return (
-        <section className={styles.section}>
+        <section
+            className={`${styles.section} ${
+                isOwnRecipes ? styles.profileSection : ""
+            }`}
+        >
             <div className={isOwnRecipes ? undefined : "container"}>
-                <h2 className={styles.title}>
+                <h2
+                    className={`${styles.title} ${
+                        isOwnRecipes ? styles.profileTitle : ""
+                    }`}
+                >
                     {isOwnRecipes ? `${totalRecipes} recipes` : "Recipes"}
                 </h2>
                 {!isOwnRecipes && (

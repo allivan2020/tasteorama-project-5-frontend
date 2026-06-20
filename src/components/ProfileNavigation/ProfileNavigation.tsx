@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import css from '@/app/(private)/profile/ProfileLayout.module.css';
+import css from './ProfileNavigation.module.css';
 
 const profileLinks = [
   { href: '/profile/own', label: 'My Recipes' },
