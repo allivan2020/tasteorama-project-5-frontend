@@ -11,6 +11,7 @@ import RecipesFilters from "../RecipesFilters/RecipesFilters";
 import { useRecipesQueryParamsStore } from "@/lib/store/recipesQueryParamsStore";
 import styles from "./RecipesList.module.css";
 import { Recipe, RecipesResponse } from "@/app/types/recipe";
+import NoRecipesResult from "../NoRecipesResult/NoRecipesResult";
 
 const PER_PAGE = 12;
 const PAGINATION_THRESHOLD = 4;
@@ -111,7 +112,9 @@ export const RecipesList = () => {
                     ))}
                 </ul>
 
-                {!usePagination && (
+                {totalRecipes === 0 && <NoRecipesResult /> }
+
+                {!usePagination && totalRecipes !== 0 && (
                     <div
                         style={{
                             display: "flex",
