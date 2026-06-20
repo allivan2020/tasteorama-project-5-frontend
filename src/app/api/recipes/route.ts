@@ -154,7 +154,7 @@ function getMockResponse(searchParams: URLSearchParams) {
     return {recipes, totalRecipes, totalPages, currentPage: page};
 }
 
-/* ========================================================= */
+
 
 export async function GET(req: Request) {
     const {searchParams} = new URL(req.url);

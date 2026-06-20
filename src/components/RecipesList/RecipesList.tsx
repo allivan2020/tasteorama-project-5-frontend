@@ -1,125 +1,140 @@
-'use client';
+"use client";
 
-import {useState} from 'react';
-import {useInfiniteQuery} from '@tanstack/react-query';
-import {getRecipes} from '@/lib/api/recipesApi';
-import {RecipeCard} from '@/components/RecipeCard/RecipeCard';
-import {LoadMoreBtn} from '@/components/LoadMoreBtn/LoadMoreBtn';
-import {Pagination} from '@/components/Pagination/Pagination';
-import styles from './RecipesList.module.css';
+import { useState, useMemo, useEffect } from "react";
+import toast from "react-hot-toast";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { getRecipes } from "@/lib/api/recipesApi";
+import { RecipeCard } from "@/components/RecipeCard/RecipeCard";
+import { LoadMoreBtn } from "@/components/LoadMoreBtn/LoadMoreBtn";
+import { Pagination } from "@/components/Pagination/Pagination";
+import RecipesFilters from "../RecipesFilters/RecipesFilters";
+import { useRecipesQueryParamsStore } from "@/lib/store/recipesQueryParamsStore";
+import styles from "./RecipesList.module.css";
+import { Recipe, RecipesResponse } from "@/app/types/recipe";
 
-const LIMIT = 12;
-const PAGINATION_THRESHOLD = 4; // показуємо пагінацію замість Load More від 4 сторінок
+const PER_PAGE = 12;
+const PAGINATION_THRESHOLD = 4;
 
 export const RecipesList = () => {
-    const [category, setCategory] = useState('');
-    const [ingredient, setIngredient] = useState('');
+    const { category, ingredient, search } = useRecipesQueryParamsStore();
+    const [page, setPage] = useState(1);
+    const [reachedEnd, setReachedEnd] = useState(false);
+    const queryClient = useQueryClient();
 
-    const {
-        data,
-        fetchNextPage,
-        hasNextPage,
-        isFetchingNextPage,
-        isFetching,
-    } = useInfiniteQuery({
-        queryKey: ['recipes', category, ingredient],
-        queryFn: ({pageParam = 1}) =>
-            getRecipes({page: pageParam, perPage: LIMIT, category, ingredient}),
-        initialPageParam: 1,
-        getNextPageParam: (lastPage) =>
-            lastPage.currentPage < lastPage.totalPages
-                ? lastPage.currentPage + 1
-                : undefined,
+    const [prevFilters, setPrevFilters] = useState({
+        category,
+        ingredient,
+        search,
     });
 
-    const recipes = data?.pages.flatMap((p) => p.recipes) ?? [];
-    const totalRecipes = data?.pages[0]?.totalRecipes ?? 0;
-    const totalPages = data?.pages[0]?.totalPages ?? 1;
-    const currentPage = data?.pages.length ?? 1;
-    const usePagination = totalPages >= PAGINATION_THRESHOLD;
+    if (
+        prevFilters.category !== category ||
+        prevFilters.ingredient !== ingredient ||
+        prevFilters.search !== search
+    ) {
+        setPrevFilters({ category, ingredient, search });
+        setPage(1);
+        setReachedEnd(false);
+    }
 
-    const handlePageChange = (page: number) => {
-        if (page > currentPage) {
-            fetchNextPage();
+    const { data, isFetching, isSuccess } = useQuery({
+        queryKey: ["recipes", page, category, ingredient, search],
+        queryFn: () =>
+            getRecipes({
+                page,
+                perPage: PER_PAGE,
+                category,
+                ingredient,
+                search,
+            }),
+        staleTime: 60_000,
+    });
+
+    const totalRecipes = data?.totalRecipes ?? 0;
+    const totalPages = data?.totalPages ?? 1;
+    const usePagination = totalPages >= PAGINATION_THRESHOLD;
+    const hasMore = page < totalPages;
+
+    const displayRecipes = useMemo(() => {
+        if (usePagination) return data?.recipes ?? [];
+
+        const all: Recipe[] = [];
+        for (let p = 1; p <= page; p++) {
+            const cached = queryClient.getQueryData<RecipesResponse>([
+                "recipes",
+                p,
+                category,
+                ingredient,
+                search,
+            ]);
+            if (cached?.recipes) all.push(...cached.recipes);
+        }
+        return all;
+    }, [data, page, category, ingredient, search, usePagination, queryClient]);
+
+    useEffect(() => {
+        if (isSuccess && search && data?.recipes.length === 0) {
+            toast.error(`No recipes found for "${search}"`);
+        }
+    }, [isSuccess, search, data]);
+
+    const handleLoadMore = () => {
+        if (hasMore) {
+            setPage((p) => p + 1);
+        } else {
+            setReachedEnd(true);
         }
     };
 
-    const handleResetFilters = () => {
-        setCategory('');
-        setIngredient('');
-    };
-
-    const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setCategory(e.target.value);
-    };
-
-    const handleIngredientChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setIngredient(e.target.value);
+    const handlePageChange = (newPage: number) => {
+        setPage(newPage);
+        window.scrollTo({ top: 0, behavior: "smooth" });
     };
 
     return (
         <section className={styles.section}>
             <div className="container">
-                <div className={styles.heading}>
-                    <div className={styles.counter}>
-                        <h1 className={styles.title}>Recipes</h1>
-                        <p className={styles.total}>{totalRecipes} recipes</p>
-                    </div>
+                <h2 className={styles.title}>Recipes</h2>
+                <RecipesFilters totalRecipes={totalRecipes} />
 
-                    <div className={styles.filters}>
-                        <button
-                            type="button"
-                            onClick={handleResetFilters}
-                            className={styles.resetButton}
-                        >
-                            Reset filters
-                        </button>
-                        <select
-                            value={category}
-                            onChange={handleCategoryChange}
-                            className={styles.filterSelect}
-                        >
-                            <option value="">Category</option>
-                            <option value="Breakfast">Breakfast</option>
-                            <option value="Main">Main</option>
-                            <option value="Soup">Soup</option>
-                            <option value="Salad">Salad</option>
-                            <option value="Sushi">Sushi</option>
-                        </select>
-                        <select
-                            value={ingredient}
-                            onChange={handleIngredientChange}
-                            className={styles.filterSelect}
-                        >
-                            <option value="">Ingredient</option>
-                            <option value="eggs">Eggs</option>
-                            <option value="salmon">Salmon</option>
-                            <option value="tomato">Tomato</option>
-                            <option value="mushrooms">Mushrooms</option>
-                        </select>
-                    </div>
-                </div>
-
-                {isFetching && !isFetchingNextPage && recipes.length === 0 && (
+                {isFetching && displayRecipes.length === 0 && (
                     <p className={styles.loading}>Loading...</p>
                 )}
 
                 <ul className={styles.list}>
-                    {recipes.map((recipe, index) => (
-                        <RecipeCard key={recipe._id} recipe={recipe} index={index}/>
+                    {displayRecipes.map((recipe, index) => (
+                        <RecipeCard
+                            key={recipe._id}
+                            recipe={recipe}
+                            index={index}
+                        />
                     ))}
                 </ul>
 
-                {hasNextPage && !usePagination && (
-                    <LoadMoreBtn
-                        onClick={fetchNextPage}
-                        isLoading={isFetchingNextPage}
-                    />
+                {!usePagination && (
+                    <div
+                        style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
+                            marginTop: 40,
+                            gap: 12,
+                        }}
+                    >
+                        {reachedEnd ? (
+                            <p className={styles.noMore}>No more recipes</p>
+                        ) : (
+                            <LoadMoreBtn
+                                onClick={handleLoadMore}
+                                isLoading={isFetching}
+                            />
+                        )}
+                    </div>
                 )}
 
-                {usePagination && (
+                {usePagination && totalPages > 1 && (
                     <Pagination
-                        currentPage={currentPage}
+                        currentPage={page}
                         totalPages={totalPages}
                         onPageChange={handlePageChange}
                     />

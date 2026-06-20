@@ -1,0 +1,452 @@
+/* ==========================================================================
+   1. БАЗОВА МОБІЛЬНА ВЕРСІЯ
+   ========================================================================== */
+
+.mainTitle {
+  font-size: 40px;
+  font-weight: 600;
+  color: #000;
+  margin-top: 48px;
+  margin-bottom: 16px;
+}
+
+.mainForm {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding-bottom: 48px;
+}
+
+.rightColumn {
+  order: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px !important;
+}
+
+.leftColumn {
+  order: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.dropzone {
+  position: relative;
+  width: 100%;
+  max-width: 361px;
+  height: 383px;
+  background-color: #9f9f9f;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.cameraMobile {
+  display: block;
+}
+
+.cameraDesktop {
+  display: none;
+}
+
+.formSection {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ingredientsSection {
+  gap: 32px;
+}
+
+.instructionsSection {
+  gap: 16px;
+}
+
+.sectionTitle {
+  font-size: 24px;
+  font-weight: 600;
+  color: #000;
+}
+
+/* Елементи форм */
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.rowGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  width: 100%;
+}
+
+.inputsRow {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}
+
+.btnRow {
+  display: flex;
+  width: 100%;
+}
+
+.label {
+  font-weight: 400;
+  font-size: 18px;
+  color: #000;
+}
+
+.input,
+.select,
+.textarea {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 12px 16px;
+  border: 1px solid #d9d9d9;
+  border-radius: 8px;
+  font-size: 16px;
+  outline: none;
+  background-color: #fff;
+  box-sizing: border-box;
+  resize: none;
+  overflow-y: hidden;
+  font-family: var(--font-family);
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+  border-color: #8b6e4e;
+}
+
+.inputError {
+  border-color: #ff4d4f;
+}
+
+.errorText {
+  color: #ff4d4f;
+  font-size: 14px;
+  margin-top: 5px;
+  display: block;
+  text-align: left;
+  width: 100%;
+}
+
+.select.selectPlaceholder {
+  color: #595d62;
+}
+
+.select option {
+  color: #000000;
+}
+
+.addIngredientBtn {
+  background-color: #9b6c43;
+  color: #fff;
+  padding: 12px 16px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100%;
+  height: 44px;
+}
+
+/* Список інгредієнтів */
+.listSection {
+  width: 100%;
+  max-width: 373px;
+  margin-top: 16px;
+}
+
+.listSection:not(:has(li)) {
+  display: none;
+}
+
+.listHeader,
+.listItem {
+  display: grid;
+  grid-template-columns: 1fr 120px 24px;
+  align-items: center;
+  width: 100%;
+}
+
+.listHeader {
+  gap: 4px;
+  border-bottom: 1px solid #c5c5c5;
+  padding-block: 16px;
+  padding-inline: 0px;
+}
+
+.headerName,
+.headerAmount {
+  font-weight: 600;
+  font-size: 16px;
+  color: #000000;
+}
+
+.ingredientsList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ingredientscontrolsBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.listItem {
+  gap: 4px;
+  border-bottom: 1px solid #c5c5c5;
+  padding-block: 16px;
+  padding-inline: 0px;
+}
+
+.itemName,
+.itemAmount {
+  font-size: 16px;
+  color: #000;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.removeBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 28px;
+}
+
+.removeBtn:hover {
+  opacity: 0.6;
+}
+
+.publishBtn {
+  background-color: #9b6c43;
+  color: #fff;
+  padding-block: 12px;
+  padding-inline: 16px;
+  font-size: 18px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  height: 44px;
+}
+
+.dropzoneLabel,
+.previewLabel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  position: relative;
+}
+
+.previewContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.deletePhotoBtn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 10;
+  background: none;
+  cursor: pointer;
+}
+
+.previewImage {
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+.hiddenInput {
+  display: none;
+}
+
+/* ==========================================================================
+   2. ПЛАНШЕТНА ВЕРСІЯ (Екрани від 768px)
+   ========================================================================== */
+
+@media (min-width: 768px) {
+  .formSection {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 32px;
+    width: 100%;
+  }
+
+  .mainTitle {
+    font-size: 48px;
+  }
+
+  .formSection .inputGroup {
+    margin-bottom: 0;
+    width: 100%;
+  }
+
+  .sectionTitle {
+    font-size: 32px;
+    line-height: 39px;
+  }
+
+  .rightColumn .sectionTitle {
+    line-height: 70px;
+  }
+
+  .instructionsSection {
+    gap: 16px;
+  }
+
+  .rowGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    width: 100%;
+  }
+
+  .rowGrid .inputGroup {
+    margin-bottom: 0;
+    width: 100%;
+  }
+
+  .inputsRow {
+    display: grid;
+    grid-template-columns: 431fr 249fr;
+    gap: 24px;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .btnRow {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+  }
+
+  .addIngredientBtn {
+    padding: 8px;
+    height: 36px;
+    width: 100%;
+    max-width: 249px;
+  }
+
+  .listSection {
+    width: 100%;
+    max-width: 431px;
+    margin-top: 0;
+  }
+
+  .listSection:not(:has(li)) {
+    display: block;
+  }
+
+  .listItem {
+    padding-block: 8px;
+  }
+
+  .dropzone {
+    max-width: 704px;
+  }
+}
+
+/* ==========================================================================
+   3. ДЕСКТОПНА ВЕРСІЯ (Екрани від 1440px і більше)
+   ========================================================================== */
+
+@media screen and (min-width: 1440px) {
+  .mainTitle {
+    margin-bottom: 40px;
+  }
+
+  .mainForm {
+    display: grid;
+    /* Ділимо екран на дві колонки: ліва ширша під інпути, права вужча під фото */
+    grid-template-columns: 809px 391px;
+    gap: 24px;
+    align-items: start;
+  }
+
+  .leftColumn {
+    order: unset;
+    gap: 72px;
+  }
+
+  .rowGrid {
+    display: grid;
+    grid-template-columns: 392px 392px;
+    gap: 24px;
+  }
+
+  .addIngredientBtn {
+    padding: 4px 8px;
+    height: 23px;
+    width: 100%;
+    max-width: 247px;
+    font-size: 12px;
+  }
+
+  .rightColumn {
+    order: unset;
+    top: 40px;
+  }
+
+  .dropzone {
+    width: 391px;
+    height: 374px;
+    max-width: none;
+    margin: 0;
+  }
+
+  .cameraMobile {
+    display: none;
+  }
+  
+  .cameraDesktop {
+    display: block;
+  }
+
+  .btnRow {
+    justify-content: flex-end;
+  }
+
+  .listSection {
+    width: 100%;
+    max-width: 332px;
+  }
+
+  .listItem,
+  .listHeader {
+    padding-block: 0px;
+  }
+}
