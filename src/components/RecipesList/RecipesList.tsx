@@ -112,7 +112,7 @@ export const RecipesList = () => {
                     ))}
                 </ul>
 
-                {totalRecipes === 0 && <NoRecipesResult /> }
+                {totalRecipes === 0 && !isFetching && <NoRecipesResult /> }
 
                 {!usePagination && totalRecipes !== 0 && (
                     <div
