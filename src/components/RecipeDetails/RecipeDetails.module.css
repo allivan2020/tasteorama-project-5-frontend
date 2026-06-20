@@ -1,12 +1,12 @@
 .section {
-  padding: 40px 0 64px;
+  padding: 24px 0 40px;
 }
 
 .title {
-  margin-bottom: 24px;
+  margin-bottom: 16px;
   color: var(--black);
   font-family: var(--font-family);
-  font-size: 32px;
+  font-size: 24px;
   font-weight: 700;
   line-height: 1.2;
 }
@@ -16,8 +16,8 @@
   justify-content: center;
   overflow: hidden;
   width: 100%;
-  min-height: 260px;
-  margin-bottom: 32px;
+  min-height: 172px;
+  margin-bottom: 16px;
   border-radius: 8px;
   background-color: #282b2f;
 }
@@ -32,7 +32,7 @@
 .imagePlaceholder {
   width: 100%;
   max-width: 586px;
-  min-height: 260px;
+  min-height: 172px;
   background:
     linear-gradient(135deg, rgba(227, 202, 165, 0.25), transparent),
     var(--darck-gray);
@@ -40,23 +40,24 @@
 
 .content {
   display: grid;
-  gap: 32px;
+  gap: 24px;
 }
 
 .mainColumn {
   display: grid;
-  gap: 32px;
+  gap: 24px;
+  order: 2;
 }
 
 .textBlock {
   display: grid;
-  gap: 12px;
+  gap: 8px;
 }
 
 .textBlock h2 {
   color: var(--black);
   font-family: var(--font-family);
-  font-size: 22px;
+  font-size: 24px;
   font-weight: 700;
   line-height: 1.2;
 }
@@ -65,14 +66,14 @@
 .ingredients {
   color: var(--black);
   font-family: var(--font-family);
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 400;
   line-height: 1.55;
 }
 
 .ingredients {
   display: grid;
-  gap: 8px;
+  gap: 6px;
 }
 
 .ingredients li {
@@ -91,33 +92,34 @@
 
 .steps {
   display: grid;
-  gap: 16px;
+  gap: 12px;
 }
 
 .aside {
   display: grid;
   align-content: start;
-  gap: 24px;
+  gap: 16px;
+  order: 1;
 }
 
 .infoCard {
-  padding: 24px;
+  padding: 16px;
   border-radius: 12px;
   background-color: var(--light-beige);
 }
 
 .infoCard h2 {
-  margin-bottom: 16px;
+  margin-bottom: 12px;
   color: var(--black);
   font-family: var(--font-family);
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 700;
   line-height: 1.2;
 }
 
 .infoList {
   display: grid;
-  gap: 12px;
+  gap: 8px;
 }
 
 .infoList div {
@@ -129,7 +131,7 @@
 .infoList dd {
   color: var(--black);
   font-family: var(--font-family);
-  font-size: 13px;
+  font-size: 10px;
   line-height: 1.45;
 }
 
@@ -144,15 +146,59 @@
 
   .title {
     font-size: 36px;
+    margin-bottom: 24px;
   }
 
   .imageFrame {
     min-height: 390px;
+    margin-bottom: 32px;
   }
 
   .image,
   .imagePlaceholder {
     min-height: 390px;
+  }
+
+  .aside {
+    grid-template-columns: minmax(0, 1fr) 240px;
+    align-items: start;
+    gap: 24px;
+  }
+
+  .content,
+  .mainColumn {
+    gap: 32px;
+  }
+
+  .textBlock {
+    gap: 12px;
+  }
+
+  .textBlock h2 {
+    font-size: 22px;
+  }
+
+  .textBlock p,
+  .ingredients {
+    font-size: 14px;
+  }
+
+  .infoCard {
+    padding: 24px;
+  }
+
+  .infoCard h2 {
+    font-size: 18px;
+    margin-bottom: 16px;
+  }
+
+  .infoList {
+    gap: 12px;
+  }
+
+  .infoList dt,
+  .infoList dd {
+    font-size: 13px;
   }
 }
 
@@ -160,6 +206,15 @@
   .content {
     grid-template-columns: minmax(0, 1fr) 392px;
     gap: 72px;
+  }
+
+  .mainColumn,
+  .aside {
+    order: initial;
+  }
+
+  .aside {
+    grid-template-columns: 1fr;
   }
 
   .imageFrame {
