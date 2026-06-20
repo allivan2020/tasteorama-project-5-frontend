@@ -3,7 +3,7 @@
 import { useState, useMemo, useEffect } from "react";
 import toast from "react-hot-toast";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { getRecipes } from "@/lib/api/recipesApi";
+import { getOwnRecipes, getRecipes } from "@/lib/api/recipesApi";
 import { RecipeCard } from "@/components/RecipeCard/RecipeCard";
 import { LoadMoreBtn } from "@/components/LoadMoreBtn/LoadMoreBtn";
 import { Pagination } from "@/components/Pagination/Pagination";
@@ -16,44 +16,71 @@ import NoRecipesResult from "../NoRecipesResult/NoRecipesResult";
 const PER_PAGE = 12;
 const PAGINATION_THRESHOLD = 4;
 
-export const RecipesList = () => {
+type Props = {
+    recipeType?: "all" | "own";
+};
+
+export const RecipesList = ({ recipeType = "all" }: Props) => {
+    const isOwnRecipes = recipeType === "own";
     const { category, ingredient, search } = useRecipesQueryParamsStore();
+    const activeCategory = isOwnRecipes ? "" : category;
+    const activeIngredient = isOwnRecipes ? "" : ingredient;
+    const activeSearch = isOwnRecipes ? "" : search;
     const [page, setPage] = useState(1);
     const [reachedEnd, setReachedEnd] = useState(false);
     const queryClient = useQueryClient();
 
     const [prevFilters, setPrevFilters] = useState({
-        category,
-        ingredient,
-        search,
+        category: activeCategory,
+        ingredient: activeIngredient,
+        search: activeSearch,
     });
 
     if (
-        prevFilters.category !== category ||
-        prevFilters.ingredient !== ingredient ||
-        prevFilters.search !== search
+        prevFilters.category !== activeCategory ||
+        prevFilters.ingredient !== activeIngredient ||
+        prevFilters.search !== activeSearch
     ) {
-        setPrevFilters({ category, ingredient, search });
+        setPrevFilters({
+            category: activeCategory,
+            ingredient: activeIngredient,
+            search: activeSearch,
+        });
         setPage(1);
         setReachedEnd(false);
     }
 
     const { data, isFetching, isSuccess } = useQuery({
-        queryKey: ["recipes", page, category, ingredient, search],
-        queryFn: () =>
-            getRecipes({
+        queryKey: [
+            isOwnRecipes ? "ownRecipes" : "recipes",
+            page,
+            activeCategory,
+            activeIngredient,
+            activeSearch,
+        ],
+        queryFn: () => {
+            if (isOwnRecipes) {
+                return getOwnRecipes({
+                    page,
+                    perPage: PER_PAGE,
+                });
+            }
+
+            return getRecipes({
                 page,
                 perPage: PER_PAGE,
-                category,
-                ingredient,
-                search,
-            }),
+                category: activeCategory,
+                ingredient: activeIngredient,
+                search: activeSearch,
+            });
+        },
         staleTime: 60_000,
     });
 
     const totalRecipes = data?.totalRecipes ?? 0;
     const totalPages = data?.totalPages ?? 1;
-    const usePagination = totalPages >= PAGINATION_THRESHOLD;
+    const usePagination =
+        !isOwnRecipes && totalPages >= PAGINATION_THRESHOLD;
     const hasMore = page < totalPages;
 
     const displayRecipes = useMemo(() => {
@@ -62,22 +89,31 @@ export const RecipesList = () => {
         const all: Recipe[] = [];
         for (let p = 1; p <= page; p++) {
             const cached = queryClient.getQueryData<RecipesResponse>([
-                "recipes",
+                isOwnRecipes ? "ownRecipes" : "recipes",
                 p,
-                category,
-                ingredient,
-                search,
+                activeCategory,
+                activeIngredient,
+                activeSearch,
             ]);
             if (cached?.recipes) all.push(...cached.recipes);
         }
         return all;
-    }, [data, page, category, ingredient, search, usePagination, queryClient]);
+    }, [
+        data,
+        page,
+        activeCategory,
+        activeIngredient,
+        activeSearch,
+        isOwnRecipes,
+        usePagination,
+        queryClient,
+    ]);
 
     useEffect(() => {
-        if (isSuccess && search && data?.recipes.length === 0) {
-            toast.error(`No recipes found for "${search}"`);
+        if (isSuccess && activeSearch && data?.recipes.length === 0) {
+            toast.error(`No recipes found for "${activeSearch}"`);
         }
-    }, [isSuccess, search, data]);
+    }, [isSuccess, activeSearch, data]);
 
     const handleLoadMore = () => {
         if (hasMore) {
@@ -94,9 +130,13 @@ export const RecipesList = () => {
 
     return (
         <section className={styles.section}>
-            <div className="container">
-                <h2 className={styles.title}>Recipes</h2>
-                <RecipesFilters totalRecipes={totalRecipes} />
+            <div className={isOwnRecipes ? undefined : "container"}>
+                <h2 className={styles.title}>
+                    {isOwnRecipes ? `${totalRecipes} recipes` : "Recipes"}
+                </h2>
+                {!isOwnRecipes && (
+                    <RecipesFilters totalRecipes={totalRecipes} />
+                )}
 
                 {isFetching && displayRecipes.length === 0 && (
                     <p className={styles.loading}>Loading...</p>
@@ -108,13 +148,29 @@ export const RecipesList = () => {
                             key={recipe._id}
                             recipe={recipe}
                             index={index}
+                            showFavoriteButton={!isOwnRecipes}
                         />
                     ))}
                 </ul>
 
                 {totalRecipes === 0 && <NoRecipesResult /> }
 
-                {!usePagination && totalRecipes !== 0 && (
+                {isOwnRecipes && hasMore && (
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            marginTop: 40,
+                        }}
+                    >
+                        <LoadMoreBtn
+                            onClick={handleLoadMore}
+                            isLoading={isFetching}
+                        />
+                    </div>
+                )}
+
+                {!isOwnRecipes && !usePagination && totalRecipes !== 0 && (
                     <div
                         style={{
                             display: "flex",
@@ -135,7 +191,7 @@ export const RecipesList = () => {
                     </div>
                 )}
 
-                {usePagination && totalPages > 1 && (
+                {!isOwnRecipes && usePagination && totalPages > 1 && (
                     <Pagination
                         currentPage={page}
                         totalPages={totalPages}
