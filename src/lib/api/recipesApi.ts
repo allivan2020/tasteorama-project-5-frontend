@@ -1,5 +1,6 @@
 import { nextServer } from './api';
 import {RecipeDetail, RecipeDetailIngredient, RecipesParams, RecipesResponse} from "@/app/types/recipe";
+import { Ingredient } from '@/app/types/ingredient';
 
 const FALLBACK_IMAGES = [
   '/recipe-1.jpg',
@@ -197,6 +198,40 @@ function normalizeRecipeDetail(value: unknown): RecipeDetail | null {
   };
 }
 
+async function getIngredientsById(
+  backendUrl: string,
+): Promise<Map<string, string>> {
+  const response = await fetch(`${backendUrl}/ingredients`, {
+    next: { revalidate: 3600 },
+  });
+
+  if (!response.ok) {
+    return new Map();
+  }
+
+  const ingredients = (await response.json()) as Ingredient[];
+
+  return new Map(
+    ingredients.map((ingredient) => [ingredient._id, ingredient.name]),
+  );
+}
+
+function resolveIngredientNames(
+  recipe: RecipeDetail,
+  ingredientsById: Map<string, string>,
+): RecipeDetail {
+  return {
+    ...recipe,
+    ingredients: recipe.ingredients.map((ingredient) => ({
+      ...ingredient,
+      name:
+        ingredient.id && ingredientsById.has(ingredient.id)
+          ? ingredientsById.get(ingredient.id) ?? ingredient.name
+          : ingredient.name,
+    })),
+  };
+}
+
 export const getRecipeById = async (
   recipeId: string,
 ): Promise<RecipeDetail | null> => {
@@ -204,7 +239,7 @@ export const getRecipeById = async (
     return null;
   }
 
-  const backendUrl = process.env.BACKEND_URL?.replace(/\/$/, '');
+  const backendUrl = process.env.BACKEND_URL?.trim().replace(/\/$/, '');
 
   if (!backendUrl) {
     return null;
@@ -226,7 +261,15 @@ export const getRecipeById = async (
       return null;
     }
 
-    return normalizeRecipeDetail(await response.json());
+    const recipe = normalizeRecipeDetail(await response.json());
+
+    if (!recipe) {
+      return null;
+    }
+
+    const ingredientsById = await getIngredientsById(backendUrl);
+
+    return resolveIngredientNames(recipe, ingredientsById);
   } catch {
     return null;
   }

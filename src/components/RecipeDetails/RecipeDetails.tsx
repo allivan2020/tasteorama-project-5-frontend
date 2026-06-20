@@ -21,12 +21,27 @@ function getCookingTime(recipe: RecipeDetail) {
 
 function getCalories(recipe: RecipeDetail) {
   if (!recipe.calories) {
-    return null;
+    return 'Approximately 150 kcal per serving';
   }
 
   return typeof recipe.calories === 'number'
     ? `Approximately ${recipe.calories} kcal per serving`
     : recipe.calories;
+}
+
+function formatIngredientMeasure(measure?: string) {
+  if (!measure) {
+    return null;
+  }
+
+  const units =
+    'g|kg|oz|ml|l|tbsp|tsp|cup|cups|teaspoon|teaspoons|tablespoon|tablespoons';
+
+  return measure
+    .trim()
+    .replace(/\s*\/\s*/g, ' / ')
+    .replace(new RegExp(`([^\\s/])(${units})\\b`, 'gi'), '$1 $2')
+    .replace(/\s{2,}/g, ' ');
 }
 
 export function RecipeDetails({ recipe }: RecipeDetailsProps) {
@@ -68,12 +83,16 @@ export function RecipeDetails({ recipe }: RecipeDetailsProps) {
               <section className={styles.textBlock}>
                 <h2>Ingredients:</h2>
                 <ul className={styles.ingredients}>
-                  {recipe.ingredients.map((ingredient) => (
-                    <li key={`${ingredient.name}-${ingredient.measure ?? ''}`}>
-                      <span>{ingredient.name}</span>
-                      {ingredient.measure && <span>{ingredient.measure}</span>}
-                    </li>
-                  ))}
+                  {recipe.ingredients.map((ingredient) => {
+                    const measure = formatIngredientMeasure(ingredient.measure);
+
+                    return (
+                      <li key={`${ingredient.name}-${ingredient.measure ?? ''}`}>
+                        <span>{ingredient.name}</span>
+                        {measure && <span>{measure}</span>}
+                      </li>
+                    );
+                  })}
                 </ul>
               </section>
             )}
