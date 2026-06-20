@@ -49,6 +49,10 @@ export function RecipeDetails({ recipe }: RecipeDetailsProps) {
   const cookingTime = getCookingTime(recipe);
   const calories = getCalories(recipe);
 
+  const instructions = recipe.instructions
+      .split(/\r?\n/)
+      .filter(Boolean);
+
   return (
     <section className={styles.section}>
       <div className="container">
@@ -101,8 +105,8 @@ export function RecipeDetails({ recipe }: RecipeDetailsProps) {
               <section className={styles.textBlock}>
                 <h2>Preparation Steps:</h2>
                 <div className={styles.steps}>
-                  {recipe.instructions.map((step, index) => (
-                    <p key={`${index}-${step}`}>{step}</p>
+                  {instructions.map((step, index) => (
+                      <p key={index}>{step}</p>
                   ))}
                 </div>
               </section>
@@ -111,7 +115,7 @@ export function RecipeDetails({ recipe }: RecipeDetailsProps) {
 
           <aside className={styles.aside} aria-label="Recipe information">
             <div className={styles.infoCard}>
-              <h2>General informations</h2>
+              <h2>General information</h2>
               <dl className={styles.infoList}>
                 {recipe.category && (
                   <div>

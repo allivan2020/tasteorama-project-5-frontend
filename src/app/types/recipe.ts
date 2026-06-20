@@ -40,7 +40,7 @@ export type RecipeDetail = {
     category: string;
     owner?: string;
     area?: string;
-    instructions: string[];
+    instructions: string;
     thumb?: string;
     image?: string;
     time?: string | number;
