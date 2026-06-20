@@ -164,6 +164,18 @@
   height: 44px;
 }
 
+.addIngredientBtn:hover,
+.addIngredientBtn:focus {
+  background-color: #6d554b;
+}
+
+.addIngredientBtn:active {
+  box-shadow:
+    0 0 0 6px rgba(78, 70, 180, 0.12),
+    0 0 0 2px #fff;
+  background-color: #9b6c43;
+}
+
 /* Список інгредієнтів */
 .listSection {
   width: 100%;
@@ -254,6 +266,27 @@
   cursor: pointer;
   width: 100%;
   height: 44px;
+}
+
+.publishBtn:hover,
+.publishBtn:focus {
+  background-color: #6d554b;
+}
+
+.publishBtn:active {
+  box-shadow:
+    0 0 0 6px rgba(78, 70, 180, 0.12),
+    0 0 0 2px #fff;
+  background-color: #9b6c43;
+}
+
+.publishBtn:disabled {
+  box-shadow:
+    0 0 0 6px rgba(78, 70, 180, 0.12),
+    0 0 0 2px #fff;
+  background: #9b6c43;
+  opacity: 0.3;
+  cursor: none;
 }
 
 .dropzoneLabel,
@@ -431,7 +464,7 @@
   .cameraMobile {
     display: none;
   }
-  
+
   .cameraDesktop {
     display: block;
   }
