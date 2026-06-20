@@ -21,9 +21,14 @@ const FALLBACK_IMAGES = [
 type Props = {
     recipe: Recipe;
     index?: number;
+    showFavoriteButton?: boolean;
 };
 
-export const RecipeCard = ({recipe, index = 0}: Props) => {
+export const RecipeCard = ({
+    recipe,
+    index = 0,
+    showFavoriteButton = true,
+}: Props) => {
     const imageSrc =
         recipe.thumb || FALLBACK_IMAGES[index % FALLBACK_IMAGES.length];
 
@@ -62,7 +67,9 @@ export const RecipeCard = ({recipe, index = 0}: Props) => {
                     Learn more
                 </Link>
 
-                <FavoriteRecipeButton recipeId={recipe._id}/>
+                {showFavoriteButton && (
+                    <FavoriteRecipeButton recipeId={recipe._id}/>
+                )}
             </div>
         </li>
     );

@@ -1,5 +1,6 @@
 import {notFound} from 'next/navigation';
 import {SavedRecipes} from "@/components/SavedRecipes/SavedRecipes";
+import {RecipesList} from "@/components/RecipesList/RecipesList";
 
 type Props = {
     params: Promise<{ recipeType: string }>;
@@ -21,5 +22,6 @@ export default async function RecipeTypePage({params}: Props) {
     if (recipeType === 'favorites') {
         return <SavedRecipes/>
     }
-    return null;
+
+    return <RecipesList recipeType="own"/>
 }

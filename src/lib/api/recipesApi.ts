@@ -32,6 +32,16 @@ export const getRecipes = async (
   return data;
 };
 
+export const getOwnRecipes = async (
+  params: Pick<RecipesParams, 'page' | 'perPage'> = {},
+): Promise<RecipesResponse> => {
+  const { data } = await nextServer.get<RecipesResponse>('/recipes/own', {
+    params,
+  });
+
+  return data;
+};
+
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null;
 }
