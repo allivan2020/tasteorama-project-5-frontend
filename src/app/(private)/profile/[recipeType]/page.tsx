@@ -12,12 +12,12 @@ function isProfileRecipeType(
   return (PROFILE_RECIPE_TYPES as readonly string[]).includes(recipeType);
 }
 
-export default async function RecipeTypePage({
+export default function RecipeTypePage({
   params,
 }: {
-  params: Promise<{ recipeType: string }>;
+  params: { recipeType: string };
 }) {
-  const { recipeType } = await params;
+  const { recipeType } = params;
 
   if (!isProfileRecipeType(recipeType)) {
     notFound();
