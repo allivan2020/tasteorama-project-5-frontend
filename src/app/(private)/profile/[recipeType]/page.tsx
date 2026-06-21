@@ -7,19 +7,16 @@ const PROFILE_RECIPE_TYPES = ['own', 'favorites'] as const;
 type ProfileRecipeType = (typeof PROFILE_RECIPE_TYPES)[number];
 
 function isProfileRecipeType(
-  recipeType: string,
+    recipeType: string,
 ): recipeType is ProfileRecipeType {
   return (PROFILE_RECIPE_TYPES as readonly string[]).includes(recipeType);
 }
 
-export default async function RecipeTypePage({
-  params,
-}: {
+
+export default async function RecipeTypePage({params,}: {
   params: Promise<{ recipeType: string }>;
 }) {
-  const resolvedParams = await params;
-
-  const { recipeType } = resolvedParams;
+  const { recipeType } = await params;
 
   if (!isProfileRecipeType(recipeType)) {
     notFound();
