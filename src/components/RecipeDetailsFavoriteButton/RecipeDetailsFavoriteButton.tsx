@@ -28,16 +28,20 @@ export function RecipeDetailsFavoriteButton({
   const openModal = useAuthModalStore((state) => state.openModal);
   const [savedOverride, setSavedOverride] = useState<boolean | null>(null);
 
-  const { data: favorites = [] } = useQuery({
+  const { data } = useQuery({
     queryKey: ['favoriteRecipes'],
-    queryFn: ()=> getFavoriteRecipes(),
+    queryFn: () => getFavoriteRecipes({
+      page: 1,
+      perPage: 10000,
+    }),
     enabled: isAuthenticated,
   });
 
   const isSavedFromApi = useMemo(
-    () => favorites.some((recipe) => recipe._id === recipeId),
-    [favorites, recipeId],
+      () => data?.recipes.some((recipe) => recipe._id === recipeId) ?? false,
+      [data, recipeId],
   );
+
   const isSaved = savedOverride ?? isSavedFromApi;
 
   const mutation = useMutation({
