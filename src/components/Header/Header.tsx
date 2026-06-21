@@ -82,8 +82,8 @@ export const Header = () => {
 
         <nav className={`${styles.nav} ${isAuth ? styles.auth : styles.guest}`}>
           <Link
-            href="/"
-            className={`${pathname === "/" ? styles.active : ""} ${styles.recipesLink}`}
+            href="/recipes"
+            className={`${pathname.startsWith("/recipes") ? styles.active : ""} ${styles.recipesLink}`}
           >
             Recipes
           </Link>
@@ -92,14 +92,16 @@ export const Header = () => {
             <>
               <Link
                 href="/profile"
-                className={pathname === "/profile" ? styles.active : ""}
+                className={pathname.startsWith("/profile") ? styles.active : ""}
               >
                 My Profile
               </Link>
 
               <Link
                 href="/add-recipe"
-                className={pathname === "/add-recipe" ? styles.active : ""}
+                className={`${styles.addRecipeBtn} ${
+                  pathname === "/add-recipe" ? styles.active : ""
+                }`}
               >
                 Add Recipe
               </Link>
@@ -211,7 +213,7 @@ export const Header = () => {
             </div>
 
             <div className={styles.mobileContent}>
-              <Link href="/" onClick={() => setIsMenuOpen(false)}>
+              <Link href="/recipes" onClick={() => setIsMenuOpen(false)}>
                 Recipes
               </Link>
 
@@ -221,7 +223,11 @@ export const Header = () => {
                     My Profile
                   </Link>
 
-                  <Link href="/add-recipe" onClick={() => setIsMenuOpen(false)}>
+                  <Link
+                    href="/add-recipe"
+                    className={styles.mobileActionBtn}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
                     Add Recipe
                   </Link>
 
