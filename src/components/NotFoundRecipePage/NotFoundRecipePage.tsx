@@ -21,7 +21,14 @@ export function NotFoundRecipePage() {
             <h1>404</h1>
             <p>Recipe not found</p>
             <Link href="/" className={styles.link}>
-              Back to Home
+              <svg
+                className={styles.icon}
+                aria-hidden="true"
+                focusable="false"
+              >
+                <use href="/icons/left-short.svg#icon-left-short" />
+              </svg>
+              <span>Back to Home</span>
             </Link>
           </div>
         </div>
