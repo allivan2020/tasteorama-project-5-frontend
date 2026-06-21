@@ -163,7 +163,7 @@ export const RecipesList = ({ recipeType = "all" }: Props) => {
                 isOwnRecipes ? styles.profileSection : ""
             }`}
         >
-            <div className={isOwnRecipes ? undefined : "container"}>
+            <div className={isOwnRecipes || isFavoriteRecipes ? undefined : "container"}>
                 <h2
                     className={`${styles.title} ${
                         isOwnRecipes ? styles.profileTitle : ""
