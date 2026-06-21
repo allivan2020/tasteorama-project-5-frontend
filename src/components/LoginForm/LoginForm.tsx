@@ -38,6 +38,7 @@ export default function LoginForm() {
             if (res) {
                 toast.success('Login successful!');
                 setUser(res);
+                document.cookie = 'isAuth=true; path=/; max-age=86400';
                 router.push('/');
             }
         },

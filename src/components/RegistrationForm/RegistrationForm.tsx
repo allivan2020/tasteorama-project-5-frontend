@@ -43,6 +43,7 @@ const RegistrationForm = () => {
             if (res) {
                 setUser(res.newUser);
                 toast.success('Registration successful!');
+                document.cookie = 'isAuth=true; path=/; max-age=86400';
                 router.push('/');
             }
         },
