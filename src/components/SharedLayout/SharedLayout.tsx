@@ -30,7 +30,7 @@ export const SharedLayout = ({ children }: { children: React.ReactNode }) => {
       style={{
         display: 'flex',
         flexDirection: 'column',
-        height: '100dvh',
+        minHeight: '100dvh',
       }}
     >
       <Header />
@@ -40,6 +40,7 @@ export const SharedLayout = ({ children }: { children: React.ReactNode }) => {
           flex: 1,
           minHeight: 0,
           overflowY: 'auto',
+          marginTop: '64px',
         }}
       >
         {children}
