@@ -25,6 +25,8 @@ export const Header = () => {
       // навіть якщо бекенд впаде — чистимо локальний стан
       console.error("Logout error:", e);
     } finally {
+      document.cookie =
+        'isAuth=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC';
       clearAuth();
       router.push("/");
     }
