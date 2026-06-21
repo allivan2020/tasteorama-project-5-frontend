@@ -12,6 +12,7 @@ function isProfileRecipeType(
   return (PROFILE_RECIPE_TYPES as readonly string[]).includes(recipeType);
 }
 
+
 export default async function RecipeTypePage({params,}: {
   params: Promise<{ recipeType: string }>;
 }) {

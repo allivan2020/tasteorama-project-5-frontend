@@ -1,6 +1,9 @@
 .header {
+    height: 64px;
     width: 100%;
     background-color: var(--darck-brown);
+    z-index: 100;
+    position: fixed;
 }
 
 /*  MOBILE 320-393  */
