@@ -6,7 +6,6 @@
   display: grid;
   justify-items: center;
   padding: 24px 0;
-  border: 2px solid #1a9fff;
 }
 
 .image {
@@ -43,6 +42,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 8px;
   min-width: 212px;
   min-height: 48px;
   border-radius: 8px;
@@ -52,6 +52,14 @@
   font-size: 14px;
   font-weight: 600;
   line-height: 1.2;
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+  color: currentColor;
+  fill: currentColor;
+  flex-shrink: 0;
 }
 
 .link:hover,
