@@ -1,6 +1,6 @@
 import { nextServer } from './api';
 import { User } from '@/app/types/user';
-import { Recipe } from '@/app/types/recipe';
+import {Recipe, RecipesParams, RecipesResponse} from '@/app/types/recipe';
 import { Category } from '@/app/types/categories';
 import { Ingredient } from '@/app/types/ingredient';
 import { useAuthStore } from "@/lib/store/authStore";
@@ -63,18 +63,20 @@ export const getProfile = async (): Promise<User> => {
   return data;
 };
 
-export const getFavoriteRecipes = async ( category?: string, ingredient?: string) => {
-  const { data } = await nextServer.get<{ recipes: Recipe[] }>(
-    '/recipes/favorites',
-    {
-        params: {
-            category,
-            ingredient,
-        },
-        withCredentials: true },
+export const getFavoriteRecipes = async (
+    params: RecipesParams = {},
+): Promise<RecipesResponse> => {
+  const { data } = await nextServer.get<RecipesResponse>(
+      '/recipes/favorites',
+      {
+        params,
+        withCredentials: true,
+      },
   );
-  return data.recipes;
+
+  return data;
 };
+
 
 export const addFavoriteRecipe = async (recipeId: string) => {
   const { data } = await nextServer.post(

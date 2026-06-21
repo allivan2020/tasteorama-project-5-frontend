@@ -12,16 +12,18 @@ import { useRecipesQueryParamsStore } from "@/lib/store/recipesQueryParamsStore"
 import styles from "./RecipesList.module.css";
 import { Recipe, RecipesResponse } from "@/app/types/recipe";
 import NoRecipesResult from "../NoRecipesResult/NoRecipesResult";
+import {getFavoriteRecipes} from "@/lib/api/clientApi";
 
 const PER_PAGE = 12;
 const PAGINATION_THRESHOLD = 4;
 
 type Props = {
-    recipeType?: "all" | "own";
+    recipeType?: "all" | "own" | 'favorites';
 };
 
 export const RecipesList = ({ recipeType = "all" }: Props) => {
     const isOwnRecipes = recipeType === "own";
+    const isFavoriteRecipes = recipeType === 'favorites';
     const { category, ingredient, search } = useRecipesQueryParamsStore();
     const activeCategory = isOwnRecipes ? "" : category;
     const activeIngredient = isOwnRecipes ? "" : ingredient;
@@ -50,9 +52,16 @@ export const RecipesList = ({ recipeType = "all" }: Props) => {
         setReachedEnd(false);
     }
 
+    const queryBaseKey =
+        isOwnRecipes
+            ? "ownRecipes"
+            : isFavoriteRecipes
+                ? "favoriteRecipes"
+                : "recipes";
+
     const { data, isFetching, isSuccess, isError } = useQuery({
         queryKey: [
-            isOwnRecipes ? "ownRecipes" : "recipes",
+            queryBaseKey,
             page,
             activeCategory,
             activeIngredient,
@@ -63,6 +72,15 @@ export const RecipesList = ({ recipeType = "all" }: Props) => {
                 return getOwnRecipes({
                     page,
                     perPage: PER_PAGE,
+                });
+            }
+
+            if (isFavoriteRecipes) {
+                return getFavoriteRecipes({
+                    page,
+                    perPage: PER_PAGE,
+                    category: activeCategory,
+                    ingredient: activeIngredient,
                 });
             }
 
@@ -92,7 +110,7 @@ export const RecipesList = ({ recipeType = "all" }: Props) => {
         const all: Recipe[] = [];
         for (let p = 1; p <= page; p++) {
             const cached = queryClient.getQueryData<RecipesResponse>([
-                isOwnRecipes ? "ownRecipes" : "recipes",
+                queryBaseKey,
                 p,
                 activeCategory,
                 activeIngredient,
