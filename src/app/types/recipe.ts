@@ -14,7 +14,7 @@ export type Recipe = {
     thumb: string;
     time: string;
     ingredients: Ingredient[];
-    calories?: number;
+    calories?: number | null;
 };
 
 export type RecipesResponse = {
@@ -46,7 +46,7 @@ export type RecipeDetail = {
     time?: string | number;
     cookingTime?: string | number;
     ingredients: RecipeDetailIngredient[];
-    calories?: string | number | null;
+    calories?: number | null;
 };
 
 export type RecipeDetailIngredient = {

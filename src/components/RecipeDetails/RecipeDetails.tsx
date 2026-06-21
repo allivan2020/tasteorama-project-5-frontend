@@ -20,13 +20,11 @@ function getCookingTime(recipe: RecipeDetail) {
 }
 
 function getCalories(recipe: RecipeDetail) {
-  if (!recipe.calories) {
-    return 'Approximately 150 kcal per serving';
+  if (recipe.calories == null) {
+    return null;
   }
 
-  return typeof recipe.calories === 'number'
-    ? `Approximately ${recipe.calories} kcal per serving`
-    : recipe.calories;
+  return `Approximately ${recipe.calories} kcal per serving`;
 }
 
 function formatIngredientMeasure(measure?: string) {

@@ -30,7 +30,13 @@ const recipeValidationSchema = Yup.object({
   title: Yup.string().max(64, "Max 64 characters").required("Required"),
   description: Yup.string().max(200, "Max 200 characters").required("Required"),
   time: Yup.number().min(1).max(360).required("Required"),
-  cals: Yup.number().min(1).max(10000).notRequired(),
+  calories: Yup.number()
+    .transform((value, originalValue) =>
+      originalValue === "" ? undefined : value,
+    )
+    .min(0, "Minimum value is 0")
+    .max(10000, "Maximum value is 10000")
+    .optional(),
   category: Yup.string().required("Required"),
   thumb: Yup.mixed().nullable(),
   instructions: Yup.string()
@@ -60,7 +66,7 @@ export default function AddRecipePage() {
       title: "",
       description: "",
       time: "",
-      cals: "",
+      calories: "",
       category: "",
       instructions: "",
       thumb: null,
@@ -83,7 +89,9 @@ export default function AddRecipePage() {
         formData.append("instructions", values.instructions);
         formData.append("description", values.description);
         formData.append("time", values.time);
-        formData.append("cals", values.cals || "0");
+        if (values.calories !== "") {
+          formData.append("calories", String(values.calories));
+        }
 
         const ingredientsForBackend = recipeIngredients.map((item) => ({
           id: item.ingredient,
@@ -311,15 +319,15 @@ export default function AddRecipePage() {
                 <label className={styles.label}>Calories</label>
                 <input
                   type="text"
-                  name="cals"
+                  name="calories"
                   placeholder="150"
-                  className={`${styles.input} ${formik.touched.cals && formik.errors.cals ? styles.inputError : ""}`}
-                  value={formik.values.cals}
+                  className={`${styles.input} ${formik.touched.calories && formik.errors.calories ? styles.inputError : ""}`}
+                  value={formik.values.calories}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                 />
-                {formik.touched.cals && formik.errors.cals && (
-                  <p className={styles.errorText}>{formik.errors.cals}</p>
+                {formik.touched.calories && formik.errors.calories && (
+                  <p className={styles.errorText}>{formik.errors.calories}</p>
                 )}
               </div>
               {/* Category Select */}

@@ -59,7 +59,9 @@ export const RecipeCard = ({
                 </div>
 
                 <p className={styles.recipeDescription}>{recipe.description}</p>
-                <p className={styles.recipeCalories}> ~ {recipe.calories ? `${recipe.calories} cals` : "150 cals"}</p>
+                <p className={styles.recipeCalories}>
+                    {recipe.calories != null ? `~ ${recipe.calories} cals` : "—"}
+                </p>
             </Link>
 
             <div className={styles.actions}>
