@@ -1,5 +1,4 @@
 import { notFound } from 'next/navigation';
-import { SavedRecipes } from '@/components/SavedRecipes/SavedRecipes';
 import { RecipesList } from '@/components/RecipesList/RecipesList';
 
 const PROFILE_RECIPE_TYPES = ['own', 'favorites'] as const;
@@ -23,7 +22,7 @@ export default async function RecipeTypePage({params,}: {
   }
 
   if (recipeType === 'favorites') {
-    return <SavedRecipes />;
+    return <RecipesList recipeType="favorites" />;
   }
 
   return <RecipesList recipeType="own" />;
