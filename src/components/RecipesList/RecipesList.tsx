@@ -50,7 +50,7 @@ export const RecipesList = ({ recipeType = "all" }: Props) => {
         setReachedEnd(false);
     }
 
-    const { data, isFetching, isSuccess } = useQuery({
+    const { data, isFetching, isSuccess, isError } = useQuery({
         queryKey: [
             isOwnRecipes ? "ownRecipes" : "recipes",
             page,
@@ -74,6 +74,9 @@ export const RecipesList = ({ recipeType = "all" }: Props) => {
                 search: activeSearch,
             });
         },
+        placeholderData: isOwnRecipes
+            ? (previousData) => previousData
+            : undefined,
         staleTime: 60_000,
     });
 
@@ -114,6 +117,14 @@ export const RecipesList = ({ recipeType = "all" }: Props) => {
             toast.error(`No recipes found for "${activeSearch}"`);
         }
     }, [isSuccess, activeSearch, data]);
+
+    useEffect(() => {
+        if (isOwnRecipes && isError) {
+            toast.error("Failed to load your recipes", {
+                id: "own-recipes-error",
+            });
+        }
+    }, [isOwnRecipes, isError]);
 
     const handleLoadMore = () => {
         if (hasMore) {
@@ -161,7 +172,9 @@ export const RecipesList = ({ recipeType = "all" }: Props) => {
                     ))}
                 </ul>
 
-                {totalRecipes === 0 && !isFetching && <NoRecipesResult /> }
+                {totalRecipes === 0 && !isFetching && !isError && (
+                    <NoRecipesResult />
+                )}
 
                 {isOwnRecipes && hasMore && (
                     <div
