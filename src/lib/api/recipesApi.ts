@@ -52,3 +52,8 @@ export const getRecipeById = async (
     ...data
   };
 };
+
+export const deleteRecipe = async (recipeId: string) => {
+  const { data } = await nextServer.delete(`/recipes/${recipeId}`);
+  return data;
+};

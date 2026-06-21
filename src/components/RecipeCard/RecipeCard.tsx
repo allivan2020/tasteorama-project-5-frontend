@@ -4,7 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import ClockIcon from "@/assets/icons/clock-icon.svg";
 import {Recipe} from "@/app/types/recipe";
-import {FavoriteRecipeButton} from "@/components/FavoriteRecipeButton/FavoriteRecipeButton";
+import { FavoriteRecipeButton } from "@/components/FavoriteRecipeButton/FavoriteRecipeButton";
+import { DeleteRecipeButton } from "@/components/DeleteRecipeButton/DeleteRecipeButton";
 import styles from "./RecipeCard.module.css";
 
 const FALLBACK_IMAGES = [
@@ -19,60 +20,64 @@ const FALLBACK_IMAGES = [
 ];
 
 type Props = {
-    recipe: Recipe;
-    index?: number;
-    showFavoriteButton?: boolean;
+  recipe: Recipe;
+  index?: number;
+  showFavoriteButton?: boolean;
+  showDeleteButton?: boolean;
 };
 
 export const RecipeCard = ({
-    recipe,
-    index = 0,
-    showFavoriteButton = true,
+  recipe,
+  index = 0,
+  showFavoriteButton = true,
+  showDeleteButton = false,
 }: Props) => {
-    const imageSrc =
-        recipe.thumb || FALLBACK_IMAGES[index % FALLBACK_IMAGES.length];
+  const imageSrc =
+    recipe.thumb || FALLBACK_IMAGES[index % FALLBACK_IMAGES.length];
 
-    return (
-        <li className={styles.recipeCard}>
-            <Link
-                href={`/recipes/${recipe._id}`}
-                className={styles.cardLink}
-                aria-label={`Open recipe ${recipe.title}`}
-            >
-                <Image
-                    src={imageSrc}
-                    alt={recipe.title}
-                    width={337}
-                    height={230}
-                    className={styles.recipeImage}
-                />
+  return (
+    <li className={styles.recipeCard}>
+      <Link
+        href={`/recipes/${recipe._id}`}
+        className={styles.cardLink}
+        aria-label={`Open recipe ${recipe.title}`}
+      >
+        <Image
+          src={imageSrc}
+          alt={recipe.title}
+          width={337}
+          height={230}
+          className={styles.recipeImage}
+        />
 
-                <div className={styles.cardHeader}>
-                    <h3 className={styles.recipeTitle}>{recipe.title}</h3>
+        <div className={styles.cardHeader}>
+          <h3 className={styles.recipeTitle}>{recipe.title}</h3>
 
-                    <div className={styles.timeBox}>
-                        <ClockIcon className={styles.timeIcon}/>
-                        <span className={styles.time}>
-                            {recipe.time ? `${recipe.time}` : "—"}
-                         </span>
-                    </div>
-                </div>
+          <div className={styles.timeBox}>
+            <ClockIcon className={styles.timeIcon} />
+            <span className={styles.time}>
+              {recipe.time ? `${recipe.time}` : "—"}
+            </span>
+          </div>
+        </div>
 
-                <p className={styles.recipeDescription}>{recipe.description}</p>
-                <p className={styles.recipeCalories}>
-                    {recipe.calories != null ? `~ ${recipe.calories} cals` : "—"}
-                </p>
-            </Link>
+        <p className={styles.recipeDescription}>{recipe.description}</p>
+        <p className={styles.recipeCalories}>
+          {recipe.calories != null ? `~ ${recipe.calories} cals` : "—"}
+        </p>
+      </Link>
 
-            <div className={styles.actions}>
-                <Link href={`/recipes/${recipe._id}`} className={styles.detailsButton}>
-                    Learn more
-                </Link>
+      <div className={styles.actions}>
+        <Link href={`/recipes/${recipe._id}`} className={styles.detailsButton}>
+          Learn more
+        </Link>
 
-                {showFavoriteButton && (
-                    <FavoriteRecipeButton recipeId={recipe._id}/>
-                )}
-            </div>
-        </li>
-    );
+        {showDeleteButton ? (
+          <DeleteRecipeButton recipeId={recipe._id} />
+        ) : (
+          showFavoriteButton && <FavoriteRecipeButton recipeId={recipe._id} />
+        )}
+      </div>
+    </li>
+  );
 };

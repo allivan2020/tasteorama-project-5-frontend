@@ -158,86 +158,81 @@ export const RecipesList = ({ recipeType = "all" }: Props) => {
     };
 
     return (
-        <section
-            className={`${styles.section} ${
-                isOwnRecipes ? styles.profileSection : ""
-            }`}
+      <section
+        className={`${styles.section} ${
+          isOwnRecipes ? styles.profileSection : ""
+        }`}
+      >
+        <div
+          className={
+            isOwnRecipes || isFavoriteRecipes ? undefined : "container"
+          }
         >
-            <div className={isOwnRecipes || isFavoriteRecipes ? undefined : "container"}>
-                <h2
-                    className={`${styles.title} ${
-                        isOwnRecipes ? styles.profileTitle : ""
-                    }`}
-                >
-                    {isOwnRecipes ? `${totalRecipes} recipes` : "Recipes"}
-                </h2>
-                {!isOwnRecipes && (
-                    <RecipesFilters totalRecipes={totalRecipes} />
-                )}
+          <h2
+            className={`${styles.title} ${
+              isOwnRecipes ? styles.profileTitle : ""
+            }`}
+          >
+            {isOwnRecipes ? `${totalRecipes} recipes` : "Recipes"}
+          </h2>
+          {!isOwnRecipes && <RecipesFilters totalRecipes={totalRecipes} />}
 
-                {isFetching && displayRecipes.length === 0 && (
-                    <p className={styles.loading}>Loading...</p>
-                )}
+          {isFetching && displayRecipes.length === 0 && (
+            <p className={styles.loading}>Loading...</p>
+          )}
 
-                <ul className={styles.list}>
-                    {displayRecipes.map((recipe, index) => (
-                        <RecipeCard
-                            key={recipe._id}
-                            recipe={recipe}
-                            index={index}
-                            showFavoriteButton={!isOwnRecipes}
-                        />
-                    ))}
-                </ul>
+          <ul className={styles.list}>
+            {displayRecipes.map((recipe, index) => (
+              <RecipeCard
+                key={recipe._id}
+                recipe={recipe}
+                index={index}
+                showFavoriteButton={!isOwnRecipes}
+                showDeleteButton={isOwnRecipes}
+              />
+            ))}
+          </ul>
 
-                {totalRecipes === 0 && !isFetching && !isError && (
-                    <NoRecipesResult />
-                )}
+          {totalRecipes === 0 && !isFetching && !isError && <NoRecipesResult />}
 
-                {isOwnRecipes && hasMore && (
-                    <div
-                        style={{
-                            display: "flex",
-                            justifyContent: "center",
-                            marginTop: 40,
-                        }}
-                    >
-                        <LoadMoreBtn
-                            onClick={handleLoadMore}
-                            isLoading={isFetching}
-                        />
-                    </div>
-                )}
-
-                {!isOwnRecipes && !usePagination && totalRecipes !== 0 && (
-                    <div
-                        style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: "center",
-                            marginTop: 40,
-                            gap: 12,
-                        }}
-                    >
-                        {reachedEnd ? (
-                            <p className={styles.noMore}>No more recipes</p>
-                        ) : (
-                            <LoadMoreBtn
-                                onClick={handleLoadMore}
-                                isLoading={isFetching}
-                            />
-                        )}
-                    </div>
-                )}
-
-                {!isOwnRecipes && usePagination && totalPages > 1 && (
-                    <Pagination
-                        currentPage={page}
-                        totalPages={totalPages}
-                        onPageChange={handlePageChange}
-                    />
-                )}
+          {isOwnRecipes && hasMore && (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                marginTop: 40,
+              }}
+            >
+              <LoadMoreBtn onClick={handleLoadMore} isLoading={isFetching} />
             </div>
-        </section>
+          )}
+
+          {!isOwnRecipes && !usePagination && totalRecipes !== 0 && (
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                marginTop: 40,
+                gap: 12,
+              }}
+            >
+              {reachedEnd ? (
+                <p className={styles.noMore}>No more recipes</p>
+              ) : (
+                <LoadMoreBtn onClick={handleLoadMore} isLoading={isFetching} />
+              )}
+            </div>
+          )}
+
+          {!isOwnRecipes && usePagination && totalPages > 1 && (
+            <Pagination
+              currentPage={page}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+            />
+          )}
+        </div>
+      </section>
     );
 };
