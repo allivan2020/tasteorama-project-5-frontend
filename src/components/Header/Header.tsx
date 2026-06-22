@@ -99,9 +99,7 @@ export const Header = () => {
 
               <Link
                 href="/add-recipe"
-                className={`${styles.addRecipeBtn} ${
-                  pathname === "/add-recipe" ? styles.active : ""
-                }`}
+                className={`${styles.primaryAction} ${styles.headerAction}`}
               >
                 Add Recipe
               </Link>
@@ -148,7 +146,10 @@ export const Header = () => {
                 Log in
               </Link>
 
-              <Link href="/auth/register" className={styles.registerBtn}>
+              <Link
+                href="/auth/register"
+                className={`${styles.primaryAction} ${styles.headerAction}`}
+              >
                 Register
               </Link>
             </>
@@ -225,7 +226,7 @@ export const Header = () => {
 
                   <Link
                     href="/add-recipe"
-                    className={styles.mobileActionBtn}
+                    className={`${styles.primaryAction} ${styles.mobileActionBtn}`}
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Add Recipe
@@ -272,7 +273,7 @@ export const Header = () => {
 
                   <Link
                     href="/auth/register"
-                    className={styles.mobileActionBtn}
+                    className={`${styles.primaryAction} ${styles.mobileActionBtn}`}
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Register
