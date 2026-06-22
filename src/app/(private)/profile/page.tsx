@@ -1,5 +1,5 @@
-import { RecipesList } from '@/components/RecipesList/RecipesList';
+import { redirect } from 'next/navigation';
 
 export default function ProfilePage() {
-  return <RecipesList recipeType="own" />;
+  redirect('/profile/own');
 }
