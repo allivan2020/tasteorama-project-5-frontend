@@ -12,18 +12,18 @@ import { useRecipesQueryParamsStore } from "@/lib/store/recipesQueryParamsStore"
 import styles from "./RecipesList.module.css";
 import { Recipe, RecipesResponse } from "@/app/types/recipe";
 import NoRecipesResult from "../NoRecipesResult/NoRecipesResult";
-import {getFavoriteRecipes} from "@/lib/api/clientApi";
+import { getFavoriteRecipes } from "@/lib/api/clientApi";
 
 const PER_PAGE = 12;
 const PAGINATION_THRESHOLD = 4;
 
 type Props = {
-    recipeType?: "all" | "own" | 'favorites';
+    recipeType?: "all" | "own" | "favorites";
 };
 
 export const RecipesList = ({ recipeType = "all" }: Props) => {
     const isOwnRecipes = recipeType === "own";
-    const isFavoriteRecipes = recipeType === 'favorites';
+    const isFavoriteRecipes = recipeType === "favorites";
     const { category, ingredient, search } = useRecipesQueryParamsStore();
     const activeCategory = isOwnRecipes ? "" : category;
     const activeIngredient = isOwnRecipes ? "" : ingredient;
@@ -52,12 +52,11 @@ export const RecipesList = ({ recipeType = "all" }: Props) => {
         setReachedEnd(false);
     }
 
-    const queryBaseKey =
-        isOwnRecipes
-            ? "ownRecipes"
-            : isFavoriteRecipes
-                ? "favoriteRecipes"
-                : "recipes";
+    const queryBaseKey = isOwnRecipes
+        ? "ownRecipes"
+        : isFavoriteRecipes
+          ? "favoriteRecipes"
+          : "recipes";
 
     const { data, isFetching, isSuccess, isError } = useQuery({
         queryKey: [
@@ -100,8 +99,7 @@ export const RecipesList = ({ recipeType = "all" }: Props) => {
 
     const totalRecipes = data?.totalRecipes ?? 0;
     const totalPages = data?.totalPages ?? 1;
-    const usePagination =
-        !isOwnRecipes && totalPages >= PAGINATION_THRESHOLD;
+    const usePagination = !isOwnRecipes && totalPages >= PAGINATION_THRESHOLD;
     const hasMore = page < totalPages;
 
     const displayRecipes = useMemo(() => {
@@ -125,7 +123,7 @@ export const RecipesList = ({ recipeType = "all" }: Props) => {
         activeCategory,
         activeIngredient,
         activeSearch,
-        isOwnRecipes,
+        queryBaseKey,
         usePagination,
         queryClient,
     ]);
@@ -158,81 +156,91 @@ export const RecipesList = ({ recipeType = "all" }: Props) => {
     };
 
     return (
-      <section
-        className={`${styles.section} ${
-          isOwnRecipes ? styles.profileSection : ""
-        }`}
-      >
-        <div
-          className={
-            isOwnRecipes || isFavoriteRecipes ? undefined : "container"
-          }
-        >
-          <h2
-            className={`${styles.title} ${
-              isOwnRecipes ? styles.profileTitle : ""
+        <section
+            className={`${styles.section} ${
+                isOwnRecipes ? styles.profileSection : ""
             }`}
-          >
-            {isOwnRecipes ? `${totalRecipes} recipes` : "Recipes"}
-          </h2>
-          {!isOwnRecipes && <RecipesFilters totalRecipes={totalRecipes} />}
-
-          {isFetching && displayRecipes.length === 0 && (
-            <p className={styles.loading}>Loading...</p>
-          )}
-
-          <ul className={styles.list}>
-            {displayRecipes.map((recipe, index) => (
-              <RecipeCard
-                key={recipe._id}
-                recipe={recipe}
-                index={index}
-                showFavoriteButton={!isOwnRecipes}
-                showDeleteButton={isOwnRecipes}
-              />
-            ))}
-          </ul>
-
-          {totalRecipes === 0 && !isFetching && !isError && <NoRecipesResult />}
-
-          {isOwnRecipes && hasMore && (
+        >
             <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                marginTop: 40,
-              }}
+                className={
+                    isOwnRecipes || isFavoriteRecipes ? undefined : "container"
+                }
             >
-              <LoadMoreBtn onClick={handleLoadMore} isLoading={isFetching} />
-            </div>
-          )}
+                <h2
+                    className={`${styles.title} ${
+                        isOwnRecipes ? styles.profileTitle : ""
+                    }`}
+                >
+                    {isOwnRecipes ? `${totalRecipes} recipes` : "Recipes"}
+                </h2>
+                {!isOwnRecipes && (
+                    <RecipesFilters totalRecipes={totalRecipes} />
+                )}
 
-          {!isOwnRecipes && !usePagination && totalRecipes !== 0 && (
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                marginTop: 40,
-                gap: 12,
-              }}
-            >
-              {reachedEnd ? (
-                <p className={styles.noMore}>No more recipes</p>
-              ) : (
-                <LoadMoreBtn onClick={handleLoadMore} isLoading={isFetching} />
-              )}
-            </div>
-          )}
+                {isFetching && displayRecipes.length === 0 && (
+                    <p className={styles.loading}>Loading...</p>
+                )}
 
-          {!isOwnRecipes && usePagination && totalPages > 1 && (
-            <Pagination
-              currentPage={page}
-              totalPages={totalPages}
-              onPageChange={handlePageChange}
-            />
-          )}
-        </div>
-      </section>
+                <ul className={styles.list}>
+                    {displayRecipes.map((recipe, index) => (
+                        <RecipeCard
+                            key={recipe._id}
+                            recipe={recipe}
+                            index={index}
+                            showFavoriteButton={!isOwnRecipes}
+                            showDeleteButton={isOwnRecipes}
+                        />
+                    ))}
+                </ul>
+
+                {totalRecipes === 0 && !isFetching && !isError && (
+                    <NoRecipesResult />
+                )}
+
+                {isOwnRecipes && hasMore && (
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            marginTop: 40,
+                        }}
+                    >
+                        <LoadMoreBtn
+                            onClick={handleLoadMore}
+                            isLoading={isFetching}
+                        />
+                    </div>
+                )}
+
+                {!isOwnRecipes && !usePagination && totalRecipes !== 0 && (
+                    <div
+                        style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
+                            marginTop: 40,
+                            gap: 12,
+                        }}
+                    >
+                        {reachedEnd ? (
+                            <p className={styles.noMore}>No more recipes</p>
+                        ) : (
+                            <LoadMoreBtn
+                                onClick={handleLoadMore}
+                                isLoading={isFetching}
+                            />
+                        )}
+                    </div>
+                )}
+
+                {!isOwnRecipes && usePagination && totalPages > 1 && (
+                    <Pagination
+                        currentPage={page}
+                        totalPages={totalPages}
+                        onPageChange={handlePageChange}
+                    />
+                )}
+            </div>
+        </section>
     );
 };
