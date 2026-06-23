@@ -1,5 +1,6 @@
 import { nextServer } from './api';
 import {RecipeDetail, RecipesParams, RecipesResponse} from "@/app/types/recipe";
+import type { Category } from '@/app/types/categories';
 
 const FALLBACK_IMAGES = [
   '/recipe-1.jpg',
@@ -41,15 +42,32 @@ export const getOwnRecipes = async (
   return data;
 };
 
+const resolveCategoryName = async (category: string): Promise<string> => {
+  if (!category || !/^[a-f\d]{24}$/i.test(category)) {
+    return category;
+  }
+
+  try {
+    const { data } = await nextServer.get<Category[]>('/categories');
+    const foundCategory = data.find((item) => item._id === category);
+
+    return foundCategory?.name ?? category;
+  } catch {
+    return category;
+  }
+};
+
 export const getRecipeById = async (
     recipeId: string,
 ): Promise<RecipeDetail> => {
   const { data } = await nextServer.get<RecipeDetail>(
       `/recipes/${recipeId}`,
   );
+  const category = await resolveCategoryName(data.category);
 
   return {
-    ...data
+    ...data,
+    category,
   };
 };
 
