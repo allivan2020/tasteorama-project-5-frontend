@@ -30,7 +30,6 @@ export const RecipesList = ({ recipeType = "all" }: Props) => {
     const activeIngredient = isOwnRecipes ? "" : ingredient;
     const activeSearch = isOwnRecipes ? "" : search;
     const [page, setPage] = useState(1);
-    const [reachedEnd, setReachedEnd] = useState(false);
     const queryClient = useQueryClient();
 
     const [prevFilters, setPrevFilters] = useState({
@@ -50,7 +49,6 @@ export const RecipesList = ({ recipeType = "all" }: Props) => {
             search: activeSearch,
         });
         setPage(1);
-        setReachedEnd(false);
     }
 
     const queryBaseKey = isOwnRecipes
@@ -146,9 +144,7 @@ export const RecipesList = ({ recipeType = "all" }: Props) => {
     const handleLoadMore = () => {
         if (hasMore) {
             setPage((p) => p + 1);
-        } else {
-            setReachedEnd(true);
-        }
+        } 
     };
 
     const handlePageChange = (newPage: number) => {
@@ -216,25 +212,25 @@ export const RecipesList = ({ recipeType = "all" }: Props) => {
                 )}
 
                 {!isOwnRecipes && !usePagination && totalRecipes !== 0 && (
-                    <div
-                        style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: "center",
-                            marginTop: 40,
-                            gap: 12,
-                        }}
-                    >
-                        {reachedEnd ? (
-                            <p className={styles.noMore}>No more recipes</p>
-                        ) : (
-                            <LoadMoreBtn
-                                onClick={handleLoadMore}
-                                isLoading={isFetching}
-                            />
-                        )}
-                    </div>
-                )}
+    <div
+        style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            marginTop: 40,
+            gap: 12,
+        }}
+    >
+        {hasMore ? (
+            <LoadMoreBtn
+                onClick={handleLoadMore}
+                isLoading={isFetching}
+            />
+        ) : (
+            <p className={styles.noMore}>No more recipes</p>
+        )}
+    </div>
+)}
 
                 {!isOwnRecipes && usePagination && totalPages > 1 && (
                     <Pagination
