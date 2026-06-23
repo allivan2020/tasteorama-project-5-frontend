@@ -71,7 +71,7 @@
     transition: color 250ms ease;
 }
 
-.logo:hover,
+
 .link:hover,
 .linkButton:hover {
     color: #e0c4a8;
