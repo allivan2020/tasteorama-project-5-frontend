@@ -68,6 +68,13 @@
     color: var(--black);
 }
 
+.placeholderColor {
+    color: var(--gray);
+}
+
+.selectedColor {
+    color: var(--black);
+}
 
 @media screen and (min-width: 768px) {
     .mobileFilterSelect {
@@ -96,7 +103,6 @@
         font-weight: 400;
         font-size: 16px;
         line-height: 155%;
-        color: var(--gray);
     }
         
     .resetButton {
