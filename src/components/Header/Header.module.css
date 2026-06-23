@@ -201,6 +201,14 @@
     color: var(--white);
 }
 
+.burger,
+.closeBtn,
+.mobileContent a,
+.mobileActionBtn,
+.logoutBtn {
+    -webkit-tap-highlight-color: transparent;
+}
+
 /* MOBILE 393-767  */
 
 @media screen and (min-width: 393px) {

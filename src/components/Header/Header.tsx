@@ -18,6 +18,16 @@ export const Header = () => {
 
   const isAuth = !!user;
 
+  const openMenu = () => {
+    document.body.classList.add("menu-open");
+    setIsMenuOpen(true);
+  };
+
+  const closeMenu = () => {
+    document.body.classList.remove("menu-open");
+    setIsMenuOpen(false);
+  };
+
   const logout = async () => {
     try {
       await logoutApi();
@@ -26,7 +36,7 @@ export const Header = () => {
       console.error("Logout error:", e);
     } finally {
       document.cookie =
-        'isAuth=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC';
+        "isAuth=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC";
       clearAuth();
       router.push("/");
     }
@@ -63,7 +73,7 @@ export const Header = () => {
           type="button"
           className={styles.burger}
           aria-label="Open menu"
-          onClick={() => setIsMenuOpen(true)}
+          onClick={openMenu}
         >
           <svg
             width="32"
@@ -160,11 +170,7 @@ export const Header = () => {
         {isMenuOpen && (
           <div className={styles.mobileMenu}>
             <div className={styles.mobileHeader}>
-              <Link
-                href="/"
-                className={styles.logo}
-                onClick={() => setIsMenuOpen(false)}
-              >
+              <Link href="/" className={styles.logo} onClick={closeMenu}>
                 <svg
                   width="32"
                   height="30"
@@ -191,7 +197,7 @@ export const Header = () => {
               <button
                 type="button"
                 className={styles.closeBtn}
-                onClick={() => setIsMenuOpen(false)}
+                onClick={closeMenu}
               >
                 <svg
                   width="32"
@@ -214,20 +220,20 @@ export const Header = () => {
             </div>
 
             <div className={styles.mobileContent}>
-              <Link href="/recipes" onClick={() => setIsMenuOpen(false)}>
+              <Link href="/recipes" onClick={closeMenu}>
                 Recipes
               </Link>
 
               {isAuth ? (
                 <>
-                  <Link href="/profile" onClick={() => setIsMenuOpen(false)}>
+                  <Link href="/profile" onClick={closeMenu}>
                     My Profile
                   </Link>
 
                   <Link
                     href="/add-recipe"
                     className={`${styles.primaryAction} ${styles.mobileActionBtn}`}
-                    onClick={() => setIsMenuOpen(false)}
+                    onClick={closeMenu}
                   >
                     Add Recipe
                   </Link>
@@ -267,14 +273,14 @@ export const Header = () => {
                 </>
               ) : (
                 <>
-                  <Link href="/auth/login" onClick={() => setIsMenuOpen(false)}>
+                  <Link href="/auth/login" onClick={closeMenu}>
                     Log in
                   </Link>
 
                   <Link
                     href="/auth/register"
                     className={`${styles.primaryAction} ${styles.mobileActionBtn}`}
-                    onClick={() => setIsMenuOpen(false)}
+                    onClick={closeMenu}
                   >
                     Register
                   </Link>
