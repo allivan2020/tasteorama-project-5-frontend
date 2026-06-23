@@ -158,12 +158,20 @@ export default function AddRecipePage() {
 
         if (catRes.ok) {
           const catData = await catRes.json();
-          setCategoriesList(catData);
+          const sortedCategories = catData.sort(
+            (a: CategoryFromDB, b: CategoryFromDB) =>
+              a.name.localeCompare(b.name),
+          );
+          setCategoriesList(sortedCategories);
         }
 
         if (ingRes.ok) {
           const ingData = await ingRes.json();
-          setIngredientsList(ingData);
+          const sortedIngredients = ingData.sort(
+            (a: IngredientFromDB, b: IngredientFromDB) =>
+              a.name.localeCompare(b.name),
+          );
+          setIngredientsList(sortedIngredients);
         }
       } catch {}
     };

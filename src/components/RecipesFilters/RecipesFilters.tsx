@@ -19,11 +19,13 @@ const RecipesFilters = ({ totalRecipes}: RecipesFiltersProps) => {
     const { data: categories } = useQuery({
         queryKey: ['categories'],
         queryFn: () => getCategories(),
+        select: (data) => [...data].sort((a, b) => a.name.localeCompare(b.name)),
     });
 
     const { data: ingredients} = useQuery({
         queryKey: ['ingredients'],
         queryFn: () => getIngredients(),
+        select: (data) => [...data].sort((a, b) => a.name.localeCompare(b.name)),
     });
 
     const handleCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
