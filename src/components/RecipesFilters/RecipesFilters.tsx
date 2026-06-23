@@ -57,9 +57,9 @@ const RecipesFilters = ({ totalRecipes}: RecipesFiltersProps) => {
                         <select
                             value={category}
                             onChange={handleCategoryChange}
-                            className={styles.mobileFilterSelect}
+                            className={`${styles.mobileFilterSelect} ${!category ? styles.placeholderColor : styles.selectedColor}`}
                         >
-                            <option value="">Category</option>
+                            <option value="" className={styles.placeholderColor}>Category</option>
                             {categories && categories.map((category) => {
                                 return (
                                     <option key={category._id} value={category.name}>{category.name}</option>
@@ -69,9 +69,9 @@ const RecipesFilters = ({ totalRecipes}: RecipesFiltersProps) => {
                         <select
                             value={ingredient}
                             onChange={handleIngredientChange}
-                            className={styles.mobileFilterSelect}
+                            className={`${styles.mobileFilterSelect} ${!ingredient ? styles.placeholderColor : styles.selectedColor}`}
                         >
-                            <option value="">Ingredient</option>
+                            <option value="" className={styles.placeholderColor}>Ingredient</option>
                             {ingredients && ingredients.map((ingredient) => {
                                 return (
                                     <option key={ingredient._id} value={ingredient.name}>{ingredient.name}</option>
@@ -99,9 +99,9 @@ const RecipesFilters = ({ totalRecipes}: RecipesFiltersProps) => {
                 <select
                     value={category}
                     onChange={handleCategoryChange}
-                    className={styles.filterSelect}
+                   className={`${styles.filterSelect} ${!category ? styles.placeholderColor : styles.selectedColor}`}
                 >
-                    <option value="">Category</option>
+                    <option value="" className={styles.placeholderColor}>Category</option>
                     {categories && categories.map((category) => {
                         return (
                             <option key={category._id} value={category.name}>{category.name}</option>
@@ -111,9 +111,9 @@ const RecipesFilters = ({ totalRecipes}: RecipesFiltersProps) => {
                 <select
                     value={ingredient}
                     onChange={handleIngredientChange}
-                    className={styles.filterSelect}
+                    className={`${styles.filterSelect} ${!ingredient ? styles.placeholderColor : styles.selectedColor}`}
                 >
-                    <option value="">Ingredient</option>
+                    <option value="" className={styles.placeholderColor}>Ingredient</option>
                     {ingredients && ingredients.map((ingredient) => {
                         return (
                             <option key={ingredient._id} value={ingredient.name}>{ingredient.name}</option>
