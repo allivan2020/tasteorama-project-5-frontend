@@ -18,6 +18,7 @@ export const SharedLayout = ({ children }: { children: React.ReactNode }) => {
   const closeModal = useAuthModalStore((state) => state.closeModal);
 
   const isAuthPage = pathname === '/auth/login' || pathname === '/auth/register';
+  const isProfilePage = pathname.startsWith('/profile');
 
   useEffect(() => {
     if (isAuthenticated && isOpen) {
@@ -40,6 +41,7 @@ export const SharedLayout = ({ children }: { children: React.ReactNode }) => {
           flex: 1,
           minHeight: 0,
           overflowY: 'auto',
+          scrollbarGutter: isProfilePage ? 'stable' : 'auto',
           marginTop: '64px',
         }}
       >

@@ -24,6 +24,7 @@ type Props = {
 export const RecipesList = ({ recipeType = "all" }: Props) => {
     const isOwnRecipes = recipeType === "own";
     const isFavoriteRecipes = recipeType === "favorites";
+    const isProfileRecipes = isOwnRecipes || isFavoriteRecipes;
     const { category, ingredient, search } = useRecipesQueryParamsStore();
     const activeCategory = isOwnRecipes ? "" : category;
     const activeIngredient = isOwnRecipes ? "" : ingredient;
@@ -91,7 +92,7 @@ export const RecipesList = ({ recipeType = "all" }: Props) => {
                 search: activeSearch,
             });
         },
-        placeholderData: isOwnRecipes
+        placeholderData: isProfileRecipes
             ? (previousData) => previousData
             : undefined,
         staleTime: 60_000,
@@ -158,21 +159,23 @@ export const RecipesList = ({ recipeType = "all" }: Props) => {
     return (
         <section
             className={`${styles.section} ${
-                isOwnRecipes ? styles.profileSection : ""
+                isProfileRecipes ? styles.profileSection : ""
             }`}
         >
             <div
                 className={
-                    isOwnRecipes || isFavoriteRecipes ? undefined : "container"
+                    isProfileRecipes ? undefined : "container"
                 }
             >
-                <h2
-                    className={`${styles.title} ${
-                        isOwnRecipes ? styles.profileTitle : ""
-                    }`}
-                >
-                    {isOwnRecipes ? `${totalRecipes} recipes` : "Recipes"}
-                </h2>
+                {!isFavoriteRecipes && (
+                    <h2
+                        className={`${styles.title} ${
+                            isOwnRecipes ? styles.profileTitle : ""
+                        }`}
+                    >
+                        {isOwnRecipes ? `${totalRecipes} recipes` : "Recipes"}
+                    </h2>
+                )}
                 {!isOwnRecipes && (
                     <RecipesFilters totalRecipes={totalRecipes} />
                 )}
