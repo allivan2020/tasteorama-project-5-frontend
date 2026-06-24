@@ -8,16 +8,16 @@ import { FavoriteRecipeButton } from "@/components/FavoriteRecipeButton/Favorite
 import { DeleteRecipeButton } from "@/components/DeleteRecipeButton/DeleteRecipeButton";
 import styles from "./RecipeCard.module.css";
 
-const FALLBACK_IMAGES = [
-    '/recipe-1.jpg',
-    '/recipe-2.jpg',
-    '/recipe-3.jpg',
-    '/recipe-4.jpg',
-    '/recipe-5.jpg',
-    '/recipe-6.jpg',
-    '/recipe-7.jpg',
-    '/recipe-8.jpg',
-];
+// const FALLBACK_IMAGES = [
+//     '/recipe-1.jpg',
+//     '/recipe-2.jpg',
+//     '/recipe-3.jpg',
+//     '/recipe-4.jpg',
+//     '/recipe-5.jpg',
+//     '/recipe-6.jpg',
+//     '/recipe-7.jpg',
+//     '/recipe-8.jpg',
+// ];
 
 type Props = {
   recipe: Recipe;
@@ -32,8 +32,8 @@ export const RecipeCard = ({
   showFavoriteButton = true,
   showDeleteButton = false,
 }: Props) => {
-  const imageSrc =
-    recipe.thumb || FALLBACK_IMAGES[index % FALLBACK_IMAGES.length];
+  const imageSrc = recipe.thumb || '/default-recipe.jpg';
+    // recipe.thumb || FALLBACK_IMAGES[index % FALLBACK_IMAGES.length];
 
   return (
     <li className={styles.recipeCard}>

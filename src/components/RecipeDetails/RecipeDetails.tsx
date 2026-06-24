@@ -43,7 +43,7 @@ function formatIngredientMeasure(measure?: string) {
 }
 
 export function RecipeDetails({ recipe }: RecipeDetailsProps) {
-  const imageSrc = recipe.thumb ?? recipe.image;
+ const imageSrc = recipe.thumb ?? recipe.image ?? '/default-recipe.jpg';
   const cookingTime = getCookingTime(recipe);
   const calories = getCalories(recipe);
 
@@ -57,19 +57,15 @@ export function RecipeDetails({ recipe }: RecipeDetailsProps) {
         <h1 className={styles.title}>{recipe.title}</h1>
 
         <div className={styles.imageFrame}>
-          {imageSrc ? (
-            <Image
-              src={imageSrc}
-              alt={recipe.title}
-              width={586}
-              height={493}
-              priority
-              sizes="(min-width: 1440px) 586px, (min-width: 768px) 586px, 100vw"
-              className={styles.image}
-            />
-          ) : (
-            <div className={styles.imagePlaceholder} aria-hidden="true" />
-          )}
+          <Image
+            src={imageSrc}
+            alt={recipe.title}
+            width={586}
+            height={493}
+            priority
+            sizes="(min-width: 1440px) 586px, (min-width: 768px) 586px, 100vw"
+            className={styles.image}
+          />
         </div>
 
         <div className={styles.content}>
@@ -89,7 +85,9 @@ export function RecipeDetails({ recipe }: RecipeDetailsProps) {
                     const measure = formatIngredientMeasure(ingredient.measure);
 
                     return (
-                      <li key={`${ingredient.name}-${ingredient.measure ?? ''}`}>
+                      <li
+                        key={`${ingredient.name}-${ingredient.measure ?? ''}`}
+                      >
                         <span>{ingredient.name}</span>
                         {measure && <span>{measure}</span>}
                       </li>
@@ -104,7 +102,7 @@ export function RecipeDetails({ recipe }: RecipeDetailsProps) {
                 <h2>Preparation Steps:</h2>
                 <div className={styles.steps}>
                   {instructions.map((step, index) => (
-                      <p key={index}>{step}</p>
+                    <p key={index}>{step}</p>
                   ))}
                 </div>
               </section>
