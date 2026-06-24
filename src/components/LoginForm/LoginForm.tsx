@@ -32,21 +32,23 @@ export default function LoginForm() {
 
     const [showPassword, setShowPassword] = useState(false);
 
-    const {mutate, isPending} = useMutation({
-        mutationFn: login,
-        onSuccess: (res) => {
-            if (res) {
-                toast.success('Login successful!');
-                setUser(res);
-                document.cookie = 'isAuth=true; path=/; max-age=86400';
-                router.push('/');
-            }
-        },
-        onError: (error: AxiosError<{ error?: string }>) => {
-            const errorMessage =
-                error.response?.data?.error ?? error.message ?? 'Oops... some error';
-            toast.error(errorMessage);
-        },
+    const { mutate, isPending } = useMutation({
+      mutationFn: login,
+      onSuccess: (res) => {
+        if (res) {
+          toast.success('Login successful!');
+          setUser(res);
+          document.cookie = 'isAuth=true; path=/; max-age=86400';
+          router.push('/');
+        }
+      },
+      onError: (error: AxiosError<{ message?: string }>) => {
+        const errorMessage =
+          error.response?.data?.message ??
+          error.message ??
+          'Oops... some error';
+        toast.error(errorMessage);
+      },
     });
 
     const togglePasswordVisibility = () => {

@@ -38,22 +38,22 @@ const RegistrationForm = () => {
     const setUser = useAuthStore((state) => state.setUser);
 
     const mutation = useMutation({
-        mutationFn: register,
-        onSuccess: (res) => {
-            if (res) {
-                setUser(res.newUser);
-                toast.success('Registration successful!');
-                document.cookie = 'isAuth=true; path=/; max-age=86400';
-                router.push('/');
-            }
-        },
-        onError: (error: AxiosError<{ error?: string }>) => {
-            const errorMessage =
-                error.response?.data?.error ??
-                error.message ??
-                'Oops... some error';
-            toast.error(errorMessage);
-        },
+      mutationFn: register,
+      onSuccess: (res) => {
+        if (res) {
+          setUser(res.newUser);
+          toast.success('Registration successful!');
+          document.cookie = 'isAuth=true; path=/; max-age=86400';
+          router.push('/');
+        }
+      },
+      onError: (error: AxiosError<{ message?: string }>) => {
+        const errorMessage =
+          error.response?.data?.message ??
+          error.message ??
+          'Oops... some error';
+        toast.error(errorMessage);
+      },
     });
 
 

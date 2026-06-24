@@ -6,7 +6,7 @@
      background-color: var(--light-beige);
      border-radius: 32px;
      padding: 48px 32px;
-     margin: 0 auto;
+     margin: 76 auto;
  }
 
  .registerCard {
@@ -151,6 +151,7 @@
      .formCard {
          max-width: 522px;
          min-height: 399px;
+         margin: 152px auto;
      }
 
      .registerCard {
@@ -162,6 +163,7 @@
      .formCard {
          max-width: 420px;
          min-height: 399px;
+         margin: 52px auto 34px auto;
      }
 
      .registerCard {
