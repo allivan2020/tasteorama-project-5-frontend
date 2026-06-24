@@ -70,7 +70,7 @@ const RegistrationForm = () => {
 
 
     return (
-        <div className={css.formCard}>
+       <div className={`${css.formCard} ${css.registerCard}`}>
             <h1 className={css.formTitle}>Register</h1>
             <p className={css.formSubTitle}>Join our community of culinary enthusiasts, save your favorite
                 recipes, and
